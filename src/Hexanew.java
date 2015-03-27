@@ -16,7 +16,7 @@ public class Hexanew extends JFrame{
   FrontEndInterface interaction;
   int totalPlayers;
 
-  //CONSTANT__________
+  //CONSTANT____
 
   //size of each small polygol, one side=2a
   int a = 40;
