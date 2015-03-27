@@ -5,7 +5,6 @@ import java.util.*;
  * 2. Create GP and have it initialize board
  * 3. Create GUI/build board
  * 4. Create front end interface
- * Edited Rungame
  */
 public class RunGame {
 	private static Scanner sc = new Scanner(System.in);
