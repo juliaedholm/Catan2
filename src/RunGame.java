@@ -102,6 +102,7 @@ public class RunGame {
 		currentPlayerID = order.getNextPlayer();
 		if (usingGraphics){
 			fei.updateCurrentPlayer(currentPlayerID);
+			clearVerticesAndAction();
 		}
 		int r1 = roll();
 		int r2 = roll();
