@@ -68,31 +68,39 @@ public class RunGame {
 			fei = new FrontEndInterface (this, board, numPlayers, ports, true);
 			fei.currentPlayerID = currentPlayerID;
 			if (AI){
-				np = new NoPeople(this, gl);
+				np = new NoPeople(this, gl, printRunningMessage);
 			}
-		} else{
-			// run the game without graphics and with a random AI making all choices
-		//	fei = new FrontEndInterface (this, board, numPlayers, ports, false);
-			//fei.currentPlayerID = currentPlayerID;
-			np = new NoPeople(this, gl);
-			for (int i=0; i<playerCount*2; i++){
-				np.firstRoundPlaceSettlement();
-			}
-			for (int i=0; i<playerCount*2; i++){
-				np.firstRoundRoad(currentPlayerID);
-			}
-			while(!gameEnd()){
-				int[] r = rollDice();
-				/*
-				if (printRunningMessage){
-					System.out.println("Next Round. Roll is: "+(r[0]+r[1]));
-				}
-				 */
-				np.turn(currentPlayerID);
-			}
-		}
+		} 
 	}
 	
+	public int runGameWithAI(boolean print){
+		printRunningMessage = print;
+		// run the game without graphics and with a random AI making all choices
+		np = new NoPeople(this, gl, print);
+		for (int i=0; i<playerCount*2; i++){
+			np.firstRoundPlaceSettlement();
+		}
+		for (int i=0; i<playerCount*2; i++){
+			np.firstRoundRoad(currentPlayerID);
+		}
+		while(!gameEnd()){
+			int[] r = rollDice();
+			/*
+			if (printRunningMessage){
+				System.out.println("Next Round. Roll is: "+(r[0]+r[1]));
+			}
+			 */
+			np.turn(currentPlayerID);
+		}
+		int winningPlayer = 0;
+		for (int i = 1; i< players.length; i++){
+			int vp = players[i].victoryPoints;
+			if (vp>= 4){
+				winningPlayer = i;
+			}
+		}
+		return winningPlayer;
+	}
 	private int roll(){
 		//pick a random int between 1 and 6
 		Random generator =  new Random();
@@ -105,7 +113,7 @@ public class RunGame {
 			//System.exit(0);
 			return new int[] {6,6};
 		}
-		currentPlayerID = order.getNextPlayer();
+		currentPlayerID = order.getNextPlayer(printRunningMessage);
 		if (usingGraphics){
 			fei.updateCurrentPlayer(currentPlayerID);
 		}
@@ -170,7 +178,7 @@ public class RunGame {
 				if (usingGraphics){
 					fei.drawRoad(verticesToAct[0], verticesToAct[1]);
 				}
-				currentPlayerID = order.getNextPlayer();
+				currentPlayerID = order.getNextPlayer(printRunningMessage);
 				firstRoundRoadCounter ++;
 				if (usingGraphics){
 					fei.updateCurrentPlayer(currentPlayerID); //switch players
@@ -278,18 +286,22 @@ public class RunGame {
 	}
 	
 	public void playerClicked(int playerID){
-		System.out.println("Trade with another player");
 		if (actionType == 4){
 			actionType = 5;
 			tradeResources[0][2] = playerID; //want to trade with the player clicked
 			tradeResources[1][2] = currentPlayerID;
 		}
-		System.out.println("Traading resource of type: "+tradeResources[0][0]+ " for resource of type: "+tradeResources[1][0]);
+		if (printRunningMessage){
+			System.out.println("Player "+tradeResources[1][2]+" is trading resource of type: "+tradeResources[0][0]+" " +
+					"to player "+tradeResources[0][2]+" for resource of type: "+tradeResources[1][0]);
+		}
 		trade();
 	}
 	
 	public void tradeResourceButton(){
-		System.out.println("Trade with bank");
+		if (printRunningMessage){
+			System.out.println("Trade with bank");
+		}
 		if (actionType == 4){ //clicked trade but did not click player
 			//4 to one trade
 			tradeResources[0][2] = 0;//trading with computer
@@ -298,10 +310,25 @@ public class RunGame {
 		trade();
 	}
 	
+	public void trade(int[][] completeTradeArray){
+		if (printRunningMessage){
+			System.out.println("Calling trade with AI");
+		}
+		//both elements have been filled in, pass to game logic 
+		gl.trade(completeTradeArray);
+		//reset the trade array;
+		tradeResources = new int[2][3];
+		updateAllStats();
+	}
+	
 	public void trade(){
-		System.out.println("Calling trade in game logic with type  "+actionType);
+		if (printRunningMessage){
+			System.out.println("Calling trade in game logic with type  "+actionType);
+		}
 		//both elements have been filled in, pass to game logic 
 		gl.trade(tradeResources);
+		//reset the trade array;
+		tradeResources = new int[2][3];
 		updateAllStats();
 	}
 	
@@ -311,14 +338,14 @@ public class RunGame {
 			if (actionType == 5 || actionType == 4){
 				if (tradeResources[0][0] == 0){
 					//nothing has been asked for
-					System.out.println("nothing asked for, setting resource wanted");
+					System.out.println("setting resource wanted");
 					tradeResources[0][0] = resourceType;
 					tradeResources[0][1] = 1;
 				} else if (tradeResources[0][0] == resourceType) {
 					System.out.println("incrimenting resource wanted");
 					tradeResources[0][1] ++;
 				} else if (tradeResources[1][0] == 0 && tradeResources[0][0] != 0) {
-					System.out.println("Something has been asked for, setting resource to give up");
+					System.out.println("setting resource to give up");
 					tradeResources[1][0] = resourceType; 
 					tradeResources[1][1] = 1;
 				} else if (tradeResources[1][0]== resourceType) {
