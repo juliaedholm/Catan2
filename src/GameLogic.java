@@ -9,8 +9,8 @@ public class GameLogic {
 	private GraphController graph;
 	private DevCardDeck devDeck;
 
-	private boolean debugSet = false;
-	private boolean debug = false;
+	private boolean debugSet = true;
+	private boolean debug = true;
 
 	private Player[] players;
 
@@ -295,20 +295,25 @@ public class GameLogic {
 		//tradeStats[0]= {type you want, amount, playerID to give}, tradeStats[1] = {type you'll give away, amount, playerID initiating trade}
 		// if playerID to give is 0, the player initiating trade is trading with bank
 		boolean tradePossilbe = checkTrade(tradeStats);
-		if (tradeStats[0][2]!=0){ //not trading with computer
-			Player a = players[tradeStats[0][2]];
-			System.out.println("Player: "+a.getID() +" gaining: "+tradeStats[1][0]);
-			//player a gives away resources and gains some
-			a.looseResource(tradeStats[0][0], tradeStats[0][1]);
-			a.addResource(tradeStats[1][0], tradeStats[1][1]);
+		if(tradePossilbe){
+			if (tradeStats[0][2]!=0){ //not trading with computer
+				Player a = players[tradeStats[0][2]];
+				System.out.println("Player: "+a.getID() +" gaining: "+tradeStats[1][0]);
+				//player a gives away resources and gains some
+				a.looseResource(tradeStats[0][0], tradeStats[0][1]);
+				a.addResource(tradeStats[1][0], tradeStats[1][1]);
+			}
+			Player b = players[tradeStats[1][2]];	
+			//player b gives away resources and gains some
+			if (debug){
+				System.out.println("Player: "+b.getID()+ " gaining: "+tradeStats[0][0]);
+			}
+			b.addResource(tradeStats[0][0], tradeStats[0][1]);
+			b.looseResource(tradeStats[1][0], tradeStats[1][1]);
 		}
-		Player b = players[tradeStats[1][2]];	
-		//player b gives away resources and gains some
-		if (debug){
-			System.out.println("Player: "+b.getID()+ " gaining: "+tradeStats[0][0]);
+		else{
+			System.out.println("Players do not have the appropriate resources.");
 		}
-		b.addResource(tradeStats[0][0], tradeStats[0][1]);
-		b.looseResource(tradeStats[1][0], tradeStats[1][1]);
 	}
 
 	
