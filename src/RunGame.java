@@ -329,6 +329,7 @@ public class RunGame {
 		gl.trade(tradeResources);
 		//reset the trade array;
 		tradeResources = new int[2][3];
+		actionType = 0;
 		updateAllStats();
 	}
 	
