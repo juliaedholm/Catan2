@@ -23,7 +23,7 @@ public class PlayCatan {
 			AI = true;
 		}
 		
-		RunGame gameRunner = new RunGame(numPlayers, graphics, AI);
+		RunGame gameRunner = new RunGame(numPlayers, graphics, AI, false);
 		if (AI && !graphics){
 			gameRunner.runGameWithAI(true);
 		}

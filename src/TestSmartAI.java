@@ -7,8 +7,8 @@ public class TestSmartAI {
 		int [] numWinsPerPlayer = new int[5];
 		
 		for (int i = 0; i< numRuns; i ++){
-			RunGame gameRunner = new RunGame(4, false, true);
-			int winner = gameRunner.runGameWithAI(false);
+			RunGame gameRunner = new RunGame(4, false, true, false);
+			int winner = gameRunner.runGameWithAI(false)[0]; //game runner will return an int[] that contians winning player and the two start vertices
 			numWinsPerPlayer[winner] ++;
 		}
 		System.out.println("Ran "+ numRuns+ "games");
