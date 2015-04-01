@@ -33,9 +33,13 @@ public class GameLogic {
 
 	}
 	
+	public boolean placeSetCheck(int p, int vertexNumber){
+		return graph.checkPlaceSettlement(vertexNumber, players[p], debugSet);
+	}
+	
 	//method to be called at start of game. will not check that player has enough resources
 	public boolean placeSettlement(int p, int vertexNumber){
-		boolean build = graph.checkPlaceSettlement(vertexNumber, players[p], debugSet);
+		boolean build = placeSetCheck(p, vertexNumber);
 		if (debugSet){
 			System.out.println("Place settlement at "+vertexNumber+" " + build);
 		}
@@ -150,14 +154,18 @@ public class GameLogic {
 	public boolean placeRoad(int p, int v1, int v2){
 		boolean build = graph.checkPlaceRound1Road(v1,v2, players[p], debugSet); 
 		if (build == false){
-			System.out.println("You cannot build a road on this location.");
+			if (debug){
+				System.out.println("You cannot build a road on this location.");
+			}
 			return false;
 		}
 
 		else{
 			players[p].placeRoad();
 			longRoadChecker(p);
-			System.out.println("Road placed successfully");
+			if (debug){
+				System.out.println("Road placed successfully");
+			}
 			graph.addRoadToGraph(v1,v2,players[p]);
 			return true;
 		}

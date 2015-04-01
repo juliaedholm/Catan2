@@ -36,7 +36,7 @@ public class RunGame {
 	NoPeople np;
 	private boolean printRunningMessage = true;
 	
-	public RunGame(int numPlayers, boolean useGraphics, boolean ai){
+	public RunGame(int numPlayers, boolean useGraphics, boolean ai, boolean testBoard){
 		AI = ai;
 		System.out.println("AI "+AI);
 		players = new Player[numPlayers+1];
@@ -53,7 +53,9 @@ public class RunGame {
 		usingGraphics = useGraphics;
 		//testboard gives a predetermined board
 		int[][] board= new Board().getBoard();
-		//int[][] testBoard = new Board().getTestBoard();
+		if (testBoard){
+			board = new Board().getTestBoard();
+		}
 		//pass this to gl 
 		gl = new GameLogic(board, players);
 		int[] ports = new int[9];
@@ -73,24 +75,33 @@ public class RunGame {
 		} 
 	}
 	
-	public int runGameWithAI(boolean print){
+	public int[] runGameWithAI(boolean print){
 		printRunningMessage = print;
 		// run the game without graphics and with a random AI making all choices
-		np = new NoPeople(this, gl, print);
+		InitialPlacementAI initial = new InitialPlacementAI(this, gl, print, false /*don't set the initial spots */);
+		TurnAI turn = new TurnAI(this, gl, print);
+		int settlementPosition;
+		int[][] initialSettlementsForPlayers = new int[5][3]; //each player stores {playerID, spot1, spot2}
+		//do something to store start settlements and winners
 		for (int i=0; i<playerCount*2; i++){
-			np.firstRoundPlaceSettlement();
+			int playerPlacingSettlement = currentPlayerID;
+			settlementPosition = initial.firstRoundPlaceSettlement(playerPlacingSettlement);
+			if (i< playerCount){
+				//System.out.println("i "+i);
+				//first time you have placed a settlemnt for this player, store player id as first element of list
+				initialSettlementsForPlayers[playerPlacingSettlement][0]= playerPlacingSettlement;
+				initialSettlementsForPlayers[playerPlacingSettlement][1]= settlementPosition;
+			} else {
+				//System.out.println("in else "+i);
+				initialSettlementsForPlayers[playerPlacingSettlement][2]= settlementPosition;
+			}
 		}
 		for (int i=0; i<playerCount*2; i++){
-			np.firstRoundRoad(currentPlayerID);
+			initial.firstRoundRoad(currentPlayerID);
 		}
 		while(!gameEnd()){
 			int[] r = rollDice();
-			/*
-			if (printRunningMessage){
-				System.out.println("Next Round. Roll is: "+(r[0]+r[1]));
-			}
-			 */
-			np.turn(currentPlayerID);
+			turn.turn(currentPlayerID);
 		}
 		int winningPlayer = 0;
 		for (int i = 1; i< players.length; i++){
@@ -99,7 +110,8 @@ public class RunGame {
 				winningPlayer = i;
 			}
 		}
-		return winningPlayer;
+		System.out.println("first Settlement for winner was "+initialSettlementsForPlayers[winningPlayer][1]+ " and second was "+initialSettlementsForPlayers[winningPlayer][2]);
+		return initialSettlementsForPlayers[winningPlayer];
 	}
 	private int roll(){
 		//pick a random int between 1 and 6
@@ -124,9 +136,6 @@ public class RunGame {
 		}
 		gl.diceRoll(r1+r2);
 		updateAllStats();
-		if (AI){
-			np.turn(currentPlayerID);
-		}
 		return new int[] {r1,r2};
 	}
 	
@@ -140,7 +149,9 @@ public class RunGame {
 	
 	public boolean placeSettlementFirstRound (int vertex){
 		//settlement building part of first round
-		System.out.println("vertex: "+vertex+" clicked in first round. Trying to place settlement for player: "+currentPlayerID);
+		if (printRunningMessage){
+			System.out.println("vertex: "+vertex+" clicked in first round. Trying to place settlement for player: "+currentPlayerID);
+		}
 		if (gl.placeSettlement(currentPlayerID, vertex)){
 			if (usingGraphics){
 				fei.drawSettlement(vertex);
@@ -157,7 +168,9 @@ public class RunGame {
 			} else {
 				firstRoundSET = false;
 				firstRoundRoadCounter = 0;
-				System.out.println("Click vertexes for Roads");
+				if (printRunningMessage){
+					System.out.println("Click vertexes for Roads");
+				}
 			}
 			return true;
 		}
@@ -169,7 +182,9 @@ public class RunGame {
 	
 	public boolean placeRoadFirstRound(int vertex){
 		//road placement part of Round 1
-		System.out.println("vertex: "+vertex+" clicked in first round. Trying to place road for player: "+currentPlayerID);
+		if (printRunningMessage){
+			System.out.println("vertex: "+vertex+" clicked in first round. Trying to place road for player: "+currentPlayerID);
+		}
 		verticesToAct[vertexCounter] = vertex;
 		vertexCounter ++;
 		boolean toReturn = false;
@@ -191,7 +206,9 @@ public class RunGame {
 			vertexCounter = 0;
 			if (firstRoundRoadCounter == 2*playerCount){
 				inFirstRound = false;
-				System.out.println("Initial Settlement and Road Placement is done");
+				if (printRunningMessage){
+					System.out.println("Initial Settlement and Road Placement is done");
+				}
 			}
 		}
 		return toReturn;
@@ -436,7 +453,7 @@ public class RunGame {
 	private boolean gameEnd(){
 		for (int i = 1; i< players.length; i++){
 			int vp = players[i].victoryPoints;
-			if (vp>= 4){
+			if (vp>= 10){
 				System.out.println("GAME OVER. Winner is Player " + i);
 				if (printRunningMessage){
 					players[i].printStats();

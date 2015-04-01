@@ -1,7 +1,7 @@
 import java.util.Random;
 
 
-public class NoPeople {
+public class TurnAI {
 	private RunGame rg;
 	private GameLogic gl;
 	int[] possibleActions;
@@ -24,7 +24,7 @@ public class NoPeople {
 	private ResourceTranslator translator = new ResourceTranslator();
 	int smartPlayer = 3;
 	
-	public NoPeople(RunGame r, GameLogic g, boolean printMessages){
+	public TurnAI(RunGame r, GameLogic g, boolean printMessages){
 		rg = r;
 		gl = g;
 		possibleActions = new int[10];
@@ -34,9 +34,9 @@ public class NoPeople {
 	}
 	
 	public void turn(int p){
-		if (p == smartPlayer){
+	//	if (p == smartPlayer){
 			smartTurn(p);
-		} else {
+	/*	} else {
 			// check available actions
 			checkPossible(p);
 			//pick action randomly
@@ -67,6 +67,7 @@ public class NoPeople {
 					break;
 			}
 		}
+		*/
 	}
 	
 	private void smartTurn(int p){
@@ -214,6 +215,10 @@ public class NoPeople {
 		int tradeIndex = generator.nextInt(tradeCounter);
 		int resourceToTrade =  resourcesToTrade4to1[tradeIndex];
 		int resourceDesired = generator.nextInt(5)+1;
+		//make sure that the type of resourceDesired is not the same resource that you are trading away
+		while (resourceDesired == resourceToTrade){
+			resourceDesired = generator.nextInt(5)+1;
+		}
 		int[][] tradeArray = new int[][]{{resourceDesired, 1, 0},{resourceToTrade,4, p}};
 		if (printActions){
 			System.out.println("trading resource of type: "+tradeArray[1][0]+ " with bank for a resource of type: "+resourceDesired);
@@ -225,43 +230,6 @@ public class NoPeople {
 	
 	private void buyDevCard(int p){
 		rg.setActionType(11);
-	}
-	
-	// actions for first round (settlement and road placement) ///
-	public void firstRoundPlaceSettlement(){
-		boolean settlementPlaced = false;
-		while (!settlementPlaced){
-			settlementPlaced = 	rg.placeSettlementFirstRound(firstRoundSettlementChoice());
-		}
-	}
-	
-	public int firstRoundSettlementChoice(){
-		Random generator =  new Random();
-		int vertexToBuild = generator.nextInt(54);
-		return vertexToBuild;
-	}
-	
-	public void firstRoundRoad(int p){
-		findLegalRound1Road(p);
-		int randIndex = generator.nextInt(roadVerticesCount);
-		int v1 = roadVertices[randIndex][0];
-		int v2 =  roadVertices[randIndex][1];
-		rg.placeRoadFirstRound(v1);
-		rg.placeRoadFirstRound(v2);
-	}
-	
-	private void findLegalRound1Road(int p){
-		roadVertices = new int[54*54][2];
-		roadVerticesCount = 0;
-		for (int i = 0; i<54; i++){
-			for (int j=0; j<54; j++){
-				if (gl.round1RoadCheck(i,j,p)){
-					roadVertices[roadVerticesCount][0] = i;
-					roadVertices[roadVerticesCount][1] = j;
-					roadVerticesCount ++;
-				}
-			}
-		}
 	}
 	
 	
