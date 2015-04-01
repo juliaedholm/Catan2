@@ -41,13 +41,15 @@ public class TurnOrderManager {
 		}
 	}
 	
-	public int getNextPlayer(){
+	public int getNextPlayer(boolean print){
 		if(turnCounter == turnOrder.length-1){
 			turnCounter = 0;
 		} else {
 			turnCounter ++;
 		}
-		System.out.println("Get next player. new player is :"+turnOrder[turnCounter]);
+		if (print){
+			System.out.println("Get next player. new player is :"+turnOrder[turnCounter]);
+		}
 		return turnOrder[turnCounter];
 	}
 	

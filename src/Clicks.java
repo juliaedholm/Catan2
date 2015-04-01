@@ -5,6 +5,7 @@ import java.awt.Graphics;
 public class Clicks implements MouseListener{
 	private Hexanew hex;
 	private FrontEndInterface interaction;
+	private ResourceTranslator translator = new ResourceTranslator();
 
 	public Clicks(Hexanew h, FrontEndInterface f){
 		hex = h;
@@ -50,23 +51,23 @@ public class Clicks implements MouseListener{
 		}
 		boolean sheep = sheep(x,y);
 		if(sheep){
-			interaction.resourceClicked(5);
+			interaction.resourceClicked(translator.Sheep);
 		}
 		boolean wood = wood(x,y); 
 		if(wood){
-			interaction.resourceClicked(4);
+			interaction.resourceClicked(translator.Wood);
 		}
 		boolean stone = stone(x,y);
 		if(stone){
-			interaction.resourceClicked(1);
+			interaction.resourceClicked(translator.Rock);
 		}
 		boolean brick = brick(x,y);
 		if(brick){
-			interaction.resourceClicked(3);
+			interaction.resourceClicked(translator.Brick);
 		}
 		boolean wheat = wheat(x,y);
 		if(wheat){
-			interaction.resourceClicked(2);
+			interaction.resourceClicked(translator.Wheat);
 		}
 		boolean player1=player1(x,y);
 		if(player1){
@@ -153,6 +154,12 @@ public class Clicks implements MouseListener{
 		if(hexy<19){
 			interaction.robberClicked();
 			interaction.tileClicked(hexy);
+		}
+		
+		//Julia P: we need a method that checks if they wanted to clear all clicks
+		boolean clickToClear = false;
+		if (clickToClear){
+			interaction.nullClick();
 		}
 	}
 

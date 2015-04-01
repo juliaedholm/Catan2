@@ -17,98 +17,70 @@ public class NoPeople {
 	int cityVerticesCount;
 	int[][] roadVertices;
 	int roadVerticesCount;
+	int[] resourcesToTrade4to1;
+	int tradeCounter;
 	boolean debug = true;
 	boolean printActions = true;
+	private ResourceTranslator translator = new ResourceTranslator();
+	int smartPlayer = 3;
 	
-	public NoPeople(RunGame r, GameLogic g){
+	public NoPeople(RunGame r, GameLogic g, boolean printMessages){
 		rg = r;
 		gl = g;
 		possibleActions = new int[10];
 		generator =  new Random();
+		printActions = printMessages;
+		debug = printMessages;
 	}
 	
-	public void firstRoundPlaceSettlement(){
-		boolean settlementPlaced = false;
-		while (!settlementPlaced){
-			settlementPlaced = 	rg.placeSettlementFirstRound(firstRoundSettlementChoice());
-		}
-	}
-	
-	public int firstRoundSettlementChoice(){
-		Random generator =  new Random();
-		int vertexToBuild = generator.nextInt(54);
-		return vertexToBuild;
-	}
-	
-	public void firstRoundRoad(int p){
-		findLegalRound1Road(p);
-		int randIndex = generator.nextInt(roadVerticesCount);
-		int v1 = roadVertices[randIndex][0];
-		int v2 =  roadVertices[randIndex][1];
-		rg.placeRoadFirstRound(v1);
-		rg.placeRoadFirstRound(v2);
-		
-	}
-	
-	private void findLegalRound1Road(int p){
-		roadVertices = new int[54*54][2];
-		roadVerticesCount = 0;
-		for (int i = 0; i<54; i++){
-			for (int j=0; j<54; j++){
-				if (gl.round1RoadCheck(i,j,p)){
-					roadVertices[roadVerticesCount][0] = i;
-					roadVertices[roadVerticesCount][1] = j;
-					roadVerticesCount ++;
-				}
+	public void turn(int p){
+		if (p == smartPlayer){
+			smartTurn(p);
+		} else {
+			// check available actions
+			checkPossible(p);
+			//pick action randomly
+			if (actionCount == 0){
+				return;
+			}
+			int randIndex = generator.nextInt(actionCount);
+			int actionToTake = possibleActions[randIndex];
+			if (printActions){
+				System.out.println("Taking action "+actionToTake);
+			}
+			
+			switch (actionToTake) {
+				case (1):
+					settle(p);
+					break;
+				case (2):
+					buildCity(p);
+					break;
+				case (3):
+					buildRoad(p);
+					break;
+				case (4):
+					makeTrade(p);
+					break;
+				case(11):
+					buyDevCard(p);
+					break;
 			}
 		}
 	}
-
-	public void turn(int p){
-		// check available actions
-		checkPossible(p);
-		//pick action randomly
-		
-		if (actionCount == 0){
-			return;
-		}
-		
-		int randIndex = generator.nextInt(actionCount);
-		int actionToTake = possibleActions[randIndex];
-		if (printActions){
-			System.out.println("Taking action "+actionToTake);
-		}
-		
-		switch (actionToTake) {
-			case (1):
-				rg.setActionType (1);
-				randIndex = generator.nextInt(settlementVerticesCount);
-				int vertexToBuild = settlementVertices[randIndex];
-				rg.setVertex(vertexToBuild);
-				break;
-			case (2):
-				rg.setActionType(2);
-				int cityIndex = generator.nextInt(cityVerticesCount);
-				int cityToBuild = cityVertices[cityIndex];
-				rg.setVertex(cityToBuild);
-				break;
-			case (3):
-				rg.setActionType(3);
-				int roadIndex = generator.nextInt(roadVerticesCount);
-				int v1 = roadVertices[roadIndex][0];
-				int v2 =  roadVertices[roadIndex][1];
-				rg.setVertex(v1);
-				rg.setVertex(v2);
-				break;
-			case(11):
-				rg.setActionType(11);
-				break;
-		}
-				
-	//	int actionType = pickAction();
-
-		//complete action with gl
-		//use runGame to update game state
+	
+	private void smartTurn(int p){
+		if (settlementPossible(p)) {
+			settle(p);
+		} else if (cityPossible(p)) {
+			buildCity(p);
+		} else if (roadPossible(p)) {
+			buildRoad(p);
+		} else if (devCardPossible(p)){
+			buyDevCard(p);
+		} else if (tradePossible4to1(p)){
+			makeTrade(p);
+		} 
 	}
 	
 	//populate the array possibleActions with list of the moves you can make
@@ -130,38 +102,53 @@ public class NoPeople {
 			possibleActions[actionCount] = 3;
 			actionCount ++;
 		}
+		if (tradePossible4to1(p)){
+			possibleActions[actionCount] = 4;
+			actionCount ++;
+		}
 	}
 	
 	//check if there is any vertex that you can build a settlement on
 	private boolean settlementPossible(int p){
 		settlementVertices = new int[54];
 		settlementVerticesCount = 0;
-		boolean toReturn = false;
 		for (int i = 0; i<settlementVertices.length; i++){
 			if (gl.buildSetCheck(p, i)){
 				settlementVertices[settlementVerticesCount] = i;
-				toReturn = true;
+				settlementVerticesCount ++;
 				if (debug){
 					System.out.println("Possible to build a settlment on vertex: "+i+ " for player "+p);
 				}
 			}
 		}
-		return toReturn;
+		return settlementVerticesCount > 0;
+	}
+	
+	private void settle(int p){
+		rg.setActionType (1);
+		int randIndex = generator.nextInt(settlementVerticesCount);
+		int vertexToBuild = settlementVertices[randIndex];
+		rg.setVertex(vertexToBuild);
 	}
 	
 	private boolean cityPossible(int p){
 		cityVertices = new int[10];
 		cityVerticesCount = 0;
 		int[] settlements = gl.getVerticesWithSettlements(p);
-		boolean toReturn = false;
 		for (int i=0; i<settlements.length; i++){
-			toReturn = gl.buildCityCheck(p, settlements[i]);
-			if (toReturn){
+			if (gl.buildCityCheck(p, settlements[i])){
 				cityVertices[cityVerticesCount] = settlements[i];
 				cityVerticesCount ++;
 			}
 		}
-		return  toReturn;
+		return  cityVerticesCount > 0;
+	}
+	
+	private void buildCity (int p){
+		rg.setActionType(2);
+		int cityIndex = generator.nextInt(cityVerticesCount);
+		int cityToBuild = cityVertices[cityIndex];
+		rg.setVertex(cityToBuild);
 	}
 	
 	private boolean devCardPossible(int p){
@@ -184,10 +171,96 @@ public class NoPeople {
 				}
 			}
 		}
-		if (roadVerticesCount > 0){
-			return true;
-		} else {
-			return false;
+		return roadVerticesCount > 0;
+	}
+	
+	private void buildRoad(int p){
+		rg.setActionType(3);
+		int roadIndex = generator.nextInt(roadVerticesCount);
+		int v1 = roadVertices[roadIndex][0];
+		int v2 =  roadVertices[roadIndex][1];
+		rg.setVertex(v1);
+		rg.setVertex(v2);
+		return;
+	}
+	
+	private boolean tradePossible4to1(int p){
+		resourcesToTrade4to1 = new int[5];
+		tradeCounter = 0;
+		if (gl.hasResourcesToTrade(p, translator.Wheat, 4)){
+			resourcesToTrade4to1[tradeCounter] = translator.Wheat;
+			tradeCounter ++;
+		}
+		if (gl.hasResourcesToTrade(p, translator.Rock, 4)){
+			resourcesToTrade4to1[tradeCounter] = translator.Rock;
+			tradeCounter ++;
+		}
+		if (gl.hasResourcesToTrade(p, translator.Brick, 4)){
+			resourcesToTrade4to1[tradeCounter] = translator.Brick;
+			tradeCounter ++;
+		}
+		if (gl.hasResourcesToTrade(p, translator.Sheep, 4)){
+			resourcesToTrade4to1[tradeCounter] = translator.Sheep;
+			tradeCounter ++;
+		}
+		if (gl.hasResourcesToTrade(p, translator.Wood, 4)){
+			resourcesToTrade4to1[tradeCounter] = translator.Wood;
+			tradeCounter ++;
+		}
+		return tradeCounter > 0;
+	}
+	
+	private void makeTrade(int p){
+		int tradeIndex = generator.nextInt(tradeCounter);
+		int resourceToTrade =  resourcesToTrade4to1[tradeIndex];
+		int resourceDesired = generator.nextInt(5)+1;
+		int[][] tradeArray = new int[][]{{resourceDesired, 1, 0},{resourceToTrade,4, p}};
+		if (printActions){
+			System.out.println("trading resource of type: "+tradeArray[1][0]+ " with bank for a resource of type: "+resourceDesired);
+			System.out.println("player trading resource is player num "+tradeArray[1][2]);
+		}
+		rg.trade(tradeArray);
+		return;
+	}
+	
+	private void buyDevCard(int p){
+		rg.setActionType(11);
+	}
+	
+	// actions for first round (settlement and road placement) ///
+	public void firstRoundPlaceSettlement(){
+		boolean settlementPlaced = false;
+		while (!settlementPlaced){
+			settlementPlaced = 	rg.placeSettlementFirstRound(firstRoundSettlementChoice());
+		}
+	}
+	
+	public int firstRoundSettlementChoice(){
+		Random generator =  new Random();
+		int vertexToBuild = generator.nextInt(54);
+		return vertexToBuild;
+	}
+	
+	public void firstRoundRoad(int p){
+		findLegalRound1Road(p);
+		int randIndex = generator.nextInt(roadVerticesCount);
+		int v1 = roadVertices[randIndex][0];
+		int v2 =  roadVertices[randIndex][1];
+		rg.placeRoadFirstRound(v1);
+		rg.placeRoadFirstRound(v2);
+	}
+	
+	private void findLegalRound1Road(int p){
+		roadVertices = new int[54*54][2];
+		roadVerticesCount = 0;
+		for (int i = 0; i<54; i++){
+			for (int j=0; j<54; j++){
+				if (gl.round1RoadCheck(i,j,p)){
+					roadVertices[roadVerticesCount][0] = i;
+					roadVertices[roadVerticesCount][1] = j;
+					roadVerticesCount ++;
+				}
+			}
 		}
 	}
 	
