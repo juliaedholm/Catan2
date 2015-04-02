@@ -22,7 +22,7 @@ public class TurnAI {
 	boolean debug = true;
 	boolean printActions = true;
 	private ResourceTranslator translator = new ResourceTranslator();
-	int smartPlayer = 3;
+	int smartPlayer = 1;
 	
 	public TurnAI(RunGame r, GameLogic g, boolean printMessages){
 		rg = r;
@@ -34,9 +34,9 @@ public class TurnAI {
 	}
 	
 	public void turn(int p){
-	//	if (p == smartPlayer){
+		if (p == smartPlayer){
 			smartTurn(p);
-	/*	} else {
+		} else {
 			// check available actions
 			checkPossible(p);
 			//pick action randomly
@@ -67,7 +67,6 @@ public class TurnAI {
 					break;
 			}
 		}
-		*/
 	}
 	
 	private void smartTurn(int p){
@@ -105,6 +104,22 @@ public class TurnAI {
 		}
 		if (tradePossible4to1(p)){
 			possibleActions[actionCount] = 4;
+			actionCount ++;
+		}
+		if (monopolyPossible(p)){
+			possibleActions[actionCount] = 7;
+			actionCount++;
+		}
+		if (yopPossible(p)){
+			possibleActions[actionCount] = 8;
+			actionCount++;
+		}
+		if (roadBuilderPossible(p)){
+			possibleActions[actionCount] = 9;
+			actionCount ++;
+		}
+		if (knightPossible(p)){
+			possibleActions[actionCount] = 10;
 			actionCount ++;
 		}
 	}
@@ -173,6 +188,22 @@ public class TurnAI {
 			}
 		}
 		return roadVerticesCount > 0;
+	}
+	
+	private boolean monopolyPossible(int p){
+		return false;
+	}
+	
+	private boolean yopPossible(int p){
+		return false;
+	}
+	
+	private boolean knightPossible(int p){
+		return false;
+	}
+	
+	private boolean roadBuilderPossible(int p){
+		return false;
 	}
 	
 	private void buildRoad(int p){

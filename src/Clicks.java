@@ -87,6 +87,7 @@ public class Clicks implements MouseListener{
 		}
 		boolean knights=knights(x,y);
 		if(knights){
+			System.out.println("unplayed");
 			interaction.knightClicked();
 		}
 		boolean yearOfPlenty=yearOfPlenty(x,y);
@@ -164,7 +165,6 @@ public class Clicks implements MouseListener{
 			interaction.tileClicked(hexy);
 		}
 		
-		//Julia P: we need a method that checks if they wanted to clear all clicks
 		boolean clickToClear = clickToClear(x,y);
 		if (clickToClear){
 			System.out.println("clear");
