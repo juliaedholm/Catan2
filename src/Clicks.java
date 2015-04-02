@@ -165,8 +165,9 @@ public class Clicks implements MouseListener{
 		}
 		
 		//Julia P: we need a method that checks if they wanted to clear all clicks
-		boolean clickToClear = false;
+		boolean clickToClear = clickToClear(x,y);
 		if (clickToClear){
+			System.out.println("clear");
 			interaction.nullClick();
 		}
 	}
@@ -447,6 +448,15 @@ public class Clicks implements MouseListener{
 			return false;
 		}
 	}
+	public boolean clickToClear(int x, int y){
+		if(x<100 &&  y<100 ){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
 
 
 

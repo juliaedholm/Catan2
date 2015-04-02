@@ -29,6 +29,7 @@ public class Hexanew extends JFrame{
   //ratio of little hexagon side to big hexagon side, only initiallizing to change from double
   double aBorder = 6*a/1.155;
   int a1 = (int) aBorder;
+  boolean firstSeven = false;
 
   //Making colors
   Color water = new Color (54, 183, 235);
@@ -297,6 +298,13 @@ public class Hexanew extends JFrame{
             g2.drawString(value, start[i][0]+w-6, start[i][1]-a+5);
           }
         }
+        if (firstSeven==false){
+          for (int i=0; i<19; i++){
+            if(res[i][1]==0){
+              drawRobber(start[i][0],start[i][1]);
+            }
+          }
+        }
 
         drawDevelopement(3*a, x+780+4*a, y-560);
         drawCards(890, 260);
@@ -323,6 +331,10 @@ public class Hexanew extends JFrame{
       drawRoad(x+750+2*a, y-560, currentPlayer);
   }
   public void updateBoard(){
+      if((rollTwo+rollOne)==7){
+        firstSeven=true;
+        drawPopup(g2);
+      }
       for (int i=0; i<71;i++){
         if(roadSide[i][2]>0){
           buildRoad(i);
@@ -900,6 +912,25 @@ public class Hexanew extends JFrame{
         monopoly=Integer.toString(player4[9]);  
         yearOfPlenty=Integer.toString(player4[10]);         
       }
+
+      if(vp.equals("0")){
+        vp=" ";
+      }
+      if(knight.equals("0")){
+        knight=" ";
+      }
+      if(unplayed.equals("0")){
+        unplayed=" ";
+      }
+      if(roadBuilder.equals("0")){
+        roadBuilder=" ";
+      }
+      if(monopoly.equals("0")){
+        monopoly=" ";
+      }
+      if(yearOfPlenty.equals("0")){
+        yearOfPlenty=" ";
+      }
       int x=1250;
       int y=300;
 
@@ -1161,6 +1192,19 @@ public class Hexanew extends JFrame{
         int npoints = 3;
         g.fillPolygon(xpoints, ypoints, npoints);
       }
+  }
+  public void drawPopup(Graphics2D g2){
+      Font font = new Font("Gill Sans", Font.PLAIN, 30);
+      g2.setFont(font);
+      //draws cards
+      g2.setColor(Color.red);
+
+      int x=100;
+      int y=50;
+
+      g2.drawString("SEVEN ROLLED, Move the robber!", x, y);
+
+      repaint(); 
   }
   private void drawCircle(int x, int y, int radius) {
     g.fillOval(x-radius, y-radius, radius*2, radius*2);
