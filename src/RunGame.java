@@ -432,6 +432,11 @@ public class RunGame {
 			if (success){
 				fei.drawRoad(verticesToAct[0], verticesToAct[1]);
 			}
+			players[currentPlayerID].giveRoadResources();
+			success = gl.buildRoad(currentPlayerID, verticesToAct[0], verticesToAct[1]);
+			if (success){
+				fei.drawRoad(verticesToAct[0], verticesToAct[1]);
+			}
 			updateAllStats();
 			clearVerticesAndAction();
 			clearVerticesAndAction();

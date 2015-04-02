@@ -245,7 +245,7 @@ public class GameLogic {
 		int total = 0;
 		for(int i=0; i<players.length; i++){
 			if(i!=p){
-				total = total + players[p].getAllX(r);
+				total = total + players[i].getAllX(r);
 				System.out.println("total is now: "+total);
 			}
 		}
