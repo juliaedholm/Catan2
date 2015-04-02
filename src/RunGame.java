@@ -406,6 +406,7 @@ public class RunGame {
 		if(allowed){
 			gl.useMonopoly(currentPlayerID, resource);
 		}
+		clearVerticesAndAction();
 		updateAllStats();
 	}
 	
@@ -416,6 +417,7 @@ public class RunGame {
 		if(allowed){
 			gl.useYearOfPlenty(currentPlayerID, yopResources[0], yopResources[1]);
 		}
+		clearVerticesAndAction();
 		updateAllStats();
 	}
 
@@ -430,6 +432,7 @@ public class RunGame {
 			}
 			updateAllStats();
 			clearVerticesAndAction();
+			clearVerticesAndAction();
 		}
 		//update stats (because this may have affected longest road)
 	}
@@ -440,6 +443,7 @@ public class RunGame {
 		if(allowed){
 			robberAction(tile, currentPlayerID);
 		}
+		clearVerticesAndAction();
 		updateAllStats();
 	}
 	
