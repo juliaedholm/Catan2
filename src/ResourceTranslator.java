@@ -1,7 +1,13 @@
 /* JE
  * a class to translate the integer value of a resource to the string type
  */
-public class Resource {
+public class ResourceTranslator {
+	
+	public int Rock = 1;
+	public int Wheat = 2;
+	public int Brick = 3;
+	public int Wood = 4;
+	public int Sheep = 5;
 	
 	public static String getType(int value){
 		String toReturn = null;

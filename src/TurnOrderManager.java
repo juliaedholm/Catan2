@@ -41,14 +41,24 @@ public class TurnOrderManager {
 		}
 	}
 	
-	public int getNextPlayer(){
+	public int getNextPlayer(boolean print){
 		if(turnCounter == turnOrder.length-1){
 			turnCounter = 0;
 		} else {
 			turnCounter ++;
 		}
-		System.out.println("Get next player. new player is :"+turnOrder[turnCounter]);
+		if (print){
+			System.out.println("Get next player. new player is :"+turnOrder[turnCounter]);
+		}
 		return turnOrder[turnCounter];
+	}
+	
+	public int checkPreviousPlayer(){
+		if(turnCounter == 0){
+			return turnOrder[turnOrder.length-1];
+		} else {
+			return turnOrder[turnCounter -1];
+		} 
 	}
 	
 	public int getCurrentPlayer(){
@@ -57,7 +67,6 @@ public class TurnOrderManager {
 	
 	public int getNextPlayerGameStart(){
 		firstRoundCount++;
-		System.out.println("getting next player in start round FirstRoundCount: "+firstRoundCount);
 		if (firstRoundCount < turnOrder.length){
 			return turnOrder[++turnCounter];
 		} else if (firstRoundCount==turnOrder.length){

@@ -5,7 +5,7 @@ import java.util.*;
  * 2. Create GP and have it initialize board
  * 3. Create GUI/build board
  * 4. Create front end interface
- * Edited Rungame
+ * 
  */
 public class RunGame {
 	private static Scanner sc = new Scanner(System.in);
@@ -32,9 +32,13 @@ public class RunGame {
 	private int[][] tradeResources; //tradeResources[0]= {type you want, amount, playerID}, tradeResouces[1] = {type you'll give away, amount, playerID}
 	private int[] yopResources;
 	
+	boolean AI;//how to mimic one player as AI
+	NoPeople np;
 	private boolean printRunningMessage = true;
 	
-	public RunGame(int numPlayers, boolean useGraphics){
+	public RunGame(int numPlayers, boolean useGraphics, boolean ai, boolean testBoard){
+		AI = ai;
+		System.out.println("AI "+AI);
 		players = new Player[numPlayers+1];
 		
 		for(int i=1; i<(numPlayers+1); i++)
@@ -49,7 +53,9 @@ public class RunGame {
 		usingGraphics = useGraphics;
 		//testboard gives a predetermined board
 		int[][] board= new Board().getBoard();
-		//int[][] testBoard = new Board().getTestBoard();
+		if (testBoard){
+			board = new Board().getTestBoard();
+		}
 		//pass this to gl 
 		gl = new GameLogic(board, players);
 		int[] ports = new int[9];
@@ -63,30 +69,50 @@ public class RunGame {
 			//FEI will draw the graph
 			fei = new FrontEndInterface (this, board, numPlayers, ports, true);
 			fei.currentPlayerID = currentPlayerID;
-		} else{
-			// run the game without graphics and with a random AI making all choices
-		//	fei = new FrontEndInterface (this, board, numPlayers, ports, false);
-			//fei.currentPlayerID = currentPlayerID;
-			NoPeople np = new NoPeople(this, gl);
-			for (int i=0; i<playerCount*2; i++){
-				np.firstRoundPlaceSettlement();
+			if (AI){
+				np = new NoPeople(this, gl, printRunningMessage);
 			}
-			for (int i=0; i<playerCount*2; i++){
-				np.firstRoundRoad(currentPlayerID);
-			}
-			while(!gameEnd()){
-				int[] r = rollDice();
-				/*
-				if (printRunningMessage){
-				 
-					System.out.println("Next Round. Roll is: "+(r[0]+r[1]));
-				}
-				 */
-				np.turn(currentPlayerID);
-			}
-		}
+		} 
 	}
 	
+	public int[] runGameWithAI(boolean print){
+		printRunningMessage = print;
+		// run the game without graphics and with a random AI making all choices
+		InitialPlacementAI initial = new InitialPlacementAI(this, gl, print, false /*don't set the initial spots */);
+		TurnAI turn = new TurnAI(this, gl, print);
+		int settlementPosition;
+		int[][] initialSettlementsForPlayers = new int[5][3]; //each player stores {playerID, spot1, spot2}
+		//do something to store start settlements and winners
+		for (int i=0; i<playerCount*2; i++){
+			int playerPlacingSettlement = currentPlayerID;
+			settlementPosition = initial.firstRoundPlaceSettlement(playerPlacingSettlement);
+			if (i< playerCount){
+				//System.out.println("i "+i);
+				//first time you have placed a settlemnt for this player, store player id as first element of list
+				initialSettlementsForPlayers[playerPlacingSettlement][0]= playerPlacingSettlement;
+				initialSettlementsForPlayers[playerPlacingSettlement][1]= settlementPosition;
+			} else {
+				//System.out.println("in else "+i);
+				initialSettlementsForPlayers[playerPlacingSettlement][2]= settlementPosition;
+			}
+		}
+		for (int i=0; i<playerCount*2; i++){
+			initial.firstRoundRoad(currentPlayerID);
+		}
+		while(!gameEnd()){
+			int[] r = rollDice();
+			turn.turn(currentPlayerID);
+		}
+		int winningPlayer = 0;
+		for (int i = 1; i< players.length; i++){
+			int vp = players[i].victoryPoints;
+			if (vp>= 4){
+				winningPlayer = i;
+			}
+		}
+		System.out.println("first Settlement for winner was "+initialSettlementsForPlayers[winningPlayer][1]+ " and second was "+initialSettlementsForPlayers[winningPlayer][2]);
+		return initialSettlementsForPlayers[winningPlayer];
+	}
 	private int roll(){
 		//pick a random int between 1 and 6
 		Random generator =  new Random();
@@ -99,10 +125,9 @@ public class RunGame {
 			//System.exit(0);
 			return new int[] {6,6};
 		}
-		currentPlayerID = order.getNextPlayer();
+		currentPlayerID = order.getNextPlayer(printRunningMessage);
 		if (usingGraphics){
 			fei.updateCurrentPlayer(currentPlayerID);
-			clearVerticesAndAction();
 		}
 		int r1 = roll();
 		int r2 = roll();
@@ -124,7 +149,9 @@ public class RunGame {
 	
 	public boolean placeSettlementFirstRound (int vertex){
 		//settlement building part of first round
-		System.out.println("vertex: "+vertex+" clicked in first round. Trying to place settlement for player: "+currentPlayerID);
+		if (printRunningMessage){
+			System.out.println("vertex: "+vertex+" clicked in first round. Trying to place settlement for player: "+currentPlayerID);
+		}
 		if (gl.placeSettlement(currentPlayerID, vertex)){
 			if (usingGraphics){
 				fei.drawSettlement(vertex);
@@ -141,7 +168,9 @@ public class RunGame {
 			} else {
 				firstRoundSET = false;
 				firstRoundRoadCounter = 0;
-				System.out.println("Click vertexes for Roads");
+				if (printRunningMessage){
+					System.out.println("Click vertexes for Roads");
+				}
 			}
 			return true;
 		}
@@ -153,7 +182,9 @@ public class RunGame {
 	
 	public boolean placeRoadFirstRound(int vertex){
 		//road placement part of Round 1
-		System.out.println("vertex: "+vertex+" clicked in first round. Trying to place road for player: "+currentPlayerID);
+		if (printRunningMessage){
+			System.out.println("vertex: "+vertex+" clicked in first round. Trying to place road for player: "+currentPlayerID);
+		}
 		verticesToAct[vertexCounter] = vertex;
 		vertexCounter ++;
 		boolean toReturn = false;
@@ -162,7 +193,7 @@ public class RunGame {
 				if (usingGraphics){
 					fei.drawRoad(verticesToAct[0], verticesToAct[1]);
 				}
-				currentPlayerID = order.getNextPlayer();
+				currentPlayerID = order.getNextPlayer(printRunningMessage);
 				firstRoundRoadCounter ++;
 				if (usingGraphics){
 					fei.updateCurrentPlayer(currentPlayerID); //switch players
@@ -175,7 +206,9 @@ public class RunGame {
 			vertexCounter = 0;
 			if (firstRoundRoadCounter == 2*playerCount){
 				inFirstRound = false;
-				System.out.println("Initial Settlement and Road Placement is done");
+				if (printRunningMessage){
+					System.out.println("Initial Settlement and Road Placement is done");
+				}
 			}
 		}
 		return toReturn;
@@ -238,7 +271,7 @@ public class RunGame {
 		//TEST:
 		//players[currentPlayerID].giveSettlementResources();
 		boolean success = 	gl.buildSettlement(currentPlayerID, v);
-		if (success){
+		if (success && usingGraphics){
 			fei.drawSettlement(v);
 		}
 		clearVerticesAndAction();
@@ -270,18 +303,22 @@ public class RunGame {
 	}
 	
 	public void playerClicked(int playerID){
-		System.out.println("Trade with another player");
 		if (actionType == 4){
 			actionType = 5;
 			tradeResources[0][2] = playerID; //want to trade with the player clicked
 			tradeResources[1][2] = currentPlayerID;
 		}
-		System.out.println("Traading resource of type: "+tradeResources[0][0]+ " for resource of type: "+tradeResources[1][0]);
+		if (printRunningMessage){
+			System.out.println("Player "+tradeResources[1][2]+" is trading resource of type: "+tradeResources[0][0]+" " +
+					"to player "+tradeResources[0][2]+" for resource of type: "+tradeResources[1][0]);
+		}
 		trade();
 	}
 	
 	public void tradeResourceButton(){
-		System.out.println("Trade with bank");
+		if (printRunningMessage){
+			System.out.println("Trade with bank");
+		}
 		if (actionType == 4){ //clicked trade but did not click player
 			//4 to one trade
 			tradeResources[0][2] = 0;//trading with computer
@@ -290,10 +327,26 @@ public class RunGame {
 		trade();
 	}
 	
+	public void trade(int[][] completeTradeArray){
+		if (printRunningMessage){
+			System.out.println("Calling trade with AI");
+		}
+		//both elements have been filled in, pass to game logic 
+		gl.trade(completeTradeArray);
+		//reset the trade array;
+		tradeResources = new int[2][3];
+		updateAllStats();
+	}
+	
 	public void trade(){
-		System.out.println("Calling trade in game logic with type  "+actionType);
+		if (printRunningMessage){
+			System.out.println("Calling trade in game logic with type  "+actionType);
+		}
 		//both elements have been filled in, pass to game logic 
 		gl.trade(tradeResources);
+		//reset the trade array;
+		tradeResources = new int[2][3];
+		actionType = 0;
 		updateAllStats();
 	}
 	
@@ -303,14 +356,14 @@ public class RunGame {
 			if (actionType == 5 || actionType == 4){
 				if (tradeResources[0][0] == 0){
 					//nothing has been asked for
-					System.out.println("nothing asked for, setting resource wanted");
+					System.out.println("setting resource wanted");
 					tradeResources[0][0] = resourceType;
 					tradeResources[0][1] = 1;
 				} else if (tradeResources[0][0] == resourceType) {
 					System.out.println("incrimenting resource wanted");
 					tradeResources[0][1] ++;
 				} else if (tradeResources[1][0] == 0 && tradeResources[0][0] != 0) {
-					System.out.println("Something has been asked for, setting resource to give up");
+					System.out.println("setting resource to give up");
 					tradeResources[1][0] = resourceType; 
 					tradeResources[1][1] = 1;
 				} else if (tradeResources[1][0]== resourceType) {
@@ -401,7 +454,7 @@ public class RunGame {
 	private boolean gameEnd(){
 		for (int i = 1; i< players.length; i++){
 			int vp = players[i].victoryPoints;
-			if (vp>= 3){
+			if (vp>= 10){
 				System.out.println("GAME OVER. Winner is Player " + i);
 				if (printRunningMessage){
 					players[i].printStats();

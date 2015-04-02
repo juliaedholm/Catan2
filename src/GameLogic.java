@@ -9,7 +9,8 @@ public class GameLogic {
 	private GraphController graph;
 	private DevCardDeck devDeck;
 
-	private boolean debugSet = false;
+	private boolean debugSet = true;
+	private boolean debug = true;
 
 	private Player[] players;
 
@@ -32,9 +33,13 @@ public class GameLogic {
 
 	}
 	
+	public boolean placeSetCheck(int p, int vertexNumber){
+		return graph.checkPlaceSettlement(vertexNumber, players[p], debugSet);
+	}
+	
 	//method to be called at start of game. will not check that player has enough resources
 	public boolean placeSettlement(int p, int vertexNumber){
-		boolean build = graph.checkPlaceSettlement(vertexNumber, players[p], debugSet);
+		boolean build = placeSetCheck(p, vertexNumber);
 		if (debugSet){
 			System.out.println("Place settlement at "+vertexNumber+" " + build);
 		}
@@ -149,14 +154,18 @@ public class GameLogic {
 	public boolean placeRoad(int p, int v1, int v2){
 		boolean build = graph.checkPlaceRound1Road(v1,v2, players[p], debugSet); 
 		if (build == false){
-			System.out.println("You cannot build a road on this location.");
+			if (debug){
+				System.out.println("You cannot build a road on this location.");
+			}
 			return false;
 		}
 
 		else{
 			players[p].placeRoad();
 			longRoadChecker(p);
-			System.out.println("Road placed successfully");
+			if (debug){
+				System.out.println("Road placed successfully");
+			}
 			graph.addRoadToGraph(v1,v2,players[p]);
 			return true;
 		}
@@ -261,24 +270,50 @@ public class GameLogic {
 			return true;
 		}
 	}
+	
+	public boolean checkTrade(int[][] tradeStats){
+		//tradeStats[0]= {type you want, amount, playerID to give}, tradeStats[1] = {type you'll give away, amount, playerID initiating trade}
+		//check that person gaining has enough resources to give away
+		boolean tradePossible = hasResourcesToTrade(tradeStats[1][2], tradeStats[1][0], tradeStats[1][1]);
+		if (tradeStats[0][2]!=0) {
+			//check that other person has enough resources to give away
+			tradePossible = tradePossible && hasResourcesToTrade(tradeStats[0][2], tradeStats[0][0], tradeStats[0][1]);
+		}
+		return tradePossible;
+	}
+	
+	public boolean hasResourcesToTrade(int p, int resourceType, int numToTrade){
+		if (debug){
+			System.out.println("Checking if trade is possible with player" + p );
+			players[p].printStats();
+		}
+		int totalResourcesOfType = players[p].numResourcesOfType(resourceType);
+		return totalResourcesOfType >= numToTrade;
+	}
 
 	public void trade(int[][] tradeStats){
 		//tradeStats[0]= {type you want, amount, playerID to give}, tradeStats[1] = {type you'll give away, amount, playerID initiating trade}
 		// if playerID to give is 0, the player initiating trade is trading with bank
-		if (tradeStats[0][2]!=0){ //not trading with computer
-			Player a = players[tradeStats[0][2]];
-			System.out.println("Player a: "+a.getID() +"gaining: "+tradeStats[1][0]);
-			a.printStats();
-			//player a gives away resources and gains some
-			a.looseResource(tradeStats[0][0], tradeStats[0][1]);
-			a.addResource(tradeStats[1][0], tradeStats[1][1]);
+		boolean tradePossilbe = checkTrade(tradeStats);
+		if(tradePossilbe){
+			if (tradeStats[0][2]!=0){ //not trading with computer
+				Player a = players[tradeStats[0][2]];
+				System.out.println("Player: "+a.getID() +" gaining: "+tradeStats[1][0]);
+				//player a gives away resources and gains some
+				a.looseResource(tradeStats[0][0], tradeStats[0][1]);
+				a.addResource(tradeStats[1][0], tradeStats[1][1]);
+			}
+			Player b = players[tradeStats[1][2]];	
+			//player b gives away resources and gains some
+			if (debug){
+				System.out.println("Player: "+b.getID()+ " gaining: "+tradeStats[0][0]);
+			}
+			b.addResource(tradeStats[0][0], tradeStats[0][1]);
+			b.looseResource(tradeStats[1][0], tradeStats[1][1]);
 		}
-		Player b = players[tradeStats[1][2]];	
-		b.printStats();
-		//player b gives away resources and gains some
-		System.out.println("Player b: "+b.getID()+ "gaining: "+tradeStats[0][0]);
-		b.addResource(tradeStats[0][0], tradeStats[0][1]);
-		b.looseResource(tradeStats[1][0], tradeStats[1][1]);
+		else{
+			System.out.println("Players do not have the appropriate resources.");
+		}
 	}
 
 	

@@ -1,3 +1,5 @@
+import javax.annotation.Resource;
+
 //CJ
 
 public class Player {
@@ -12,7 +14,7 @@ public class Player {
 	private int numberOfRoads; //max 15
 	
 	private Ports portTracker;
-
+	private ResourceTranslator translator = new ResourceTranslator();
 	private ResourceCards resourceTracker;
 	private DevCards dCardTracker;
 	//settlements and cities and roads are pointed to from the graph
@@ -65,31 +67,46 @@ public class Player {
 		return stats;
 
 	}
-
+	
+	public int numResourcesOfType (int i){
+		if(i== translator.Rock)
+			return resourceTracker.getRock();
+		if(i== translator.Wheat)
+			return resourceTracker.getWheat();
+		if(i== translator.Brick)
+			return resourceTracker.getBrick();
+		if(i==translator.Wood)
+			return resourceTracker.getWood();
+		if(i==translator.Sheep)
+			return resourceTracker.getSheep();
+		else 
+			return 0;
+	}
+	
 	public void addResource(int i, int q){
-		if(i==1)
+		if(i== translator.Rock)
 			resourceTracker.addRock(q);
-		if(i==2)
+		if(i== translator.Wheat)
 			resourceTracker.addWheat(q);
-		if(i==3)
+		if(i== translator.Brick)
 			resourceTracker.addBrick(q);
-		if(i==4)
+		if(i==translator.Wood)
 			resourceTracker.addWood(q);
-		if(i==5)
+		if(i==translator.Sheep)
 			resourceTracker.addSheep(q);
 	}
 	
 	//used in trading
 	public boolean looseResource(int i, int q){
-		if(i==1)
+		if(i== translator.Rock)
 			return resourceTracker.useRock(q);
-		if(i==2)
+		if(i== translator.Wheat)
 			return resourceTracker.useWheat(q);
-		if(i==3)
+		if(i== translator.Brick)
 			return resourceTracker.useBrick(q);
-		if(i==4)
+		if(i==translator.Wood)
 			return resourceTracker.useWood(q);
-		if(i==5)
+		if(i==translator.Sheep)
 			return resourceTracker.useSheep(q);
 
 		System.out.println("Something is wrong if this prints - looseResource");
