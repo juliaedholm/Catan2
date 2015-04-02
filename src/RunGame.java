@@ -34,7 +34,7 @@ public class RunGame {
 	private int[] yopResources;
 	
 	boolean AI;//how to mimic one player as AI
-	NoPeople np;
+	TurnAI np;
 	private boolean printRunningMessage = true;
 	
 	public RunGame(int numPlayers, boolean useGraphics, boolean ai, boolean testBoard){
@@ -71,7 +71,7 @@ public class RunGame {
 			fei = new FrontEndInterface (this, board, numPlayers, ports, true);
 			fei.currentPlayerID = currentPlayerID;
 			if (AI){
-				np = new NoPeople(this, gl, printRunningMessage);
+				np = new TurnAI(this, gl, printRunningMessage);
 			}
 		} 
 	}
@@ -404,10 +404,12 @@ public class RunGame {
 		//r is the resource (int) they want to monopolize from all the players
 		boolean allowed = gl.useDevCard(currentPlayerID, 4);
 		if(allowed){
+			System.out.println("Monopoly use is allowed. Now we try to use it.");
 			gl.useMonopoly(currentPlayerID, resource);
 		}
 		clearVerticesAndAction();
 		updateAllStats();
+		System.out.println("Do we see monopoly changes? We should!");
 	}
 	
 	public void useYearOfPlenty(){
