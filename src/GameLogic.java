@@ -9,10 +9,10 @@ public class GameLogic {
 	private GraphController graph;
 	private DevCardDeck devDeck;
 
-	private boolean debugSet = true;
-	private boolean debug = true;
+	private boolean debugSet = false;
+	private boolean debug = false;
 
-	private Player[] players;
+	public Player[] players;
 
 	public GameLogic(int[][] board, Player[] pArray) {
 		GraphMaker gm = new GraphMaker(board);
@@ -182,7 +182,9 @@ public class GameLogic {
 		}
 		int i = devDeck.drawDevCard();
 		if(i ==10){
-			System.out.println("There are no development cards left.");
+			if (debug){
+				System.out.println("There are no development cards left.");
+			}
 			return false;
 		}
 		return true;
@@ -245,7 +247,7 @@ public class GameLogic {
 		int total = 0;
 		for(int i=0; i<players.length; i++){
 			if(i!=p){
-				total = total + players[p].getAllX(r);
+				total = total + players[i].getAllX(r);
 				System.out.println("total is now: "+total);
 			}
 		}
@@ -289,7 +291,6 @@ public class GameLogic {
 	public boolean hasResourcesToTrade(int p, int resourceType, int numToTrade){
 		if (debug){
 			System.out.println("Checking if trade is possible with player" + p );
-			players[p].printStats();
 		}
 		int totalResourcesOfType = players[p].numResourcesOfType(resourceType);
 		return totalResourcesOfType >= numToTrade;

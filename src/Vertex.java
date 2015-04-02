@@ -58,7 +58,7 @@ public class Vertex {
 		settlementType = 1;
 		setOwner(p);
 		if (port != null){
-			owner.setPort(port.portType);
+			owner.addPort(port.portType);
 		}
 	}
 	

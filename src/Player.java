@@ -153,10 +153,6 @@ public class Player {
 			victoryPoints = victoryPoints+2;
 		}
 	}
-	
-	public void setPort (int p){
-		
-	}
 
 	public boolean buildSetCheck(){
 		if(resourceTracker.getSheep()<1 || resourceTracker.getWheat()<1 || resourceTracker.getWood()<1 || resourceTracker.getBrick()<1){
