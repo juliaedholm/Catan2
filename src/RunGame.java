@@ -20,7 +20,8 @@ public class RunGame {
 	
 	private  int actionType; //0= nothing, 1 = settlement, 2 = city, 3 = road,
 	//4 = trade 4 to 1, 5 = trade other player, 6 = move robber, 7 = monopoly 8 = year of plenty
-	//9 = road builder, 10 = knight, 11 = buy dev card
+	//9 = road builder, 10 = knight, 11 = buy dev card, 12 = use 3 to 1 port, 13 = rock port, 14 = Wheat port, 15 = brick port, 
+	//16 = wood port, 17 = Sheep port
 	private  int[] verticesToAct; //at most 2 vertices
 	private int vertexCounter;
 	private boolean sevenRolled;
@@ -230,7 +231,7 @@ public class RunGame {
 	
 	public void setActionType (int t){
 		if (t == 4 ){
-			System.out.println("Trade started. Click num of resources you want. Num of resources you'll give up.");
+			System.out.println("Trade started. Click num of resources you want, then the num of resources you'll give up.");
 		}
 		if (actionType == 4 && t == 4){//player already clicked the trade button once
 			tradeResourceButton();
@@ -238,6 +239,8 @@ public class RunGame {
 			yopResources = new int[2];
 		} else if (t == 11){
 			buyDevCard();
+		} else if (t == 12){
+			System.out.println("3 to 1 port clicked...");
 		}
 		actionType = t;
 	}
@@ -379,8 +382,20 @@ public class RunGame {
 					yopResources[1] = resourceType;
 					useYearOfPlenty();
 				}
+			} else if (actionType == 12) {
+				//harder
+			} else if (actionType == 13) {
+				System.out.println("Trying to use stone port");
+				gl.usePort(currentPlayerID, 1, resourceType);
+			} else if (actionType == 14) {
+				gl.usePort(currentPlayerID, 2, resourceType);
+			} else if (actionType == 15) {
+				gl.usePort(currentPlayerID, 3, resourceType);
+			} else if (actionType == 16) {
+				gl.usePort(currentPlayerID, 4, resourceType);
+			} else if (actionType == 17) {
+				gl.usePort(currentPlayerID, 5, resourceType);
 			}
-			
 	}
 	
 	//dev card methods

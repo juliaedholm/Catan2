@@ -109,41 +109,49 @@ public class Clicks implements MouseListener{
 		boolean port1=port1(x,y);
 		if(port1){
 			System.out.println("port1");
+			interaction.portClicked(1);
 			//JuliaE Code
 		}
 		boolean port2=port2(x,y);
 		if(port2){
 			System.out.println("port2");
+			interaction.portClicked(2);
 			//JuliaE Code
 		}
 		boolean port3=port3(x,y);
 		if(port3){
 			System.out.println("port3");
+			interaction.portClicked(3);
 			//JuliaE Code
 		}
 		boolean port4=port4(x,y);
 		if(port4){
 			System.out.println("port4");
+			interaction.portClicked(4);
 			//JuliaE Code
 		}
 		boolean port5=port5(x,y);
 		if(port5){
 			System.out.println("port5");
+			interaction.portClicked(5);
 			//JuliaE Code
 		}
 		boolean port6=port6(x,y);
 		if(port6){
 			System.out.println("port6");
+			interaction.portClicked(6);
 			//JuliaE Code
 		}
 		boolean port7=port7(x,y);
 		if(port7){
 			System.out.println("port7");
+			interaction.portClicked(7);
 			//JuliaE Code
 		}
 		boolean port8=port8(x,y);
 		if(port8){
 			System.out.println("port8");
+			interaction.portClicked(8);
 			//JuliaE Code
 		}
 

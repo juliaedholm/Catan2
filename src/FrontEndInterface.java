@@ -11,11 +11,12 @@ public class FrontEndInterface {
 	private RunGame rg;
 	private Hexanew h;
 	public int currentPlayerID;
+	private int[] ports;
 	
-	public FrontEndInterface (RunGame r, int[][] board, int n, int[] ports, boolean mouseListener){
+	public FrontEndInterface (RunGame r, int[][] board, int n, int[] p, boolean mouseListener){
 		rg = r;
 		//must convert board (4X19) to the correct shape for hexanew (19x2)
-		
+		ports = p;
 		int[][] newBoard = new int[19][2];
 		for (int i = 0; i<newBoard.length; i++){
 			newBoard[i][0]= board[0][i];
@@ -97,7 +98,32 @@ public class FrontEndInterface {
 	public void tileClicked(int t){
 		rg.setTileClicked(t);
 	}
-
+	
+	public void portClicked(int portNum){
+		int portType = ports[portNum];
+		System.out.println("Port clicked. Type of port is "+portType);
+		switch (portType) {
+		case (0):
+			rg.setActionType(12);
+			break;
+		case (1):
+			rg.setActionType(13);
+			break;
+		case (2):
+			rg.setActionType(14);
+			break;
+		case (3):
+			rg.setActionType(15);
+			break;
+		case (4):
+			rg.setActionType(16);
+			break;
+		case(5):
+			rg.setActionType(17);
+			break;
+		}
+	}
+	
 	public void drawSettlement(int v){
 		h.addSettlement(v);
 	}
@@ -121,7 +147,7 @@ public class FrontEndInterface {
 	public void updateResources(int playerID, int[] resources){
 		h.addStatistics(resources, playerID);
 	}
-
+	
 	public void nullClick(){
 		rg.clearVerticesAndAction();
 	}

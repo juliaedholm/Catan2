@@ -256,9 +256,10 @@ public class GameLogic {
 	}
 
 
-	public boolean usePort(int p, int x, int r, int y){
+	public boolean use3to1Port(int p, int x, int r, int y){
 		//p is the player, x is which port they want to use, r is what resource they want, y is what resource they are using
-		boolean build = players[p].buildPortCheck(x,y);
+		//see if i can edit this for 3:1 port
+		boolean build = players[p].usePortCheck(x);
 		if (build == false)
 			return false;
 		else{
@@ -313,6 +314,29 @@ public class GameLogic {
 		}
 		else{
 			System.out.println("Players do not have the appropriate resources.");
+		}
+	}
+	
+	//this is just for the 2:1 port. 3:1 port is handled elsewhere
+	public boolean checkUsePort (int player, int portType){
+		//make sure player has at least 2 of required resource
+		boolean hasResource = hasResourcesToTrade(player, portType, 2);
+		//make sure player is built on the correct port
+		boolean hasPort = players[player].usePortCheck(portType);
+		if (!hasResource && debug){
+			System.out.println("You don't have enough resources to use this port");
+		}
+		if (!hasPort && debug){
+			System.out.println("You are not built on this port");
+		}
+		return hasResource && hasPort;
+	}
+	
+	public void usePort ( int playerID, int portType, int resourceDesired){
+		boolean canUsePort = checkUsePort(playerID, portType);
+		if (canUsePort){
+			players[playerID].looseResource(portType, 2);
+			players[playerID].addResource(resourceDesired, 1);
 		}
 	}
 

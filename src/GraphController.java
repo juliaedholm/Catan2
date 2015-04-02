@@ -201,7 +201,6 @@ public class GraphController {
 	
 	}
 	
-	
 	/*
 	 * Go through vertices and determine which players should receive resources for the given roll. 
 	 * Allocate those resources using methods in the player class.
