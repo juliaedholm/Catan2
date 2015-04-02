@@ -195,21 +195,6 @@ public class Player {
 		return toReturn;
 	}
 
-	public void addPort(int i){
-		if(i==0)
-			portTracker.addThreePort();
-		if(i==1)
-			portTracker.addRockPort();
-		if(i==2)
-			portTracker.addWheatPort();
-		if(i==3)
-			portTracker.addBrickPort();
-		if(i==4)
-			portTracker.addWoodPort();
-		if(i==5)
-			portTracker.addSheepPort();
-	}
-
 	public boolean buildDevCheck(){
 		if(resourceTracker.getSheep()<1 || resourceTracker.getWheat()<1 || resourceTracker.getRock()<1){
 			if (printToTerminal){
@@ -314,33 +299,24 @@ public class Player {
 		}
 		return true;
 	}
+	
+	public void addPort(int i){
+		if(i==0)
+			portTracker.addThreePort();
+		if(i==1)
+			portTracker.addRockPort();
+		if(i==2)
+			portTracker.addWheatPort();
+		if(i==3)
+			portTracker.addBrickPort();
+		if(i==4)
+			portTracker.addWoodPort();
+		if(i==5)
+			portTracker.addSheepPort();
+	}
 
-	public boolean buildPortCheck(int x, int y){
-		boolean build = portTracker.getxPort(x);
-		if (build == false){
-			System.out.println("You are not built on this port.");
-			return false;
-		}
-
-		int howmany = resourceTracker.getx(y);
-
-		//if 3 for one you need three of the thing you are trading
-		if(x==0){
-			if (howmany>=3){
-				return true;
-			}	
-			System.out.println("You do not have enough of the necessary resource to use the port.");
-			return false;
-		}
-
-		//if you have any other port 2:1
-		else{
-			if (howmany>=2){
-				return true;
-			}	
-			System.out.println("You do not have enough of the necessary resource to use the port.");
-			return false;
-		}
+	public boolean usePortCheck(int portType){
+		return portTracker.getxPort(portType);
 	}
 
 	
