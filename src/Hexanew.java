@@ -29,7 +29,7 @@ public class Hexanew extends JFrame{
   //ratio of little hexagon side to big hexagon side, only initiallizing to change from double
   double aBorder = 6*a/1.155;
   int a1 = (int) aBorder;
-  boolean firstSeven = false;
+ // boolean firstSeven = false;
 
   //Making colors
   Color water = new Color (54, 183, 235);
@@ -298,14 +298,14 @@ public class Hexanew extends JFrame{
             g2.drawString(value, start[i][0]+w-6, start[i][1]-a+5);
           }
         }
-        if (firstSeven==false){
+/*        if (firstSeven==false){
           for (int i=0; i<19; i++){
             if(res[i][1]==0){
               drawRobber(start[i][0],start[i][1]);
             }
           }
         }
-
+*/
         drawDevelopement(3*a, x+780+4*a, y-560);
         drawCards(890, 260);
         //Setting players, should be from Julia
@@ -314,12 +314,12 @@ public class Hexanew extends JFrame{
         for (int i=0; i<9;i++){
           drawPorts(i);
         }
-        for (int i=0; i<19; i++){
+ /*       for (int i=0; i<19; i++){
           if(res[i][1]==0){
             drawRobber(start[i][0],start[i][1]);
           }
         }
-
+*/
       //Setting Dice
       drawDice(25, 800, rollOne, false);
       drawDice(110, 800, rollTwo, true);
@@ -332,7 +332,7 @@ public class Hexanew extends JFrame{
   }
   public void updateBoard(){
       if((rollTwo+rollOne)==7){
-        firstSeven=true;
+        //firstSeven=true;
         drawPopup(g2);
       }
       for (int i=0; i<71;i++){

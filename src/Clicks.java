@@ -87,6 +87,7 @@ public class Clicks implements MouseListener{
 		}
 		boolean knights=knights(x,y);
 		if(knights){
+			System.out.println("unplayed");
 			interaction.knightClicked();
 		}
 		boolean yearOfPlenty=yearOfPlenty(x,y);
