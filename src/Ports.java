@@ -25,7 +25,7 @@ public class Ports{
 	public boolean getxPort(int x){
 		return portKey[x];
 	}
-
+	
 	public boolean getSheepPort(){
 		return portKey[5];
 	}
@@ -50,6 +50,10 @@ public class Ports{
 		return portKey[0];
 	}
 
+	public void addxPort(int x){
+		portKey[x] = true;
+	}
+	
 	public void addSheepPort(){
 		portKey[5] = true;
 	}
