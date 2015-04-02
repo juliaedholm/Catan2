@@ -244,9 +244,12 @@ public class GameLogic {
 		//r is the resource we are monopolizing
 		int total = 0;
 		for(int i=0; i<players.length; i++){
-			if(i!=p)
+			if(i!=p){
 				total = total + players[p].getAllX(r);
+				System.out.println("total is now: "+total);
+			}
 		}
+		System.out.println("total at end of loop = "+total);
 		players[p].addResource(r,total);
 	}
 

@@ -77,6 +77,7 @@ public class FrontEndInterface {
 	
 	public void monopolyClicked(){
 		rg.setActionType(7);
+		System.out.println("Click the resource you want to monopolize.");
 	}
 	
 	public void yearOfPlentyClicked(){
