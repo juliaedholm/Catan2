@@ -13,6 +13,7 @@ public class RunGame {
 	TurnOrderManager order;
 	private  GameLogic gl;
 	private  FrontEndInterface fei;
+	int endGameCondition = 10;
 	
 	private  Player[] players;
 	private  int playerCount;
@@ -107,11 +108,11 @@ public class RunGame {
 		int winningPlayer = 0;
 		for (int i = 1; i< players.length; i++){
 			int vp = players[i].victoryPoints;
-			if (vp>= 4){
+			if (vp>= endGameCondition){
 				winningPlayer = i;
 			}
 		}
-		System.out.println("first Settlement for winner was "+initialSettlementsForPlayers[winningPlayer][1]+ " and second was "+initialSettlementsForPlayers[winningPlayer][2]);
+		System.out.println("first Settlement for winner("+winningPlayer+" was "+initialSettlementsForPlayers[winningPlayer][1]+ " and second was "+initialSettlementsForPlayers[winningPlayer][2]);
 		return initialSettlementsForPlayers[winningPlayer];
 	}
 	private int roll(){
@@ -396,6 +397,7 @@ public class RunGame {
 			} else if (actionType == 17) {
 				gl.usePort(currentPlayerID, 5, resourceType);
 			}
+			updateAllStats();
 	}
 	
 	//dev card methods
@@ -475,7 +477,7 @@ public class RunGame {
 	private boolean gameEnd(){
 		for (int i = 1; i< players.length; i++){
 			int vp = players[i].victoryPoints;
-			if (vp>= 10){
+			if (vp>= endGameCondition){
 				System.out.println("GAME OVER. Winner is Player " + i);
 				if (printRunningMessage){
 					players[i].printStats();
