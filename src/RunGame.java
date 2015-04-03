@@ -33,6 +33,8 @@ public class RunGame {
 	
 	private int[][] tradeResources; //tradeResources[0]= {type you want, amount, playerID}, tradeResouces[1] = {type you'll give away, amount, playerID}
 	private int[] yopResources;
+
+	private int roadBuilderCounter; //for road builder dev card
 	
 	boolean AI;//how to mimic one player as AI
 	TurnAI np;
@@ -224,6 +226,18 @@ public class RunGame {
 		}
 	}
 	
+	public void useKnight(int tile){
+		//p is the player number which we need as input - I will leave that to you since you've been doing it
+		boolean allowed = gl.useDevCard(currentPlayerID,0);
+		if(allowed){
+			System.out.println("You are allowed to use a knight, time to use it.");
+			robberAction(tile, currentPlayerID);
+		}
+		clearVerticesAndAction();
+		updateAllStats();
+		System.out.println("Working?");
+	}
+
 	public void robberAction(int tile, int playerID){
 		gl.moveRobber(tile, playerID);
 		fei.updateRobberPosition(tile);
@@ -433,33 +447,20 @@ public class RunGame {
 		//p is the player number which we need as input - I will leave that to you since you've been doing it
 		boolean allowed = gl.useDevCard(currentPlayerID,3);
 		if(allowed){
-			players[currentPlayerID].giveRoadResources();
-			boolean success = gl.buildRoad(currentPlayerID, verticesToAct[0], verticesToAct[1]);
-			if (success){
-				fei.drawRoad(verticesToAct[0], verticesToAct[1]);
+			//players[currentPlayerID].giveRoadResources(); //dont need this anymore because new methods in gl
+			while(roadBuilderCounter<2){
+				boolean success = gl.useRoadBuilder(currentPlayerID, verticesToAct[0], verticesToAct[1]); 
+				if (success){
+					fei.drawRoad(verticesToAct[0], verticesToAct[1]);
+					roadBuilderCounter++;
+				}
 			}
-			players[currentPlayerID].giveRoadResources();
-			success = gl.buildRoad(currentPlayerID, verticesToAct[0], verticesToAct[1]);
-			if (success){
-				fei.drawRoad(verticesToAct[0], verticesToAct[1]);
-			}
+			roadBuilderCounter=0;
 			updateAllStats();
 			clearVerticesAndAction();
-			clearVerticesAndAction();
 		}
-		//update stats (because this may have affected longest road)
 	}
 
-	
-	public void useKnight(int tile){
-		//p is the player number which we need as input - I will leave that to you since you've been doing it
-		boolean allowed = gl.useDevCard(currentPlayerID,0);
-		if(allowed){
-			robberAction(tile, currentPlayerID);
-		}
-		clearVerticesAndAction();
-		updateAllStats();
-	}
 	
 	private void updateSinglePlayerStats(){
 		int [] r = players[currentPlayerID].getPlayerStats();
