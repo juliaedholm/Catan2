@@ -155,7 +155,6 @@ public class GameLogic {
 			graph.addRoadToGraph(v1, v2, players[p]);
 			return true;
 		}
-		return build;
 
 	}
 
@@ -197,7 +196,7 @@ public class GameLogic {
 		if (hasResources == false){
 			return false;
 		}
-		int i = devDeck.drawDevCard();
+		int i = devDeck.drawDevCheck();
 		if(i ==10){
 			if (debug){
 				System.out.println("There are no development cards left.");
@@ -211,7 +210,8 @@ public class GameLogic {
 		boolean build = buildDevCheck(p);
 		if (build == false){
 			return false;
-		} else {
+		} 
+		else {
 			int i = devDeck.drawDevCard();
 //			System.out.println("used dev resources");
 			players[p].buildDev(i);
