@@ -125,6 +125,7 @@ public class GameLogic {
 		if(players[p].buildRoadCheck() == false)
 			return false;
 
+		System.out.println("You can build a road, now checking location on graph.");
 		return graph.checkBuildRoad(v1,v2, players[p], debugSet); 
 	}
 	
@@ -245,6 +246,7 @@ public class GameLogic {
 	public void useMonopoly(int p, int r){
 		//r is the resource we are monopolizing
 		int total = 0;
+		System.out.println("Okay, I think this is the problem with monopoly. What you should see here is # of players minus one statements (so if 3 players, 2 statements) that count up to the total number of the resource you are monopolizing. Then it should say total at end of loop. Please report back to CJ what happens.");
 		for(int i=0; i<players.length; i++){
 			if(i!=p){
 				total = total + players[i].getAllX(r);

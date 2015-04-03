@@ -253,7 +253,7 @@ public class RunGame {
 	
 	public void setVertex (int v){
 		if (vertexCounter >= 2){
-			System.out.println("You have clicked too many vertices. Clearning action and vertecies.");
+			System.out.println("You have clicked too many vertices. Clearing action and vertices.");
 			clearVerticesAndAction();
 		}
 		verticesToAct[vertexCounter] = v;
@@ -424,10 +424,14 @@ public class RunGame {
 		//r1 and r2 are the two resources (int) they want to take from the bank
 		boolean allowed = gl.useDevCard(currentPlayerID,5);
 		if(allowed){
+			System.out.println("You have the card, lets use it! These two numbers should be >0: "+yopResources[0]+" "+yopResources[1]);
 			gl.useYearOfPlenty(currentPlayerID, yopResources[0], yopResources[1]);
 		}
+		else
+			System.out.println("You do not have a year of plenty card it seems.");
 		clearVerticesAndAction();
 		updateAllStats();
+		System.out.println("If you don't see the stuff updated right now I don't know what to say!");
 	}
 
 	public void useRoadBuilder(){
@@ -450,6 +454,7 @@ public class RunGame {
 		}
 		//update stats (because this may have affected longest road)
 	}
+
 	
 	public void useKnight(int tile){
 		//p is the player number which we need as input - I will leave that to you since you've been doing it
