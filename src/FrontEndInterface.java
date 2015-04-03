@@ -82,14 +82,17 @@ public class FrontEndInterface {
 	
 	public void yearOfPlentyClicked(){
 		rg.setActionType(8);
+		System.out.println("Click the two resources you want.");
 	}
 	
 	public void knightClicked(){
 		rg.setActionType(10);
+		System.out.println("Click where you want to move the robber to.");
 	}
 	
 	public void roadBuilderClicked(){
 		rg.setActionType(9);
+		System.out.println("Click the vertices of where you want your two free roads.");
 	}
 	
 	public void robberClicked(){
