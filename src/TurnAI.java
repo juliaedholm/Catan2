@@ -34,9 +34,9 @@ public class TurnAI {
 	}
 	
 	public void turn(int p){
-		if (p == smartPlayer){
+		//if (p == smartPlayer){
 			smartTurn(p);
-		} else {
+	/*	} else {
 			// check available actions
 			checkPossible(p);
 			//pick action randomly
@@ -67,6 +67,7 @@ public class TurnAI {
 					break;
 			}
 		}
+		*/
 	}
 	
 	private void smartTurn(int p){

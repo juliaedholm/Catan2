@@ -78,6 +78,7 @@ public class RunGame {
 	}
 	
 	public int[] runGameWithAI(boolean print){
+		int numTurns = 0;
 		printRunningMessage = print;
 		// run the game without graphics and with a random AI making all choices
 		InitialPlacementAI initial = new InitialPlacementAI(this, gl, print, false /*don't set the initial spots */);
@@ -102,17 +103,21 @@ public class RunGame {
 			initial.firstRoundRoad(currentPlayerID);
 		}
 		while(!gameEnd()){
+			numTurns ++;
 			int[] r = rollDice();
 			turn.turn(currentPlayerID);
 		}
 		int winningPlayer = 0;
 		for (int i = 1; i< players.length; i++){
 			int vp = players[i].victoryPoints;
+			System.out.println("num vps for player: "+i+" with vps "+vp);
 			if (vp>= endGameCondition){
 				winningPlayer = i;
 			}
 		}
 		System.out.println("first Settlement for winner("+winningPlayer+" was "+initialSettlementsForPlayers[winningPlayer][1]+ " and second was "+initialSettlementsForPlayers[winningPlayer][2]);
+		System.out.println("numTurns: "+numTurns);
+		
 		return initialSettlementsForPlayers[winningPlayer];
 	}
 	private int roll(){

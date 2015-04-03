@@ -16,7 +16,7 @@ public class Player {
 	private Ports portTracker;
 	private ResourceTranslator translator = new ResourceTranslator();
 	private ResourceCards resourceTracker;
-	private DevCards dCardTracker;
+	public DevCards dCardTracker;
 	//settlements and cities and roads are pointed to from the graph
 
 	private boolean printToTerminal = false;
