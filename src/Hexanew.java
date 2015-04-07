@@ -324,10 +324,7 @@ public class Hexanew extends JFrame{
       played=false;
   }
   public void updateBoard(){
-      if((rollTwo+rollOne)==7){
-        //firstSeven=true;
         drawPopup(g2);
-      }
       for (int i=0; i<71;i++){
         if(roadSide[i][2]>0){
           buildRoad(i);
@@ -349,6 +346,8 @@ public class Hexanew extends JFrame{
         }
       }
       for (int i=0; i<19; i++){
+        Font font = new Font("Gill Sans", Font.PLAIN, 15);
+        g2.setFont(font);
         if(start[i][2]==2){
           g.setColor(circles);
           drawCircle(start[i][0]+w, start[i][1]-a, 20);
@@ -1208,8 +1207,10 @@ public class Hexanew extends JFrame{
       Font font = new Font("Gill Sans", Font.PLAIN, 30);
       g2.setFont(font);
       //draws cards
-      g2.setColor(Color.red);
-
+      g2.setColor(circles);
+      if((rollTwo+rollOne)==7){
+        g2.setColor(Color.red);
+      }
       int x=100;
       int y=50;
 
