@@ -277,28 +277,6 @@ public class Hexanew extends JFrame{
         //drawing border
         drawBorderHex(a1, x, y+2*a);
 
-        String value ="0";
-        //Filling in Board
-        for (int i=0; i<19; i++){
-          //Draw each small hexagon
-          drawHexalex(start[i][0],start[i][1], res[i][0]);
-          //Makes sure it's not the dessert
-          if(res[i][0] != 0){
-            g.setColor(circles);
-           //circle radius is simply shifted from the left lower coordinates in start[][]
-            drawCircle(start[i][0]+w, start[i][1]-a, 20);
-            //Getting number for circle
-            value = Integer.toString(res[i][1]);
-            g.setColor(Color.black);
-            //making 8 and 6 red
-            if (value.equals("6") || value.equals("8")){
-              g.setColor(Color.red);
-            }
-            //6 and five are centering text
-            g2.drawString(value, start[i][0]+w-6, start[i][1]-a+5);
-          }
-        }
-
         drawDevelopement(3*a, x+780+4*a, y-560);
         drawCards(890, 260);
         //Setting players, should be from Julia
@@ -307,6 +285,27 @@ public class Hexanew extends JFrame{
           drawPorts(i);
         }
     }
+      String value ="0";
+      //Filling in Board
+      for (int i=0; i<19; i++){
+        //Draw each small hexagon
+        drawHexalex(start[i][0],start[i][1], res[i][0]);
+        //Makes sure it's not the dessert
+        if(res[i][0] != 0){
+          g.setColor(circles);
+         //circle radius is simply shifted from the left lower coordinates in start[][]
+          drawCircle(start[i][0]+w, start[i][1]-a, 20);
+          //Getting number for circle
+          value = Integer.toString(res[i][1]);
+          g.setColor(Color.black);
+          //making 8 and 6 red
+          if (value.equals("6") || value.equals("8")){
+            g.setColor(Color.red);
+          }
+          //6 and five are centering text
+          g2.drawString(value, start[i][0]+w-6, start[i][1]-a+5);
+        }
+      }
       g.setColor(circles);
       int xpoints[]={0,700,700,0};
       int ypoints[]={0,0,100,100};
