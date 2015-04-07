@@ -29,7 +29,7 @@ public class Hexanew extends JFrame{
   //ratio of little hexagon side to big hexagon side, only initiallizing to change from double
   double aBorder = 6*a/1.155;
   int a1 = (int) aBorder;
- // boolean firstSeven = false;
+  boolean played=true;
 
   //Making colors
   Color water = new Color (54, 183, 235);
@@ -256,23 +256,23 @@ public class Hexanew extends JFrame{
       interaction = f;
       res = board;
       totalPlayers = numPlayers;
-      repaint();
+      //repaint();
   } 
   public void paint(Graphics graphics){
       g = graphics;
       //allows me to print text!
       g2 = (Graphics2D)g;
       g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); 
-      drawBoard(interaction.currentPlayerID);   
+      drawBoard(interaction.currentPlayerID); 
       updateBoard();
   }
   public void drawBoard(int currentPlayer){
-
-        //background
-        g.setColor(circles);
-        int xpoints[]={0,1500,1500,0};
-        int ypoints[]={0,0,1000,1000};
-        g.fillPolygon(xpoints,ypoints,4);
+    if(played){
+      //background
+      g.setColor(circles);
+      int xpoints[]={0,1500,1500,0};
+      int ypoints[]={0,0,1000,1000};
+      g.fillPolygon(xpoints,ypoints,4);
 
         //drawing border
         drawBorderHex(a1, x, y+2*a);
@@ -298,28 +298,20 @@ public class Hexanew extends JFrame{
             g2.drawString(value, start[i][0]+w-6, start[i][1]-a+5);
           }
         }
-/*        if (firstSeven==false){
-          for (int i=0; i<19; i++){
-            if(res[i][1]==0){
-              drawRobber(start[i][0],start[i][1]);
-            }
-          }
-        }
-*/
+
         drawDevelopement(3*a, x+780+4*a, y-560);
         drawCards(890, 260);
         //Setting players, should be from Julia
-        drawPlayers(g2, 900, 300, totalPlayers);
         tradeButton(1300,252);
         for (int i=0; i<9;i++){
           drawPorts(i);
         }
- /*       for (int i=0; i<19; i++){
-          if(res[i][1]==0){
-            drawRobber(start[i][0],start[i][1]);
-          }
-        }
-*/
+    }
+      g.setColor(circles);
+      int xpoints[]={0,700,700,0};
+      int ypoints[]={0,0,100,100};
+      g.fillPolygon(xpoints,ypoints,4);
+
       //Setting Dice
       drawDice(25, 800, rollOne, false);
       drawDice(110, 800, rollTwo, true);
@@ -329,6 +321,7 @@ public class Hexanew extends JFrame{
       drawCity(x+750-3*a, y-560, currentPlayer);
       drawSetty(x+750, y-560, currentPlayer);
       drawRoad(x+750+2*a, y-560, currentPlayer);
+      played=false;
   }
   public void updateBoard(){
       if((rollTwo+rollOne)==7){
@@ -355,6 +348,13 @@ public class Hexanew extends JFrame{
           drawRobber(start[i][0], start[i][1]); 
         }
       }
+
+      g.setColor(circles);
+      int xpoints[]={850,1500,1500,850};
+      int ypoints[]={270,270,1000,1000};
+      g.fillPolygon(xpoints,ypoints,4);
+
+      drawPlayers(g2, 900, 300, totalPlayers);
       drawResources(g2, 1, player1);
       drawResources(g2, 2, player2);
       drawResources(g2, 3, player3);
@@ -1204,7 +1204,7 @@ public class Hexanew extends JFrame{
 
       g2.drawString("SEVEN ROLLED, Move the robber!", x, y);
 
-      repaint(); 
+      //repaint(); 
   }
   private void drawCircle(int x, int y, int radius) {
     g.fillOval(x-radius, y-radius, radius*2, radius*2);
