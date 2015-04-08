@@ -143,6 +143,21 @@ public class GameLogic {
 		//longest road check
 	}
 	
+	public boolean useRoadBuilder(int p, int v1, int v2){
+		boolean build = graph.checkBuildRoad(v1,v2, players[p], debugSet);
+		if (build == false){
+			System.out.println("You cannot build a road on this location.");
+			return false;
+		} 
+		else{
+			players[p].placeRoad();
+			longRoadChecker(p);
+			graph.addRoadToGraph(v1, v2, players[p]);
+			return true;
+		}
+
+	}
+
 	public boolean legalRoadCheck(int p, int v1, int v2){
 		return graph.checkPlaceRoad(v1,v2, players[p], debugSet); 
 	}
@@ -181,7 +196,7 @@ public class GameLogic {
 		if (hasResources == false){
 			return false;
 		}
-		int i = devDeck.drawDevCard();
+		int i = devDeck.drawDevCheck();
 		if(i ==10){
 			if (debug){
 				System.out.println("There are no development cards left.");
@@ -195,7 +210,8 @@ public class GameLogic {
 		boolean build = buildDevCheck(p);
 		if (build == false){
 			return false;
-		} else {
+		} 
+		else {
 			int i = devDeck.drawDevCard();
 //			System.out.println("used dev resources");
 			players[p].buildDev(i);
@@ -211,6 +227,7 @@ public class GameLogic {
 
 		//for largest army
 		if(i==0 && build){
+			System.out.println("If this is printing, you played a knight so we need to check if you have largest army. You should automatically get your two points. Tell CJ if this isnt working");
 			if(players[p].getArmySize()>=3 && players[p].checkLgArmy()==false){
 				for(int m=0; m<players.length; m++){
 					if(players[m].checkLgArmy() == true){

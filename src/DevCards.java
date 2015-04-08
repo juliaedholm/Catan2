@@ -29,6 +29,7 @@ public class DevCards{
 		if(cardKey[0]>0){
 			cardKey[0]--;
 			cardKey[1]++;
+			System.out.println("used knights ++, unused knights --");
 			return true;
 		}
 		return false;
