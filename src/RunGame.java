@@ -11,9 +11,10 @@ public class RunGame {
 	private static Scanner sc = new Scanner(System.in);
 	private  boolean usingGraphics;
 	TurnOrderManager order;
-	private  GameLogic gl;
+	public  GameLogic gl;
 	private  FrontEndInterface fei;
 	int endGameCondition = 10;
+	public int[][] board;
 	
 	private  Player[] players;
 	private  int playerCount;
@@ -56,7 +57,7 @@ public class RunGame {
 		
 		usingGraphics = useGraphics;
 		//testboard gives a predetermined board
-		int[][] board= new Board().getBoard();
+		board= new Board().getBoard();
 		if (testBoard){
 			board = new Board().getTestBoard();
 		}

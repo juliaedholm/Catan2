@@ -6,7 +6,7 @@ public class GameLogic {
 	1.initialize the board
 	2. Handle all logic for changing state of board/player hands
 	*/
-	private GraphController graph;
+	public GraphController graph;
 	private DevCardDeck devDeck;
 
 	private boolean debugSet = false;
