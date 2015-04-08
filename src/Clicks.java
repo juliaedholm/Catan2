@@ -89,7 +89,7 @@ public class Clicks implements MouseListener{
 			interaction.resourceClicked(translator.Wheat);
 		}
 		else if(player1){
-						System.out.println("player1");
+			System.out.println("player1");
 			interaction.playerClicked(1);
 		}
 		else if(player2){

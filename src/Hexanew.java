@@ -307,15 +307,9 @@ public class Hexanew extends JFrame{
           drawPorts(i);
         }
     }
-      g.setColor(circles);
-      int xpoints[]={0,700,700,0};
-      int ypoints[]={0,0,100,100};
-      g.fillPolygon(xpoints,ypoints,4);
-
       //Setting Dice
       drawDice(25, 800, rollOne, false);
       drawDice(110, 800, rollTwo, true);
-
       //Things to build
       //x values are pretty arbitrary, just moving things over
       drawCity(x+750-3*a, y-560, currentPlayer);
@@ -324,7 +318,7 @@ public class Hexanew extends JFrame{
       played=false;
   }
   public void updateBoard(){
-        drawPopup(g2);
+      drawPopup(g2);
       for (int i=0; i<71;i++){
         if(roadSide[i][2]>0){
           buildRoad(i);
@@ -361,7 +355,7 @@ public class Hexanew extends JFrame{
       }
       g.setColor(circles);
       int xpoints[]={900,1500,1500,900};
-      int ypoints[]={270,270,1000,1000};
+      int ypoints[]={270,270,1500,1500};
       g.fillPolygon(xpoints,ypoints,4);
 
       drawPlayers(g2, 900, 300, totalPlayers);
