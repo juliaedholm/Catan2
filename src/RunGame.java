@@ -330,12 +330,13 @@ public class RunGame {
 			actionType = 5;
 			tradeResources[0][2] = playerID; //want to trade with the player clicked
 			tradeResources[1][2] = currentPlayerID;
+		} else if (actionType == 5){
+			if (printRunningMessage){
+				System.out.println("Player "+tradeResources[1][2]+" is trading resource of type: "+tradeResources[0][0]+" " +
+						"to player "+tradeResources[0][2]+" for resource of type: "+tradeResources[1][0]);
+			}
+			trade();
 		}
-		if (printRunningMessage){
-			System.out.println("Player "+tradeResources[1][2]+" is trading resource of type: "+tradeResources[0][0]+" " +
-					"to player "+tradeResources[0][2]+" for resource of type: "+tradeResources[1][0]);
-		}
-		trade();
 	}
 	
 	public void tradeResourceButton(){
