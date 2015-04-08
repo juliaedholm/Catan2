@@ -294,16 +294,16 @@ public class GraphController {
 	//toReturn[i][0] = settlementType, 1 = settlement 2 = city
 	//toReturn[i][1] = owner player ID
 	public int[][] getVerticesAndSettlementTypes (){
-		System.out.println("Called get vert");
 		int[][] toReturn = new int[vertices.length][2];
 		for (int i = 0; i< vertices.length; i++){
 			if (vertices[i].getOwner() != null){
-				System.out.println("Found an owner");
 				toReturn[i][0]= vertices[i].getSettlementType();
 				toReturn[i][1] = vertices[i].getOwner().getID();
 			}
 		}
 		return toReturn;
 	}
+	
+	
 		
 }

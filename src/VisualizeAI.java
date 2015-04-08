@@ -15,15 +15,29 @@ public class VisualizeAI {
 			newBoard[i][1]= board[1][i];
 		}
 		Hexanew h = new Hexanew(newBoard);
-		int[][] citiesAndSets = theGraph.getVerticesAndSettlementTypes();
-		for (int i=0; i<citiesAndSets.length; i++){
-			if (citiesAndSets[i][0] == 1){
-				System.out.println("found a settlement!");
-				h.addSettlementWithAI(i, citiesAndSets[i][1]);
-			} else if (citiesAndSets[i][0] == 2){
-				h.addCityWithAI(i, citiesAndSets[i][1]);
+		
+		Vertex[] verticesInGraph = theGraph.vertices;
+		for (int i = 0; i< verticesInGraph.length; i++){
+			Vertex currentV = verticesInGraph[i];
+			//add city/settlements as appropriate
+			if (currentV.getOwner() != null){
+				if (currentV.getSettlementType() == 1){
+					System.out.println("found a settlement!");
+					h.addSettlementWithAI(i, currentV.getOwner().getID());
+				} else if (currentV.getSettlementType() == 2){
+					h.addCityWithAI(i, currentV.getOwner().getID());
+				}
+			}
+			//add roads if they were buit
+			Edge[] edges = currentV.getEdges();
+			for (int j = 0; j<currentV.getNumEdges(); j++ ){
+				Edge e = edges[j];
+				if (e.owner != null) {
+					h.addRoad(e.v1.vertexNumber, e.v2.vertexNumber, e.owner.getID());
+				}
 			}
 		}
+			
 		h.repaint();
 		
 	}
