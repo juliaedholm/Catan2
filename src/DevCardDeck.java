@@ -24,14 +24,47 @@ public class DevCardDeck{
 		cardTypes[4] = 2;
 	}
 
-	public int drawDevCard(){
-	//returns the int of the devcard drawn as keyd above or 10 if no dev cards left
-
+	public int drawDevCheck(){
 		if (cardsInDeck == 0)
 			return 10;
+		return 0;
+	}
+
+	public int drawDevCard(){
+	//returns the int of the devcard drawn as keyd above 
+
+		//This is actually random
+
+		Random rand = new Random();
+
+		cardsInDeck--;
+
+		while(true){
+			int x = rand.nextInt(cardsInDeck);
+			if(x<cardTypes[0]){
+				cardTypes[0]--;
+				return 0;
+			}
+			else if(x<cardTypes[0]+cardTypes[1]){
+				cardTypes[1]--;
+				return 1;
+			}
+			else if(x<cardTypes[0]+cardTypes[1]+cardTypes[2]){
+				cardTypes[2]--;
+				return 2;
+			}
+			else if(x<cardTypes[0]+cardTypes[1]+cardTypes[2]+cardTypes[3]){
+				cardTypes[3]--;
+				return 3;
+			}
+			else{
+				cardTypes[4]--;
+				return 4;
+			}
+		}
 
 		//this is not really random because it is not based on how many of each card are in the deck but random enough
-		Random rand = new Random();
+		/*Random rand = new Random();
 
 		cardsInDeck--;
 
@@ -42,7 +75,10 @@ public class DevCardDeck{
 				//this is because the numbering is different here since there is not a desert
 				return x;
 			}
-		}
+		}*/
+
+		
+
 	}
 
 }
