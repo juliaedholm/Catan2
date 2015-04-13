@@ -8,12 +8,12 @@ public class SpotQualityAlgorithm {
 		weightOfVertexNum = new double[55];
 	} 
 	
-	public void incrimentVertexNumWeight (int v){
+	public void incrementVertexNumWeight (int v){
 		weightOfVertexNum[v] += .1;
 		System.out.println(weightOfVertexNum[v] );
 	}
 	
-	public void decrimentVertexNumWeight (int v){
+	public void decrementVertexNumWeight (int v){
 		weightOfVertexNum[v] -= .1;
 	}
 	

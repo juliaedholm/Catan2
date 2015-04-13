@@ -23,12 +23,12 @@ public class PlayManyGames {
 					Vertex v1 = verticesInGraph[spot1];
 					/*  incriment feature weights for the winning player */
 					int[] features = feats.getFeaturesForVertex (v1);
-					spotQuality.incrimentVertexNumWeight(spot1);
-					spotQuality.incrimentVertexNumWeight(spot2);
+					spotQuality.incrementVertexNumWeight(spot1);
+					spotQuality.incrementVertexNumWeight(spot2);
 				}  else {
 					/*decriment feature weights for loosing players */
-					spotQuality.decrimentVertexNumWeight(spot1);
-					spotQuality.decrimentVertexNumWeight(spot2);
+					spotQuality.decrementVertexNumWeight(spot1);
+					spotQuality.decrementVertexNumWeight(spot2);
 				}
 			}
 		}
