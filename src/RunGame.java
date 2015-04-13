@@ -227,7 +227,7 @@ public class RunGame {
 	}
 	
 	public void setTileClicked(int t){
-		if (actionType == 6 && sevenRolled) {
+		if (/*actionType == 6 &&*/ sevenRolled) {
 			robberAction(t, currentPlayerID);
 		} if (actionType == 10){
 			useKnight(t);
@@ -240,6 +240,7 @@ public class RunGame {
 		if(allowed){
 			System.out.println("You are allowed to use a knight, time to use it.");
 			robberAction(tile, currentPlayerID);
+
 		}
 		clearVerticesAndAction();
 		updateAllStats();
@@ -333,7 +334,8 @@ public class RunGame {
 			actionType = 5;
 			tradeResources[0][2] = playerID; //want to trade with the player clicked
 			tradeResources[1][2] = currentPlayerID;
-		} else if (actionType == 5){
+		} 
+		if (actionType == 5){
 			if (printRunningMessage){
 				System.out.println("Player "+tradeResources[1][2]+" is trading resource of type: "+tradeResources[0][0]+" " +
 						"to player "+tradeResources[0][2]+" for resource of type: "+tradeResources[1][0]);
@@ -516,6 +518,8 @@ public class RunGame {
 		}
 		return false;
 	}
+
+
 	
 	public Player[] getPlayers(){
 		return players;

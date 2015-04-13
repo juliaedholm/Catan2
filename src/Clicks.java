@@ -53,10 +53,11 @@ public class Clicks implements MouseListener{
 //		boolean clickToClear = clickToClear(x,y);
 
 		if(roll){
-			int [] rolls= interaction.diceClicked();
-			hex.rollOne=rolls[0];//random from Julia
-			hex.rollTwo=rolls[1];
-			hex.repaint();
+				int [] rolls= interaction.diceClicked();
+				hex.rollOne=rolls[0];//random from Julia
+				hex.rollTwo=rolls[1];
+				hex.repaint();
+
 		}
 		else if(trade){
 			interaction.tradeClicked();
@@ -161,7 +162,7 @@ public class Clicks implements MouseListener{
 			interaction.vertexClicked(verty);
 		}
 		else if(hexy<19){
-			interaction.robberClicked();
+			//interaction.robberClicked();
 			interaction.tileClicked(hexy);
 		}		
 		else /*(clickToClear)*/{

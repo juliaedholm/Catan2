@@ -22,6 +22,7 @@ public class DevCards{
 	// 5 = 2 Year of Plenty Cards
 
 	public int armySize(){
+		System.out.println(cardKey[1]);
 		return cardKey[1];
 	}
 
