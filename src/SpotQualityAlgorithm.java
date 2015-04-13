@@ -2,15 +2,15 @@
 
 
 public class SpotQualityAlgorithm {
-	int[] weightOfVertexNum; //test learning= try to determine something meaningful about the weight of vertex for winning
-	
+	double[] weightOfVertexNum; //test learning= try to determine something meaningful about the weight of vertex for winning	
 	
 	public SpotQualityAlgorithm(){
-		weightOfVertexNum = new int[55];
+		weightOfVertexNum = new double[55];
 	} 
 	
 	public void incrimentVertexNumWeight (int v){
 		weightOfVertexNum[v] += .1;
+		System.out.println(weightOfVertexNum[v] );
 	}
 	
 	public void decrimentVertexNumWeight (int v){
