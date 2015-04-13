@@ -398,86 +398,13 @@ public class GetSpotFeatures {
 	}
 	
 	private boolean hasAtLeast2BuildableSpots (Vertex v){
-		Edge[] es = v.getEdges();
-		int numSpotsToBuild = 0;
-		for (int i=0; i<v.getNumEdges(); i++){
-			Edge e = es[i];
-			Vertex vertexA = e.v1;
-			Vertex vertexB = e.v2;
-			Edge[] aEs = vertexA.getEdges();
-			Edge[] bEs = vertexB.getEdges();
-			
-			for (int j = 0; j< vertexA.getNumEdges(); j++){
-				Vertex v1 = aEs[j].v1;
-				Vertex v2 = aEs[j].v2;
-				if (v1 != vertexA){
-					if (v1.getSettlementType() == 0){
-						numSpotsToBuild ++;
-					}
-				} else if (v2 != vertexA){
-					if (v2.getSettlementType() == 0){
-						numSpotsToBuild ++;
-					}
-				}
-			}
-			
-			for (int j = 0; j< vertexB.getNumEdges(); j++){
-				Vertex v1 = bEs[j].v1;
-				Vertex v2 = bEs[j].v2;
-				if (v1 != vertexB){
-					if (v1.getSettlementType() == 0){
-						numSpotsToBuild ++;
-					}
-				} else if (v2 != vertexB){
-					if (v2.getSettlementType() == 0){
-						numSpotsToBuild ++;
-					}
-				}
-			}
-		}
-		return numSpotsToBuild >=2;		
+
+		return false;
 	}
 	
 	private boolean doesNotHave2BuildableSpots (Vertex v){
-		Edge[] es = v.getEdges();
-		int numSpotsToBuild = 0;
-		for (int i=0; i<v.getNumEdges(); i++){
-			Edge e = es[i];
-			Vertex vertexA = e.v1;
-			Vertex vertexB = e.v2;
-			Edge[] aEs = vertexA.getEdges();
-			Edge[] bEs = vertexB.getEdges();
-			
-			for (int j = 0; j< vertexA.getNumEdges(); j++){
-				Vertex v1 = aEs[j].v1;
-				Vertex v2 = aEs[j].v2;
-				if (v1 != vertexA){
-					if (v1.getSettlementType() == 0){
-						numSpotsToBuild ++;
-					}
-				} else if (v2 != vertexA){
-					if (v2.getSettlementType() == 0){
-						numSpotsToBuild ++;
-					}
-				}
-			}
-			
-			for (int j = 0; j< vertexB.getNumEdges(); j++){
-				Vertex v1 = bEs[j].v1;
-				Vertex v2 = bEs[j].v2;
-				if (v1 != vertexB){
-					if (v1.getSettlementType() == 0){
-						numSpotsToBuild ++;
-					}
-				} else if (v2 != vertexB){
-					if (v2.getSettlementType() == 0){
-						numSpotsToBuild ++;
-					}
-				}
-			}
+		return false;
 		}
-		return numSpotsToBuild <2;
-	}
 	
 	private boolean onScarceResource(Vertex v){
 		//must think about how to define scarce....
