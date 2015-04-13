@@ -26,13 +26,23 @@ public class GetSpotFeatures {
 	 * 20 = touches 3 different Resouces
 	 * 21 = touches 2 different resources
 	 * 22 = touches 1 different resource
+	 * 23 = onThreeTiles
+	 * 24 = onTwoTiles
+	 * 25 = onOneTile
+	 * 26 = hasAtLeast2BuildableSpots
+	 * 27 = doesNotHave2BuildableSpots
+	 * 28 = onScarceResource
+	 * 29 = rock port
+	 * 30 = wheat port
+	 * 31 = brick port
+	 * 32 = wood port
+	 * 33 = sheep port
 	 */
 	
 	public int[] getFeaturesForVertex (Vertex v){
 		boolean debug = true;
 		
-		int[] toReturn = new int[30];
-
+		int[] toReturn = new int[33];
 
 		if (rock(v)){
 			toReturn[0] = 1;
@@ -103,8 +113,40 @@ public class GetSpotFeatures {
 		if (touchesOneTypeOfResource(v)){
 			toReturn[22] = 1;
 		}
+		if (onThreeTiles(v)){
+			toReturn[23] = 1;
+		}
+		if (onTwoTiles(v)){
+			toReturn[24] = 1;
+		}
+		if (onOneTile(v)){
+			toReturn[25] = 1;
+		}
+		if (hasAtLeast2BuildableSpots(v)){
+			toReturn[26] = 1;
+		}
+		if (doesNotHave2BuildableSpots(v)){
+			toReturn[27] = 1;
+		}
+		if (onScarceResource(v)){
+			toReturn[29] = 1;
+		}
+		if (onRockPort(v)){
+			toReturn[29] =1;
+		}
+		if (onWheatPort(v)){
+			toReturn[30] =1;
+		}
+		if (onBrickPort(v)){
+			toReturn[31] =1;
+		}
+		if (onWoodPort(v)){
+			toReturn[32] =1;
+		}
+		if (onSheepPort(v)){
+			toReturn[33] =1;
+		}
 
-		
 		if (debug){
 			System.out.println("features for vertex "+v.vertexNumber);
 			for (int i = 0; i<toReturn.length; i++){
