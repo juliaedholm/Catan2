@@ -8,10 +8,24 @@ public class GetSpotFeatures {
 	 * 2 = brick
 	 * 3 = wood
 	 * 4 = sheep	 
-	 * 
-	 * 15 = touches 3 different Resouces
-	 * 16 = touches 2 different resources
-	 * 17 = touches 1 different resource
+	 * 5 = on2
+	 * 6 = on3
+	 * 7 = on4
+	 * 8 = on5
+	 * 9 = on6
+	 * 10 = on8
+	 * 11 = on9
+	 * 12 = on10
+	 * 13 = on11
+	 * 14 = on12
+	 * 15 = oneDot
+	 * 16 = twoDot
+	 * 17 = threeDot
+	 * 18 = fourDot
+	 * 19 = fiveDot
+	 * 20 = touches 3 different Resouces
+	 * 21 = touches 2 different resources
+	 * 22 = touches 1 different resource
 	 */
 	
 	public int[] getFeaturesForVertex (Vertex v){
