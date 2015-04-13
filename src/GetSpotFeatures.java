@@ -65,14 +65,29 @@ public class GetSpotFeatures {
 		if (on12(v)){
 			toReturn[14] = 1;
 		}
-		if (touchesThreeDiffResources(v) ){
+		if (oneDot(v)){
 			toReturn[15] = 1;
 		}
-		if (touchesTwoDiffResources(v)){
+		if (twoDot(v)){
 			toReturn[16] = 1;
 		}
-		if (touchesOneTypeOfResource(v)){
+		if (threeDot(v)){
 			toReturn[17] = 1;
+		}
+		if (fourDot(v)){
+			toReturn[18] = 1;
+		}
+		if (fiveDot(v)){
+			toReturn[19] = 1;
+		}
+		if (touchesThreeDiffResources(v) ){
+			toReturn[20] = 1;
+		}
+		if (touchesTwoDiffResources(v)){
+			toReturn[21] = 1;
+		}
+		if (touchesOneTypeOfResource(v)){
+			toReturn[22] = 1;
 		}
 
 		
@@ -239,12 +254,40 @@ public class GetSpotFeatures {
 
 	
 	private boolean oneDot (Vertex v){
+		if(on2(v) || on12(v)){
+			return true;
+		}
 		return false;
 	}
 	
 	private boolean twoDot (Vertex v){
+		if(on3(v) || on11(v)){
+			return true;
+		}
 		return false;
 	}
+
+	private boolean threeDot (Vertex v){
+		if(on4(v) || on10(v)){
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean fourDot (Vertex v){
+		if(on5(v) || on9(v)){
+			return true;
+		}
+		return false;
+	}
+	private boolean fiveDot (Vertex v){
+		if(on6(v) || on8(v)){
+			return true;
+		}
+		return false;
+	}
+	
+
 	//etc for all dots through 5
 	
 	//Julia P stop here
