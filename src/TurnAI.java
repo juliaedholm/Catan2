@@ -6,6 +6,8 @@ public class TurnAI {
 	private GameLogic gl;
 	int[] possibleActions;
 	Random generator;
+	
+	int p; //current player, will be set each time turn is called
 	//will store int that corresponds to action type used in RunGame  
 	//0= nothing, 1 = settlement, 2 = city, 3 = road,
 	//4 = trade 4 to 1, 5 = trade other player, 6 = move robber, 7 = monopoly 8 = year of plenty
@@ -19,6 +21,10 @@ public class TurnAI {
 	int roadVerticesCount;
 	int[] resourcesToTrade4to1;
 	int tradeCounter;
+	int [] potentialPorts;
+	int portCount;
+	
+	
 	boolean debug = true;
 	boolean printActions = true;
 	private ResourceTranslator translator = new ResourceTranslator();
@@ -33,10 +39,11 @@ public class TurnAI {
 		debug = printMessages;
 	}
 	
-	public void turn(int p){
-		if (p == smartPlayer){
-			smartTurn(p);
-		} else {
+	public void turn(int playerID){
+		p = playerID;
+		//if (p == smartPlayer){
+			smartTurn();
+	/*	} else {
 			// check available actions
 			checkPossible(p);
 			//pick action randomly
@@ -67,65 +74,76 @@ public class TurnAI {
 					break;
 			}
 		}
+		*/
 	}
 	
-	private void smartTurn(int p){
-		if (settlementPossible(p)) {
-			settle(p);
-		} else if (cityPossible(p)) {
-			buildCity(p);
-		} else if (roadPossible(p)) {
-			buildRoad(p);
-		} else if (devCardPossible(p)){
-			buyDevCard(p);
-		} else if (tradePossible4to1(p)){
-			makeTrade(p);
-		} 
+	private void smartTurn(){
+		if (settlementPossible()) {
+			settle();
+		} else if (cityPossible()) {
+			buildCity();
+		} else if (roadPossible()) {
+			buildRoad();
+		} else if (devCardPossible()){
+			buyDevCard();
+		} else if (canUsePort()){
+			usePort();
+		} else if (tradePossible4to1()){
+			makeTrade();
+		} else if (monopolyPossible()){
+			///do something
+		} else if (yopPossible()){
+			//do something
+		} else if (roadBuilderPossible()){
+			//do something
+		} else if (knightPossible()){
+			//do something
+		}
 	}
 	
 	//populate the array possibleActions with list of the moves you can make
-	private void checkPossible(int p){
+	private void checkPossible(){
 		actionCount = 0;
-		if (settlementPossible(p)){
+		if (settlementPossible()){
 			possibleActions[actionCount] = 1;
 			actionCount ++;
 		}
-		if (cityPossible(p)){
+		if (cityPossible()){
 			possibleActions[actionCount] = 2;
 			actionCount ++;
 		}
-		if (devCardPossible(p)){
+		if (devCardPossible()){
 			possibleActions[actionCount] = 11;
 			actionCount ++;
 		}
-		if (roadPossible(p)){
+		if (roadPossible()){
 			possibleActions[actionCount] = 3;
 			actionCount ++;
 		}
-		if (tradePossible4to1(p)){
+		if (tradePossible4to1()){
 			possibleActions[actionCount] = 4;
 			actionCount ++;
 		}
-		if (monopolyPossible(p)){
+		if (monopolyPossible()){
 			possibleActions[actionCount] = 7;
 			actionCount++;
 		}
-		if (yopPossible(p)){
+		if (yopPossible()){
 			possibleActions[actionCount] = 8;
 			actionCount++;
 		}
-		if (roadBuilderPossible(p)){
+		if (roadBuilderPossible()){
 			possibleActions[actionCount] = 9;
 			actionCount ++;
 		}
-		if (knightPossible(p)){
+		if (knightPossible()){
 			possibleActions[actionCount] = 10;
 			actionCount ++;
 		}
 	}
 	
 	//check if there is any vertex that you can build a settlement on
-	private boolean settlementPossible(int p){
+	private boolean settlementPossible(){
 		settlementVertices = new int[54];
 		settlementVerticesCount = 0;
 		for (int i = 0; i<settlementVertices.length; i++){
@@ -140,14 +158,14 @@ public class TurnAI {
 		return settlementVerticesCount > 0;
 	}
 	
-	private void settle(int p){
+	private void settle(){
 		rg.setActionType (1);
 		int randIndex = generator.nextInt(settlementVerticesCount);
 		int vertexToBuild = settlementVertices[randIndex];
 		rg.setVertex(vertexToBuild);
 	}
 	
-	private boolean cityPossible(int p){
+	private boolean cityPossible(){
 		cityVertices = new int[10];
 		cityVerticesCount = 0;
 		int[] settlements = gl.getVerticesWithSettlements(p);
@@ -160,22 +178,14 @@ public class TurnAI {
 		return  cityVerticesCount > 0;
 	}
 	
-	private void buildCity (int p){
+	private void buildCity (){
 		rg.setActionType(2);
 		int cityIndex = generator.nextInt(cityVerticesCount);
 		int cityToBuild = cityVertices[cityIndex];
 		rg.setVertex(cityToBuild);
 	}
 	
-	private boolean devCardPossible(int p){
-		boolean toReturn = gl.buildDevCheck(p);
-			if (toReturn && debug ){
-				System.out.println("Possible to buy a dev card for player "+p);
-			}
-		return toReturn;
-	}
-	
-	private boolean roadPossible(int p){
+	private boolean roadPossible(){
 		roadVertices = new int[54*54][2];
 		roadVerticesCount = 0;
 		for (int i = 0; i<54; i++){
@@ -190,23 +200,7 @@ public class TurnAI {
 		return roadVerticesCount > 0;
 	}
 	
-	private boolean monopolyPossible(int p){
-		return false;
-	}
-	
-	private boolean yopPossible(int p){
-		return false;
-	}
-	
-	private boolean knightPossible(int p){
-		return false;
-	}
-	
-	private boolean roadBuilderPossible(int p){
-		return false;
-	}
-	
-	private void buildRoad(int p){
+	private void buildRoad(){
 		rg.setActionType(3);
 		int roadIndex = generator.nextInt(roadVerticesCount);
 		int v1 = roadVertices[roadIndex][0];
@@ -216,7 +210,75 @@ public class TurnAI {
 		return;
 	}
 	
-	private boolean tradePossible4to1(int p){
+	private boolean monopolyPossible(){
+		return false;
+	}
+	
+	private boolean yopPossible(){
+		return false;
+	}
+	
+	private boolean knightPossible(){
+		return false;
+	}
+	
+	private boolean roadBuilderPossible(){
+		return false;
+	}
+	
+	//TODO: start at 0, not 1 and use 3:1
+	private boolean canUsePort(){
+		potentialPorts = new int[6];
+		portCount = 0;
+		for (int i = 1; i<6 ; i++ ){
+			if (gl.checkUsePort(p, i)){
+				potentialPorts[portCount] = i;
+				portCount ++;
+			}
+		}
+		return portCount > 0;
+	}
+	
+	private void usePort(){
+		int randIndex = generator.nextInt(portCount);
+		int portToUse = potentialPorts[randIndex];
+		
+		switch (portToUse) {
+		//TODO: addd 3-1 port
+			case (1):
+				//rock port
+				rg.setActionType(13);
+				break;
+			case (2):
+				//wheat port
+				rg.setActionType(14);
+				break;
+			case (3):
+				//brick port
+				rg.setActionType(15);
+				break;
+			case (4):
+				//wood port
+				rg.setActionType(16);
+				break;
+			case(5):
+				//sheep port
+				rg.setActionType(17);
+				break;
+		}
+		int resourceDesired = generator.nextInt(5)+1;
+		//make sure that the type of resourceDesired is not the same resource that you are trading away
+		while (resourceDesired == portToUse){
+			resourceDesired = generator.nextInt(5)+1;
+		}
+		if (debug){
+			System.out.println("Player: "+" is using a port of type: "+portToUse+" to trade for a resource of type: "+resourceDesired);	
+		}
+		rg.resourceClicked(resourceDesired);
+		return;
+	}
+	
+	private boolean tradePossible4to1(){
 		resourcesToTrade4to1 = new int[5];
 		tradeCounter = 0;
 		if (gl.hasResourcesToTrade(p, translator.Wheat, 4)){
@@ -242,7 +304,7 @@ public class TurnAI {
 		return tradeCounter > 0;
 	}
 	
-	private void makeTrade(int p){
+	private void makeTrade(){
 		int tradeIndex = generator.nextInt(tradeCounter);
 		int resourceToTrade =  resourcesToTrade4to1[tradeIndex];
 		int resourceDesired = generator.nextInt(5)+1;
@@ -259,7 +321,15 @@ public class TurnAI {
 		return;
 	}
 	
-	private void buyDevCard(int p){
+	private boolean devCardPossible(){
+		boolean toReturn = gl.buildDevCheck(p);
+			if (toReturn && debug ){
+				System.out.println("Possible to buy a dev card for player "+p);
+			}
+		return toReturn;
+	}
+	
+	private void buyDevCard(){
 		rg.setActionType(11);
 	}
 	

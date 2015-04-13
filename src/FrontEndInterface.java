@@ -81,8 +81,8 @@ public class FrontEndInterface {
 	}
 	
 	public void yearOfPlentyClicked(){
-		rg.setActionType(8);
 		System.out.println("Click the two resources you want.");
+		rg.setActionType(8);
 	}
 	
 	public void knightClicked(){

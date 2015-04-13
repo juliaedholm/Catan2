@@ -25,7 +25,7 @@ public class DevCardDeck{
 	}
 
 	public int drawDevCheck(){
-		if (cardsInDeck == 0)
+		if (cardsInDeck <= 0)
 			return 10;
 		return 0;
 	}
@@ -36,33 +36,32 @@ public class DevCardDeck{
 		//This is actually random
 
 		Random rand = new Random();
-
-		cardsInDeck--;
-
-		while(true){
+		
+		int toReturn;
+		//while(true){
 			int x = rand.nextInt(cardsInDeck);
 			if(x<cardTypes[0]){
 				cardTypes[0]--;
-				return 0;
-			}
-			else if(x<cardTypes[0]+cardTypes[1]){
+				toReturn = 0;
+			} else if(x<cardTypes[0]+cardTypes[1]){
 				cardTypes[1]--;
-				return 1;
+				toReturn =  1;
 			}
 			else if(x<cardTypes[0]+cardTypes[1]+cardTypes[2]){
 				cardTypes[2]--;
-				return 2;
+				toReturn = 2;
 			}
 			else if(x<cardTypes[0]+cardTypes[1]+cardTypes[2]+cardTypes[3]){
 				cardTypes[3]--;
-				return 3;
+				toReturn = 3;
 			}
 			else{
 				cardTypes[4]--;
-				return 4;
+				toReturn = 4;
 			}
-		}
-
+		//}
+		cardsInDeck--;
+		return toReturn;
 		//this is not really random because it is not based on how many of each card are in the deck but random enough
 		/*Random rand = new Random();
 
@@ -76,9 +75,6 @@ public class DevCardDeck{
 				return x;
 			}
 		}*/
-
-		
-
 	}
 
 }

@@ -11,12 +11,14 @@ public class Vertex {
 	private int 	settlementType; //0= empty, 1= settlement, 2= city
 	private Edge[] edges;
 	private int numEdgesSet;
+	public int vertexNumber;
 	
-	public Vertex(Tile[] t){
+	public Vertex(Tile[] t, int num){
 		adjacentTiles = t;
 		edges = new Edge[3];
 		numEdgesSet= 0;
 		settlementType = 0;
+		vertexNumber = num;
 	}
 	
 	public void addEdge(Edge e){

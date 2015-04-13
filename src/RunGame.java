@@ -11,9 +11,10 @@ public class RunGame {
 	private static Scanner sc = new Scanner(System.in);
 	private  boolean usingGraphics;
 	TurnOrderManager order;
-	private  GameLogic gl;
+	public  GameLogic gl;
 	private  FrontEndInterface fei;
-	int endGameCondition = 10;
+	int endGameCondition = 5;
+	public int[][] board;
 	
 	private  Player[] players;
 	private  int playerCount;
@@ -26,15 +27,16 @@ public class RunGame {
 	private  int[] verticesToAct; //at most 2 vertices
 	private int vertexCounter;
 	private boolean sevenRolled;
-	
+	private int[][] tradeResources; //tradeResources[0]= {type you want, amount, playerID}, tradeResouces[1] = {type you'll give away, amount, playerID}
+	private int[] yopResources;
+	private int roadBuilderCounter; //for road builder dev card
+
 	public boolean inFirstRound;
 	private boolean firstRoundSET;
 	private int firstRoundRoadCounter;
 	
-	private int[][] tradeResources; //tradeResources[0]= {type you want, amount, playerID}, tradeResouces[1] = {type you'll give away, amount, playerID}
-	private int[] yopResources;
-
-	private int roadBuilderCounter; //for road builder dev card
+	int[][] initialSettlementsForPlayers;
+	
 	
 	boolean AI;//how to mimic one player as AI
 	TurnAI np;
@@ -56,7 +58,7 @@ public class RunGame {
 		
 		usingGraphics = useGraphics;
 		//testboard gives a predetermined board
-		int[][] board= new Board().getBoard();
+		board= new Board().getBoard();
 		if (testBoard){
 			board = new Board().getTestBoard();
 		}
@@ -79,13 +81,15 @@ public class RunGame {
 		} 
 	}
 	
-	public int[] runGameWithAI(boolean print){
+	//returns player ID of winning player
+	public int runGameWithAI(boolean print){
+		int numTurns = 0;
 		printRunningMessage = print;
 		// run the game without graphics and with a random AI making all choices
 		InitialPlacementAI initial = new InitialPlacementAI(this, gl, print, false /*don't set the initial spots */);
 		TurnAI turn = new TurnAI(this, gl, print);
 		int settlementPosition;
-		int[][] initialSettlementsForPlayers = new int[5][3]; //each player stores {playerID, spot1, spot2}
+		initialSettlementsForPlayers = new int[5][3]; //each player stores {playerID, spot1, spot2}
 		//do something to store start settlements and winners
 		for (int i=0; i<playerCount*2; i++){
 			int playerPlacingSettlement = currentPlayerID;
@@ -104,18 +108,22 @@ public class RunGame {
 			initial.firstRoundRoad(currentPlayerID);
 		}
 		while(!gameEnd()){
+			numTurns ++;
 			int[] r = rollDice();
 			turn.turn(currentPlayerID);
 		}
 		int winningPlayer = 0;
 		for (int i = 1; i< players.length; i++){
 			int vp = players[i].victoryPoints;
+			System.out.println("Player: "+i+" ended with vps "+vp);
 			if (vp>= endGameCondition){
 				winningPlayer = i;
 			}
 		}
 		System.out.println("first Settlement for winner("+winningPlayer+" was "+initialSettlementsForPlayers[winningPlayer][1]+ " and second was "+initialSettlementsForPlayers[winningPlayer][2]);
-		return initialSettlementsForPlayers[winningPlayer];
+		System.out.println("numTurns: "+numTurns);
+		
+		return winningPlayer;
 	}
 	private int roll(){
 		//pick a random int between 1 and 6
@@ -219,7 +227,7 @@ public class RunGame {
 	}
 	
 	public void setTileClicked(int t){
-		if (actionType == 6 && sevenRolled) {
+		if (/*actionType == 6 &&*/ sevenRolled) {
 			robberAction(t, currentPlayerID);
 		} if (actionType == 10){
 			useKnight(t);
@@ -232,6 +240,7 @@ public class RunGame {
 		if(allowed){
 			System.out.println("You are allowed to use a knight, time to use it.");
 			robberAction(tile, currentPlayerID);
+
 		}
 		clearVerticesAndAction();
 		updateAllStats();
@@ -325,12 +334,14 @@ public class RunGame {
 			actionType = 5;
 			tradeResources[0][2] = playerID; //want to trade with the player clicked
 			tradeResources[1][2] = currentPlayerID;
+		} 
+		if (actionType == 5){
+			if (printRunningMessage){
+				System.out.println("Player "+tradeResources[1][2]+" is trading resource of type: "+tradeResources[0][0]+" " +
+						"to player "+tradeResources[0][2]+" for resource of type: "+tradeResources[1][0]);
+			}
+			trade();
 		}
-		if (printRunningMessage){
-			System.out.println("Player "+tradeResources[1][2]+" is trading resource of type: "+tradeResources[0][0]+" " +
-					"to player "+tradeResources[0][2]+" for resource of type: "+tradeResources[1][0]);
-		}
-		trade();
 	}
 	
 	public void tradeResourceButton(){
@@ -370,22 +381,32 @@ public class RunGame {
 	
 	//fills the array with type of resources and quantity
 	public void resourceClicked( int resourceType ) {
-		System.out.println("Resource Clicked");
+		if (printRunningMessage){
+			System.out.println("Resource Clicked");
+		}
 			if (actionType == 5 || actionType == 4){
 				if (tradeResources[0][0] == 0){
 					//nothing has been asked for
-					System.out.println("setting resource wanted");
+					if (printRunningMessage){
+						System.out.println("setting resource wanted");
+					}
 					tradeResources[0][0] = resourceType;
 					tradeResources[0][1] = 1;
 				} else if (tradeResources[0][0] == resourceType) {
-					System.out.println("incrimenting resource wanted");
+					if (printRunningMessage){
+						System.out.println("incrimenting resource wanted");
+					}
 					tradeResources[0][1] ++;
 				} else if (tradeResources[1][0] == 0 && tradeResources[0][0] != 0) {
-					System.out.println("setting resource to give up");
+					if (printRunningMessage){
+						System.out.println("setting resource to give up");
+					}
 					tradeResources[1][0] = resourceType; 
 					tradeResources[1][1] = 1;
 				} else if (tradeResources[1][0]== resourceType) {
-					System.out.println("Incrimenting resource to give up");
+					if (printRunningMessage){
+						System.out.println("Incrimenting resource to give up");
+					}
 					tradeResources[1][1]++;
 				} 
 			} else if (actionType == 7){
@@ -400,7 +421,6 @@ public class RunGame {
 			} else if (actionType == 12) {
 				//harder
 			} else if (actionType == 13) {
-				System.out.println("Trying to use stone port");
 				gl.usePort(currentPlayerID, 1, resourceType);
 			} else if (actionType == 14) {
 				gl.usePort(currentPlayerID, 2, resourceType);
@@ -497,6 +517,16 @@ public class RunGame {
 			}
 		}
 		return false;
+	}
+
+
+	
+	public Player[] getPlayers(){
+		return players;
+	}
+	
+	public int[][] getInitialPlayerSets(){
+		return initialSettlementsForPlayers;
 	}
 	
 }

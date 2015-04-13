@@ -23,154 +23,154 @@ public class Clicks implements MouseListener{
 		int hexy= searchHex(x,y);
 		boolean roll=rolledDice(x, y);
 
-		if(roll){
-			int [] rolls= interaction.diceClicked();
-			hex.rollOne=rolls[0];//random from Julia
-			hex.rollTwo=rolls[1];
-			hex.repaint();
-		}
 		boolean trade = triedTrade(x,y);
-		if(trade){
+		boolean city = askCity(x,y);
+		boolean setty = askSetty(x,y);
+		boolean road = askRoad(x,y);
+		boolean dev = askDev(x,y);
+		boolean sheep = sheep(x,y);
+		boolean wood = wood(x,y); 
+		boolean stone = stone(x,y);
+		boolean brick = brick(x,y);
+		boolean wheat = wheat(x,y);
+		boolean player1=player1(x,y);
+		boolean player2=player2(x,y);
+		boolean player3=player3(x,y);
+		boolean player4=player4(x,y);
+		boolean knights=knights(x,y);
+		boolean yearOfPlenty=yearOfPlenty(x,y);
+		boolean monopoly=monopoly(x,y);
+		boolean roadBuilder=roadBuilder(x,y);
+		boolean port0=port0(x,y);
+		boolean port1=port1(x,y);
+		boolean port2=port2(x,y);
+		boolean port3=port3(x,y);
+		boolean port4=port4(x,y);
+		boolean port5=port5(x,y);
+		boolean port6=port6(x,y);
+		boolean port7=port7(x,y);
+		boolean port8=port8(x,y);
+//		boolean clickToClear = clickToClear(x,y);
+
+		if(roll){
+				int [] rolls= interaction.diceClicked();
+				hex.rollOne=rolls[0];//random from Julia
+				hex.rollTwo=rolls[1];
+				hex.repaint();
+
+		}
+		else if(trade){
 			interaction.tradeClicked();
 		}
-		boolean city = askCity(x,y);
-		if(city){
+		else if(city){
 			interaction.cityClicked();
 		}
-		boolean setty = askSetty(x,y);
-		if(setty){
+		else if(setty){
 			interaction.settyClicked();
 		}
-		boolean road = askRoad(x,y);
-		if(road){
+		else if(road){
 			interaction.roadClicked();
 		}
-		boolean dev = askDev(x,y);
-		if(dev){
+		else if(dev){
 			interaction.devCardClicked();
 		}
-		boolean sheep = sheep(x,y);
-		if(sheep){
+		else if(sheep){
 			interaction.resourceClicked(translator.Sheep);
 		}
-		boolean wood = wood(x,y); 
-		if(wood){
+		else if(wood){
 			interaction.resourceClicked(translator.Wood);
 		}
-		boolean stone = stone(x,y);
-		if(stone){
+		else if(stone){
 			interaction.resourceClicked(translator.Rock);
 		}
-		boolean brick = brick(x,y);
-		if(brick){
+		else if(brick){
 			interaction.resourceClicked(translator.Brick);
 		}
-		boolean wheat = wheat(x,y);
-		if(wheat){
+		else if(wheat){
 			interaction.resourceClicked(translator.Wheat);
 		}
-		boolean player1=player1(x,y);
-		if(player1){
+		else if(player1){
+			System.out.println("player1");
 			interaction.playerClicked(1);
 		}
-		boolean player2=player2(x,y);
-		if(player2){
+		else if(player2){
+						System.out.println("player2");
 			interaction.playerClicked(2);
 		}
-		boolean player3=player3(x,y);
-		if(player3){
+		else if(player3){
+					System.out.println("player3");
 			interaction.playerClicked(3);
 		}
-		boolean player4=player4(x,y);
-		if(player4){
+		else if(player4){
+						System.out.println("player4");
 			interaction.playerClicked(4);
 		}
-		boolean knights=knights(x,y);
-		if(knights){
-			System.out.println("unplayed");
+		else if(knights){
+			System.out.println("knights");
 			interaction.knightClicked();
 		}
-		boolean yearOfPlenty=yearOfPlenty(x,y);
-		if(yearOfPlenty){
+		else if(yearOfPlenty){
+			System.out.println("yearOfPlenty");
 			interaction.yearOfPlentyClicked();
 		}
-		boolean monopoly=monopoly(x,y);
-		if(monopoly){
+		else if(monopoly){
+			System.out.println("monops");
 			interaction.monopolyClicked();
 		}
-		boolean roadBuilder=roadBuilder(x,y);
-		if(roadBuilder){
+		else if(roadBuilder){
+			System.out.println("roadBuilder");
 			interaction.roadBuilderClicked();
 		}
-		boolean port0=port0(x,y);
-		if(port0){
+		else if(port0){
 			System.out.println("port0");
-			//JuliaE Code
+			interaction.portClicked(0);
 		}
-		boolean port1=port1(x,y);
-		if(port1){
+		else if(port1){
 			System.out.println("port1");
 			interaction.portClicked(1);
-			//JuliaE Code
 		}
-		boolean port2=port2(x,y);
-		if(port2){
+		else if(port2){
 			System.out.println("port2");
 			interaction.portClicked(2);
-			//JuliaE Code
 		}
-		boolean port3=port3(x,y);
-		if(port3){
+		else if(port3){
 			System.out.println("port3");
 			interaction.portClicked(3);
-			//JuliaE Code
 		}
-		boolean port4=port4(x,y);
-		if(port4){
+		else if(port4){
 			System.out.println("port4");
 			interaction.portClicked(4);
-			//JuliaE Code
 		}
-		boolean port5=port5(x,y);
-		if(port5){
+		else if(port5){
 			System.out.println("port5");
 			interaction.portClicked(5);
-			//JuliaE Code
 		}
-		boolean port6=port6(x,y);
-		if(port6){
+		else if(port6){
 			System.out.println("port6");
 			interaction.portClicked(6);
-			//JuliaE Code
 		}
-		boolean port7=port7(x,y);
-		if(port7){
+		else if(port7){
 			System.out.println("port7");
 			interaction.portClicked(7);
-			//JuliaE Code
 		}
-		boolean port8=port8(x,y);
-		if(port8){
+		else if(port8){
 			System.out.println("port8");
 			interaction.portClicked(8);
-			//JuliaE Code
 		}
 
-
-		if(verty<54){
+		else if(verty<54){
 			interaction.vertexClicked(verty);
 		}
-		if(hexy<19){
-			interaction.robberClicked();
+		else if(hexy<19){
+			//interaction.robberClicked();
 			interaction.tileClicked(hexy);
-		}
-		
-		boolean clickToClear = clickToClear(x,y);
-		if (clickToClear){
+		}		
+		else /*(clickToClear)*/{
 			System.out.println("clear");
 			interaction.nullClick();
 		}
 	}
+
 
 	public int searchVert(int x, int y){
 		//15=clickable radius
