@@ -31,7 +31,7 @@ public class GetSpotFeatures {
 	public int[] getFeaturesForVertex (Vertex v){
 		boolean debug = true;
 		
-		int[] toReturn = new int[20];
+		int[] toReturn = new int[30];
 
 
 		if (rock(v)){
@@ -108,6 +108,7 @@ public class GetSpotFeatures {
 		if (debug){
 			System.out.println("features for vertex "+v.vertexNumber);
 			for (int i = 0; i<toReturn.length; i++){
+				System.out.print(i+": ");
 				System.out.println(toReturn[i]);
 			}
 		}
@@ -415,13 +416,50 @@ public class GetSpotFeatures {
 	
 	//CJ do all stuff from here
 	private boolean onRockPort(Vertex v){
+		Tile [] tiles = v.getAdjacentTiles();
+		for (int i=0; i<tiles.length; i++){
+			if(tiles[i].portType==1 && tiles[i].isPort){
+				return true;
+			}
+		}
 		return false;
 	}
-	
+	private boolean onWheatPort(Vertex v){
+		Tile [] tiles = v.getAdjacentTiles();
+		for (int i=0; i<tiles.length; i++){
+			if(tiles[i].portType==2 && tiles[i].isPort){
+				return true;
+			}
+		}
+		return false;
+	}	
 	private boolean onBrickPort(Vertex v){
+		Tile [] tiles = v.getAdjacentTiles();
+		for (int i=0; i<tiles.length; i++){
+			if(tiles[i].portType==3 && tiles[i].isPort){
+				return true;
+			}
+		}
 		return false;
 	}
-	//same for all ports
+	private boolean onWoodPort(Vertex v){
+		Tile [] tiles = v.getAdjacentTiles();
+		for (int i=0; i<tiles.length; i++){
+			if(tiles[i].portType==4 && tiles[i].isPort){
+				return true;
+			}
+		}
+		return false;
+	}	
+	private boolean onSheepPort(Vertex v){
+		Tile [] tiles = v.getAdjacentTiles();
+		for (int i=0; i<tiles.length; i++){
+			if(tiles[i].portType==4 && tiles[i].isPort){
+				return true;
+			}
+		}
+		return false;
+	}	
 	
 	
 	
