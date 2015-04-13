@@ -1,17 +1,15 @@
 import java.util.Random;
 
-import sun.security.provider.certpath.Vertex;
-
 /*JE
  * The GraphController class will maintain the state of the graph as game play progresses.
  * Actions like: build settlement, build road, and build city will all be validated and carried out in this class.  
  */
 public class GraphController {
-	static Vertex[] vertices; //pointers to the vertex objects in graph (connected by edge objects)
+	static CatanVertex[] vertices; //pointers to the vertex objects in graph (connected by edge objects)
 	static Tile[] tiles;
 	boolean debug = false; 
 	
-	public GraphController (Vertex[] v, Tile[] t){
+	public GraphController (CatanVertex[] v, Tile[] t){
 		vertices = v;
 		tiles = t;
 	}
@@ -22,8 +20,8 @@ public class GraphController {
 	 * if not return false
 	 */
 	public boolean checkPlaceSettlement(int v, Player p, boolean printError){
-		Vertex vert = vertices[v];
-		Vertex [] adjacents = vert.getAdjacentVs();
+		CatanVertex vert = vertices[v];
+		CatanVertex [] adjacents = vert.getAdjacentVs();
 		System.out.println("Vertecies 1 away from "+v+" are");
 		for (int i =0 ; i<adjacents.length; i++){
 			System.out.println(adjacents[i].vertexNumber);
@@ -57,7 +55,7 @@ public class GraphController {
 	}
 	
 	public void addSettlementToGraph(int v, Player p){
-		Vertex vert = vertices[v];
+		CatanVertex vert = vertices[v];
 		vert.buildSettlement(p);
 	}
 	
@@ -88,7 +86,7 @@ public class GraphController {
 	 * if not, make no change to the graph and return false
 	 */
 	public boolean checkBuildCity(int v, Player p, boolean printError){
-		Vertex settlement = vertices[v];
+		CatanVertex settlement = vertices[v];
 		if (settlement.getSettlementType() == 1 && settlement.getOwner() == p){
 			return true;
 		} else{
@@ -100,7 +98,7 @@ public class GraphController {
 	}
 	
 	public void addCityToGraph(int v, Player p ){
-		Vertex settlement = vertices[v];
+		CatanVertex settlement = vertices[v];
 		settlement.buildCity();
 	}
 	
@@ -171,8 +169,8 @@ public class GraphController {
 	
 	 //must check for settlement at one edge - if in first round
 	 public boolean checkPlaceRound1Road(int v1, int v2, Player p, boolean printErrors){
-			Vertex vert1 = vertices[v1];
-			Vertex vert2 = vertices[v2];
+			CatanVertex vert1 = vertices[v1];
+			CatanVertex vert2 = vertices[v2];
 			if (vert1.getOwner()== p || vert2.getOwner() ==p ) {
 				return checkPlaceRoad(v1,v2,p, printErrors);
 			} else {
@@ -200,7 +198,7 @@ public class GraphController {
 	private Player longestRoad(){
 		int longestRoad = 0;
 		for (int i = 0; i<vertices.length; i++){
-			Vertex v1 = vertices[i];
+			CatanVertex v1 = vertices[i];
 			//impliment Stack
 			
 		}
@@ -215,7 +213,7 @@ public class GraphController {
 
 	public void distributeResources(int roll){
 		for (int i =0; i<vertices.length; i++){
-			Vertex v = vertices[i];
+			CatanVertex v = vertices[i];
 			if (v.getSettlementType() != 0){
 				// this vertex contains either a settlement or a city
 				Tile[] tiles = v.getAdjacentTiles();
@@ -246,7 +244,7 @@ public class GraphController {
 	 * Method that will give each owner the three resources of their second settlement
 	 */
 	public void firstRoundResource(int vertex){
-		Vertex v = vertices[vertex];
+		CatanVertex v = vertices[vertex];
 		Player owner = v.getOwner();
 		Tile[] tiles = v.getAdjacentTiles();
 		for (int i=0; i<tiles.length; i++){
@@ -271,7 +269,7 @@ public class GraphController {
 		Player[] playersOnTile = new Player[3];//maximum of 3 players on any tile
 		int playersCount = 0;
 		for (int i =0; i<vertices.length; i++){
-			Vertex v = vertices[i];
+			CatanVertex v = vertices[i];
 			if (v.getSettlementType() != 0){
 				// this vertex contains either a settlement or a city
 				Tile[] tiles = v.getAdjacentTiles();

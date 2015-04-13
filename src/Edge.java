@@ -1,12 +1,12 @@
 //class that represents the connection between verticies
 public class Edge {
 
-	Vertex 	v1;
-	Vertex v2;
+	CatanVertex 	v1;
+	CatanVertex v2;
 	boolean hasRoad;
 	Player 	owner; //person who owns the road 
 
-	public Edge(Vertex start, Vertex end){
+	public Edge(CatanVertex start, CatanVertex end){
 		v1= start;
 		v2 = end;
 	}

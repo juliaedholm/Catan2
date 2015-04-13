@@ -4,7 +4,7 @@
  * The vertex may be occupied with a settlement or a city 
  */
 
-public class Vertex {
+public class CatanVertex {
 	private Tile[] adjacentTiles; //the list of Tiles that this vertex touches
 	private Tile port; //the port associated with this spot, if there is one
 	private Player owner;
@@ -13,7 +13,7 @@ public class Vertex {
 	private int numEdgesSet;
 	public int vertexNumber;
 	
-	public Vertex(Tile[] t, int num){
+	public CatanVertex(Tile[] t, int num){
 		adjacentTiles = t;
 		edges = new Edge[3];
 		numEdgesSet= 0;
@@ -76,7 +76,7 @@ public class Vertex {
 		return settlementType;
 	}
 	
-	public Vertex[] getVertices2Away(){
+	public CatanVertex[] getVertices2Away(){
 		/*
 		int numSpotsToBuild = 0;
 		for (int i=0; i<edges.length;  i++){
@@ -120,10 +120,10 @@ public class Vertex {
 			}
 		}
 		*/
-		return new Vertex[2];
+		return new CatanVertex[2];
 	}
 	
-	public Vertex[] getAdjacentVs(){
+	public CatanVertex[] getAdjacentVs(){
 		/*
 		Vertex[] toReturn = new Vertex[3];
 		int vCount = 0;
@@ -151,7 +151,7 @@ public class Vertex {
 			return smallerArray;
 		}
 		*/
-		return new Vertex[2];
+		return new CatanVertex[2];
 	}
 	
 }

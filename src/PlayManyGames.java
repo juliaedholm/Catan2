@@ -11,7 +11,7 @@ public class PlayManyGames {
 			RunGame gameRunner = new RunGame(4, false, true, true); //will used a fixed board
 			int winningPlayer = gameRunner.runGameWithAI(false);
 			GraphController theGraph = gameRunner.gl.graph;
-			Vertex[] verticesInGraph = theGraph.vertices;
+			CatanVertex[] verticesInGraph = theGraph.vertices;
 			
 			int[][] initialSettlementsAllPlayers = gameRunner.getInitialPlayerSets();
 			
@@ -20,7 +20,7 @@ public class PlayManyGames {
 				int spot1 = playerStartSettlements[1];
 				int spot2 = playerStartSettlements[2];
 				if (i == winningPlayer){
-					Vertex v1 = verticesInGraph[spot1];
+					CatanVertex v1 = verticesInGraph[spot1];
 					/*  incriment feature weights for the winning player */
 					int[] features = feats.getFeaturesForVertex (v1);
 					spotQuality.incrementVertexNumWeight(spot1);

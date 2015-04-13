@@ -28,7 +28,7 @@ public class GetSpotFeatures {
 	 * 22 = touches 1 different resource
 	 */
 	
-	public int[] getFeaturesForVertex (Vertex v){
+	public int[] getFeaturesForVertex (CatanVertex v){
 		boolean debug = true;
 		
 		int[] toReturn = new int[30];
@@ -116,7 +116,7 @@ public class GetSpotFeatures {
 	}
 	
 	//Julia P do stuff from here
-	private boolean rock(Vertex v){
+	private boolean rock(CatanVertex v){
 		//check graph if that vertex is on rock. Return true if so
 		Tile [] tiles = v.getAdjacentTiles();
 		for (int i=0; i<tiles.length; i++){
@@ -127,7 +127,7 @@ public class GetSpotFeatures {
 		return false;
 	}
 	
-	private boolean wheat(Vertex v){
+	private boolean wheat(CatanVertex v){
 		Tile [] tiles = v.getAdjacentTiles();
 		for (int i=0; i<tiles.length; i++){
 			if(tiles[i].resource==translator.Wheat){
@@ -137,7 +137,7 @@ public class GetSpotFeatures {
 		return false;
 	}
 	
-	private boolean brick(Vertex v){
+	private boolean brick(CatanVertex v){
 		Tile [] tiles = v.getAdjacentTiles();
 		for (int i=0; i<tiles.length; i++){
 			if(tiles[i].resource==translator.Brick){
@@ -147,7 +147,7 @@ public class GetSpotFeatures {
 		return false;
 	}
 	
-	private boolean wood(Vertex v){
+	private boolean wood(CatanVertex v){
 		Tile [] tiles = v.getAdjacentTiles();
 		for (int i=0; i<tiles.length; i++){
 			if(tiles[i].resource==translator.Wood){
@@ -158,7 +158,7 @@ public class GetSpotFeatures {
 	}
 
 	
-	private boolean sheep(Vertex v){
+	private boolean sheep(CatanVertex v){
 		Tile [] tiles = v.getAdjacentTiles();
 		for (int i=0; i<tiles.length; i++){
 			if(tiles[i].resource==translator.Sheep){
@@ -168,7 +168,7 @@ public class GetSpotFeatures {
 		return false;
 	}
 	
-	private boolean on2(Vertex v){
+	private boolean on2(CatanVertex v){
 		Tile [] tiles = v.getAdjacentTiles();
 		for (int i=0; i<tiles.length; i++){
 			if(tiles[i].roll==2){
@@ -178,7 +178,7 @@ public class GetSpotFeatures {
 		return false;
 	}
 	
-	private boolean on3(Vertex v){
+	private boolean on3(CatanVertex v){
 		Tile [] tiles = v.getAdjacentTiles();
 		for (int i=0; i<tiles.length; i++){
 			if(tiles[i].roll==3){
@@ -188,7 +188,7 @@ public class GetSpotFeatures {
 		return false;
 	}
 
-	private boolean on4(Vertex v){
+	private boolean on4(CatanVertex v){
 		Tile [] tiles = v.getAdjacentTiles();
 		for (int i=0; i<tiles.length; i++){
 			if(tiles[i].roll==4){
@@ -198,7 +198,7 @@ public class GetSpotFeatures {
 		return false;
 	}
 
-	private boolean on5(Vertex v){
+	private boolean on5(CatanVertex v){
 		Tile [] tiles = v.getAdjacentTiles();
 		for (int i=0; i<tiles.length; i++){
 			if(tiles[i].roll==5){
@@ -207,7 +207,7 @@ public class GetSpotFeatures {
 		}
 		return false;
 	}
-	private boolean on6(Vertex v){
+	private boolean on6(CatanVertex v){
 		Tile [] tiles = v.getAdjacentTiles();
 		for (int i=0; i<tiles.length; i++){
 			if(tiles[i].roll==6){
@@ -217,7 +217,7 @@ public class GetSpotFeatures {
 		return false;
 	}
 
-	private boolean on8(Vertex v){
+	private boolean on8(CatanVertex v){
 		Tile [] tiles = v.getAdjacentTiles();
 		for (int i=0; i<tiles.length; i++){
 			if(tiles[i].roll==8){
@@ -227,7 +227,7 @@ public class GetSpotFeatures {
 		return false;
 	}
 
-	private boolean on9(Vertex v){
+	private boolean on9(CatanVertex v){
 		Tile [] tiles = v.getAdjacentTiles();
 		for (int i=0; i<tiles.length; i++){
 			if(tiles[i].roll==9){
@@ -237,7 +237,7 @@ public class GetSpotFeatures {
 		return false;
 	}
 
-	private boolean on10(Vertex v){
+	private boolean on10(CatanVertex v){
 		Tile [] tiles = v.getAdjacentTiles();
 		for (int i=0; i<tiles.length; i++){
 			if(tiles[i].roll==10){
@@ -247,7 +247,7 @@ public class GetSpotFeatures {
 		return false;
 	}
 
-	private boolean on11(Vertex v){
+	private boolean on11(CatanVertex v){
 		Tile [] tiles = v.getAdjacentTiles();
 		for (int i=0; i<tiles.length; i++){
 			if(tiles[i].roll==11){
@@ -257,7 +257,7 @@ public class GetSpotFeatures {
 		return false;
 	}
 
-	private boolean on12(Vertex v){
+	private boolean on12(CatanVertex v){
 		Tile [] tiles = v.getAdjacentTiles();
 		for (int i=0; i<tiles.length; i++){
 			if(tiles[i].roll==12){
@@ -268,34 +268,34 @@ public class GetSpotFeatures {
 	}
 
 	
-	private boolean oneDot (Vertex v){
+	private boolean oneDot (CatanVertex v){
 		if(on2(v) || on12(v)){
 			return true;
 		}
 		return false;
 	}
 	
-	private boolean twoDot (Vertex v){
+	private boolean twoDot (CatanVertex v){
 		if(on3(v) || on11(v)){
 			return true;
 		}
 		return false;
 	}
 
-	private boolean threeDot (Vertex v){
+	private boolean threeDot (CatanVertex v){
 		if(on4(v) || on10(v)){
 			return true;
 		}
 		return false;
 	}
 	
-	private boolean fourDot (Vertex v){
+	private boolean fourDot (CatanVertex v){
 		if(on5(v) || on9(v)){
 			return true;
 		}
 		return false;
 	}
-	private boolean fiveDot (Vertex v){
+	private boolean fiveDot (CatanVertex v){
 		if(on6(v) || on8(v)){
 			return true;
 		}
@@ -307,7 +307,7 @@ public class GetSpotFeatures {
 	//Julia P stop here
 	
 	//Julia E start here
-	private boolean touchesThreeDiffResources (Vertex v){
+	private boolean touchesThreeDiffResources (CatanVertex v){
 		Tile[] tiles = v.getAdjacentTiles();
 		int[] resourceCounts = new int[6];
 		int numDiffResourcesOnSpot = 0;
@@ -324,7 +324,7 @@ public class GetSpotFeatures {
 		return numDiffResourcesOnSpot == 1;
 	}
 	
-	private boolean touchesTwoDiffResources (Vertex v){
+	private boolean touchesTwoDiffResources (CatanVertex v){
 		Tile[] tiles = v.getAdjacentTiles();
 		int[] resourceCounts = new int[6];
 		int numDiffResourcesOnSpot = 0;
@@ -341,7 +341,7 @@ public class GetSpotFeatures {
 		return numDiffResourcesOnSpot == 2;
 	}
 	
-	private boolean touchesOneTypeOfResource (Vertex v){
+	private boolean touchesOneTypeOfResource (CatanVertex v){
 		Tile[] tiles = v.getAdjacentTiles();
 		int[] resourceCounts = new int[6];
 		int numDiffResourcesOnSpot = 0;
@@ -359,7 +359,7 @@ public class GetSpotFeatures {
 	}
 	
 	//false if you touch 2 or 3. 
-	private boolean onThreeTiles (Vertex v){
+	private boolean onThreeTiles (CatanVertex v){
 		Tile[] tiles = v.getAdjacentTiles();
 		int numResourcesOnSpot = 0;
 		for (int i =0; i<tiles.length; i++){
@@ -372,7 +372,7 @@ public class GetSpotFeatures {
 		return numResourcesOnSpot == 3;
 	}
 	
-	private boolean onTwoTiles (Vertex v){
+	private boolean onTwoTiles (CatanVertex v){
 		Tile[] tiles = v.getAdjacentTiles();
 		int numResourcesOnSpot = 0;
 		for (int i =0; i<tiles.length; i++){
@@ -385,7 +385,7 @@ public class GetSpotFeatures {
 		return numResourcesOnSpot == 2;
 	}
 	
-	private boolean onOneTile (Vertex v){
+	private boolean onOneTile (CatanVertex v){
 		Tile[] tiles = v.getAdjacentTiles();
 		int numResourcesOnSpot = 0;
 		for (int i =0; i<tiles.length; i++){
@@ -398,12 +398,12 @@ public class GetSpotFeatures {
 		return numResourcesOnSpot == 1;
 	}
 	
-	private boolean hasAtLeast2BuildableSpots (Vertex v){
+	private boolean hasAtLeast2BuildableSpots (CatanVertex v){
 
 		return false;
 	}
 	
-	private boolean doesNotHave2BuildableSpots (Vertex v){
+	private boolean doesNotHave2BuildableSpots (CatanVertex v){
 		return false;
 		}
 	
@@ -415,7 +415,7 @@ public class GetSpotFeatures {
 	//julia e stop here
 	
 	//CJ do all stuff from here
-	private boolean onRockPort(Vertex v){
+	private boolean onRockPort(CatanVertex v){
 		Tile [] tiles = v.getAdjacentTiles();
 		for (int i=0; i<tiles.length; i++){
 			if(tiles[i].portType==1 && tiles[i].isPort){
@@ -424,7 +424,7 @@ public class GetSpotFeatures {
 		}
 		return false;
 	}
-	private boolean onWheatPort(Vertex v){
+	private boolean onWheatPort(CatanVertex v){
 		Tile [] tiles = v.getAdjacentTiles();
 		for (int i=0; i<tiles.length; i++){
 			if(tiles[i].portType==2 && tiles[i].isPort){
@@ -433,7 +433,7 @@ public class GetSpotFeatures {
 		}
 		return false;
 	}	
-	private boolean onBrickPort(Vertex v){
+	private boolean onBrickPort(CatanVertex v){
 		Tile [] tiles = v.getAdjacentTiles();
 		for (int i=0; i<tiles.length; i++){
 			if(tiles[i].portType==3 && tiles[i].isPort){
@@ -442,7 +442,7 @@ public class GetSpotFeatures {
 		}
 		return false;
 	}
-	private boolean onWoodPort(Vertex v){
+	private boolean onWoodPort(CatanVertex v){
 		Tile [] tiles = v.getAdjacentTiles();
 		for (int i=0; i<tiles.length; i++){
 			if(tiles[i].portType==4 && tiles[i].isPort){
@@ -451,7 +451,7 @@ public class GetSpotFeatures {
 		}
 		return false;
 	}	
-	private boolean onSheepPort(Vertex v){
+	private boolean onSheepPort(CatanVertex v){
 		Tile [] tiles = v.getAdjacentTiles();
 		for (int i=0; i<tiles.length; i++){
 			if(tiles[i].portType==4 && tiles[i].isPort){
