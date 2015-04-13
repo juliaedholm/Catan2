@@ -1,6 +1,7 @@
 /* class will take a vertex object and return the boolean prescence of  features in an array */
 
 public class GetSpotFeatures {
+	ResourceTranslator translator = new ResourceTranslator();
 	/*
 	 * 0 = rock
 	 * 1 = wheat
@@ -42,6 +43,12 @@ public class GetSpotFeatures {
 	//Julia P do stuff from here
 	private boolean rock(Vertex v){
 		//check graph if that vertex is on rock. Return true if so
+		int [] tiles = v.getAdjacentTiles();
+		for (int i=0; i<tiles.length; i++){
+			if(tiles[i].resource=translator.Rock){
+				return true;
+			}
+		}
 		return false;
 	}
 	
