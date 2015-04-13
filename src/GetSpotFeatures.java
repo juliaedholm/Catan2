@@ -6,7 +6,8 @@ public class GetSpotFeatures {
 	 * 0 = rock
 	 * 1 = wheat
 	 * 2 = brick
-	 * 
+	 * 3 = wood
+	 * 4 = sheep	 
 	 * 
 	 * 15 = touches 3 different Resouces
 	 * 16 = touches 2 different resources
@@ -17,8 +18,22 @@ public class GetSpotFeatures {
 		boolean debug = true;
 		
 		int[] toReturn = new int[20];
-		if (sheep(v)){
+
+
+		if (rock(v)){
 			toReturn[0] = 1;
+		}
+		if (wheat(v)){
+			toReturn[1] = 1;
+		}
+		if (brick(v)){
+			toReturn[2] = 1;
+		}
+		if (wood(v)){
+			toReturn[3] = 1;
+		}
+		if (sheep(v)){
+			toReturn[4] = 1;
 		}
 		if (touchesThreeDiffResources(v) ){
 			toReturn[15] = 1;
@@ -43,9 +58,9 @@ public class GetSpotFeatures {
 	//Julia P do stuff from here
 	private boolean rock(Vertex v){
 		//check graph if that vertex is on rock. Return true if so
-		int [] tiles = v.getAdjacentTiles();
+		Tile [] tiles = v.getAdjacentTiles();
 		for (int i=0; i<tiles.length; i++){
-			if(tiles[i].resource=translator.Rock){
+			if(tiles[i].resource==translator.Rock){
 				return true;
 			}
 		}
@@ -53,18 +68,43 @@ public class GetSpotFeatures {
 	}
 	
 	private boolean wheat(Vertex v){
+		Tile [] tiles = v.getAdjacentTiles();
+		for (int i=0; i<tiles.length; i++){
+			if(tiles[i].resource==translator.Wheat){
+				return true;
+			}
+		}
 		return false;
 	}
 	
 	private boolean brick(Vertex v){
+		Tile [] tiles = v.getAdjacentTiles();
+		for (int i=0; i<tiles.length; i++){
+			if(tiles[i].resource==translator.Brick){
+				return true;
+			}
+		}
 		return false;
 	}
 	
 	private boolean wood(Vertex v){
+		Tile [] tiles = v.getAdjacentTiles();
+		for (int i=0; i<tiles.length; i++){
+			if(tiles[i].resource==translator.Wood){
+				return true;
+			}
+		}
 		return false;
 	}
+
 	
 	private boolean sheep(Vertex v){
+		Tile [] tiles = v.getAdjacentTiles();
+		for (int i=0; i<tiles.length; i++){
+			if(tiles[i].resource==translator.Sheep){
+				return true;
+			}
+		}
 		return false;
 	}
 	
@@ -75,7 +115,38 @@ public class GetSpotFeatures {
 	private boolean on3(Vertex v){
 		return false;
 	}
-	///etc for all rolls through 12
+
+	private boolean on4(Vertex v){
+		return false;
+	}
+
+	private boolean on5(Vertex v){
+		return false;
+	}
+	private boolean on6(Vertex v){
+		return false;
+	}
+
+	private boolean on8(Vertex v){
+		return false;
+	}
+
+	private boolean on9(Vertex v){
+		return false;
+	}
+
+	private boolean on10(Vertex v){
+		return false;
+	}
+
+	private boolean on11(Vertex v){
+		return false;
+	}
+
+	private boolean on12(Vertex v){
+		return false;
+	}
+
 	
 	private boolean oneDot (Vertex v){
 		return false;
