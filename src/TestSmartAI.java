@@ -3,12 +3,12 @@ public class TestSmartAI {
 	
 	public static void main (String[] args){
 		//creates Player classes for each player and stores in players[]
-		int numRuns = 100;
+		int numRuns = 10;
 		int [] numWinsPerPlayer = new int[5];
 		
 		for (int i = 0; i< numRuns; i ++){
 			RunGame gameRunner = new RunGame(4, false, true, false);
-			int winner = gameRunner.runGameWithAI(false)[0]; //game runner will return an int[] that contians winning player and the two start vertices
+			int winner = gameRunner.runGameWithAI(false); //game runner will return the int of winning player ID
 			System.out.println("winner was: "+winner);
 			numWinsPerPlayer[winner] ++;
 		}

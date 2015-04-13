@@ -10,7 +10,7 @@ public class GameLogic {
 	private DevCardDeck devDeck;
 
 	private boolean debugSet = false;
-	private boolean debug = false;
+	private boolean debug = true;
 
 	public Player[] players;
 
@@ -124,8 +124,9 @@ public class GameLogic {
 		//check that the player has resources to build a road and has roads left
 		if(players[p].buildRoadCheck() == false)
 			return false;
-
-		System.out.println("You can build a road, now checking location on graph.");
+		if (debug){
+			System.out.println("You can build a road, now checking location on graph.");
+		}
 		return graph.checkBuildRoad(v1,v2, players[p], debugSet); 
 	}
 	
@@ -197,7 +198,7 @@ public class GameLogic {
 			return false;
 		}
 		int i = devDeck.drawDevCheck();
-		if(i ==10){
+		if(i == 10){
 			if (debug){
 				System.out.println("There are no development cards left.");
 			}
