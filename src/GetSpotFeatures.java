@@ -2,14 +2,31 @@
 
 public class GetSpotFeatures {
 	/*
-	 * 0 = sheep
+	 * 0 = rock
+	 * 1 = wheat
+	 * 2 = brick
+	 * 
+	 * 
+	 * 15 = touches 3 different Resouces
+	 * 16 = touches 2 different resources
+	 * 17 = touches 1 different resource
 	 */
+	
 	public int[] getFeaturesForVertex (Vertex v){
-		boolean debug = false;
+		boolean debug = true;
 		
-		int[] toReturn = new int[5];
+		int[] toReturn = new int[20];
 		if (sheep(v)){
 			toReturn[0] = 1;
+		}
+		if (touchesThreeDiffResources(v) ){
+			toReturn[15] = 1;
+		}
+		if (touchesTwoDiffResources(v)){
+			toReturn[16] = 1;
+		}
+		if (touchesOneTypeOfResource(v)){
+			toReturn[17] = 1;
 		}
 
 		
@@ -66,15 +83,54 @@ public class GetSpotFeatures {
 	
 	//Julia E start here
 	private boolean touchesThreeDiffResources (Vertex v){
-		return false;
+		Tile[] tiles = v.getAdjacentTiles();
+		int[] resourceCounts = new int[6];
+		int numDiffResourcesOnSpot = 0;
+		
+		for (int i =0; i<tiles.length; i++){
+			Tile t = tiles[i];
+			int r = t.resource;
+			if (resourceCounts[r] == 0){
+				resourceCounts[r] ++;
+				numDiffResourcesOnSpot ++;
+			}
+		}
+		
+		return numDiffResourcesOnSpot == 1;
 	}
 	
 	private boolean touchesTwoDiffResources (Vertex v){
-		return false;
+		Tile[] tiles = v.getAdjacentTiles();
+		int[] resourceCounts = new int[6];
+		int numDiffResourcesOnSpot = 0;
+		
+		for (int i =0; i<tiles.length; i++){
+			Tile t = tiles[i];
+			int r = t.resource;
+			if (resourceCounts[r] == 0){
+				resourceCounts[r] ++;
+				numDiffResourcesOnSpot ++;
+			}
+		}
+		
+		return numDiffResourcesOnSpot == 2;
 	}
 	
 	private boolean touchesOneTypeOfResource (Vertex v){
-		return false;
+		Tile[] tiles = v.getAdjacentTiles();
+		int[] resourceCounts = new int[6];
+		int numDiffResourcesOnSpot = 0;
+		
+		for (int i =0; i<tiles.length; i++){
+			Tile t = tiles[i];
+			int r = t.resource;
+			if (resourceCounts[r] == 0){
+				resourceCounts[r] ++;
+				numDiffResourcesOnSpot ++;
+			}
+		}
+		
+		return numDiffResourcesOnSpot == 3;
 	}
 	
 	//false if you touch 2 or 3. 
@@ -99,7 +155,7 @@ public class GetSpotFeatures {
 		return false;
 	}
 	
-	private boolean onScarceResource(Veretx v){
+	private boolean onScarceResource(Vertex v){
 		//must think about how to define scarce....
 		return false;
 	}
