@@ -35,6 +35,36 @@ public class GetSpotFeatures {
 		if (sheep(v)){
 			toReturn[4] = 1;
 		}
+		if (on2(v)){
+			toReturn[5] = 1;
+		}
+		if (on3(v)){
+			toReturn[6] = 1;
+		}
+		if (on4(v)){
+			toReturn[7] = 1;
+		}
+		if (on5(v)){
+			toReturn[8] = 1;
+		}
+		if (on6(v)){
+			toReturn[9] = 1;
+		}
+		if (on8(v)){
+			toReturn[10] = 1;
+		}
+		if (on9(v)){
+			toReturn[11] = 1;
+		}
+		if (on10(v)){
+			toReturn[12] = 1;
+		}
+		if (on11(v)){
+			toReturn[13] = 1;
+		}
+		if (on12(v)){
+			toReturn[14] = 1;
+		}
 		if (touchesThreeDiffResources(v) ){
 			toReturn[15] = 1;
 		}
@@ -109,41 +139,101 @@ public class GetSpotFeatures {
 	}
 	
 	private boolean on2(Vertex v){
+		Tile [] tiles = v.getAdjacentTiles();
+		for (int i=0; i<tiles.length; i++){
+			if(tiles[i].roll==2){
+				return true;
+			}
+		}
 		return false;
 	}
 	
 	private boolean on3(Vertex v){
+		Tile [] tiles = v.getAdjacentTiles();
+		for (int i=0; i<tiles.length; i++){
+			if(tiles[i].roll==3){
+				return true;
+			}
+		}
 		return false;
 	}
 
 	private boolean on4(Vertex v){
+		Tile [] tiles = v.getAdjacentTiles();
+		for (int i=0; i<tiles.length; i++){
+			if(tiles[i].roll==4){
+				return true;
+			}
+		}
 		return false;
 	}
 
 	private boolean on5(Vertex v){
+		Tile [] tiles = v.getAdjacentTiles();
+		for (int i=0; i<tiles.length; i++){
+			if(tiles[i].roll==5){
+				return true;
+			}
+		}
 		return false;
 	}
 	private boolean on6(Vertex v){
+		Tile [] tiles = v.getAdjacentTiles();
+		for (int i=0; i<tiles.length; i++){
+			if(tiles[i].roll==6){
+				return true;
+			}
+		}
 		return false;
 	}
 
 	private boolean on8(Vertex v){
+		Tile [] tiles = v.getAdjacentTiles();
+		for (int i=0; i<tiles.length; i++){
+			if(tiles[i].roll==8){
+				return true;
+			}
+		}
 		return false;
 	}
 
 	private boolean on9(Vertex v){
+		Tile [] tiles = v.getAdjacentTiles();
+		for (int i=0; i<tiles.length; i++){
+			if(tiles[i].roll==9){
+				return true;
+			}
+		}
 		return false;
 	}
 
 	private boolean on10(Vertex v){
+		Tile [] tiles = v.getAdjacentTiles();
+		for (int i=0; i<tiles.length; i++){
+			if(tiles[i].roll==10){
+				return true;
+			}
+		}
 		return false;
 	}
 
 	private boolean on11(Vertex v){
+		Tile [] tiles = v.getAdjacentTiles();
+		for (int i=0; i<tiles.length; i++){
+			if(tiles[i].roll==11){
+				return true;
+			}
+		}
 		return false;
 	}
 
 	private boolean on12(Vertex v){
+		Tile [] tiles = v.getAdjacentTiles();
+		for (int i=0; i<tiles.length; i++){
+			if(tiles[i].roll==12){
+				return true;
+			}
+		}
 		return false;
 	}
 
