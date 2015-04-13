@@ -10,7 +10,7 @@ public class GameLogic {
 	private DevCardDeck devDeck;
 
 	private boolean debugSet = false;
-	private boolean debug = true;
+	private boolean debug = false;
 
 	public Player[] players;
 
