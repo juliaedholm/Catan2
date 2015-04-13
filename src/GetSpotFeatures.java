@@ -31,7 +31,7 @@ public class GetSpotFeatures {
 	public int[] getFeaturesForVertex (Vertex v){
 		boolean debug = true;
 		
-		int[] toReturn = new int[20];
+		int[] toReturn = new int[30];
 
 
 		if (rock(v)){
@@ -108,6 +108,7 @@ public class GetSpotFeatures {
 		if (debug){
 			System.out.println("features for vertex "+v.vertexNumber);
 			for (int i = 0; i<toReturn.length; i++){
+				System.out.print(i+": ");
 				System.out.println(toReturn[i]);
 			}
 		}
