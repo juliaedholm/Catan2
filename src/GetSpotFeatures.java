@@ -302,20 +302,61 @@ public class GetSpotFeatures {
 	}
 	
 	//false if you touch 2 or 3. 
-	private boolean onSingleResource (Vertex v){
-		
-		return false;
+	private boolean onThreeTiles (Vertex v){
+		Tile[] tiles = v.getAdjacentTiles();
+		int numResourcesOnSpot = 0;
+		for (int i =0; i<tiles.length; i++){
+			Tile t = tiles[i];
+			int r = t.resource;
+			if (r != 0){
+				numResourcesOnSpot ++;
+			}
+		}
+		return numResourcesOnSpot == 3;
 	}
 	
-	private boolean onTwoResources (Vertex v){
-		return false;
+	private boolean onTwoTiles (Vertex v){
+		Tile[] tiles = v.getAdjacentTiles();
+		int numResourcesOnSpot = 0;
+		for (int i =0; i<tiles.length; i++){
+			Tile t = tiles[i];
+			int r = t.resource;
+			if (r != 0){
+				numResourcesOnSpot ++;
+			}
+		}
+		return numResourcesOnSpot == 2;
 	}
 	
-	private boolean onOneResource (Vertex v){
-		return false;
+	private boolean onOneTile (Vertex v){
+		Tile[] tiles = v.getAdjacentTiles();
+		int numResourcesOnSpot = 0;
+		for (int i =0; i<tiles.length; i++){
+			Tile t = tiles[i];
+			int r = t.resource;
+			if (r != 0){
+				numResourcesOnSpot ++;
+			}
+		}
+		return numResourcesOnSpot == 1;
 	}
 	
 	private boolean hasAtLeast2BuildableSpots (Vertex v){
+		Edge[] es = v.getEdges();
+		int numSpotsToBuild = 0;
+		for (int i=0; i<vert.getNumEdges(); i++){
+			
+			if (es[i].v1.getSettlementType() == 0  || es[i].v2.getSettlementType() == 0){
+				//there is another settlement one edge away(neighbor vertex)
+				if(printError){
+					System.out.println("There is a settlement next to this vertex");
+				}
+				return false;
+			}
+		}
+		//position is legal, so build settlement
+		
+		
 		return false;
 	}
 	
