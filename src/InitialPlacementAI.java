@@ -25,7 +25,7 @@ public class InitialPlacementAI {
 			if (fixedInitialPlacement){
 				///figure out some way to be systematic about the starting position for each player and make sure that all vertices are ttried at some point....
 			}else {
-				possibleSpot = spotToBuild(player );
+				possibleSpot = spotToBuild(player);
 				rg.placeSettlementFirstRound(possibleSpot);
 			}
 			return possibleSpot;

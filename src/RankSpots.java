@@ -1,0 +1,1 @@
+// class that will go through board and look at each spot and use the spot quality algorithm to determine if it is a good spot, or not

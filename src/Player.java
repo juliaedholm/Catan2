@@ -278,6 +278,7 @@ public class Player {
 	public void buildCity(){
 		resourceTracker.useRock(3);
 		resourceTracker.useWheat(2);
+		numberOfSettlements --;
 		numberOfCities++;
 		victoryPoints++;
 	}
@@ -338,6 +339,16 @@ public class Player {
 		System.out.println("Number of Cities: " +numberOfCities);
 		System.out.println("Number of Roads: " +numberOfRoads);
 		System.out.println("Victory Points: " +victoryPoints);
+	}
+	
+	public int[] getGameStateStats(){
+		int[] toReturn = new int[4];
+		toReturn[0] = numberOfSettlements;
+		toReturn[1] = numberOfCities;
+		toReturn[2] = numberOfRoads;
+		toReturn[3] = victoryPoints;
+		
+		return toReturn;
 	}
 	
 	//method for testing

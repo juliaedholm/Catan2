@@ -30,6 +30,7 @@ public class Hexanew extends JFrame{
   double aBorder = 6*a/1.155;
   int a1 = (int) aBorder;
   boolean played=true;
+  boolean AI;
 
   //Making colors
   Color water = new Color (54, 183, 235);
@@ -258,12 +259,28 @@ public class Hexanew extends JFrame{
       totalPlayers = numPlayers;
       //repaint();
   } 
+  
+  public Hexanew(int[][] board){
+	  setTitle("Hexanew");
+      setSize(1500, 1000);
+      setVisible(true);
+      setDefaultCloseOperation(EXIT_ON_CLOSE);
+	  res = board;
+      totalPlayers = 4;
+	 // vertex : update index 2 with settlement (1)/city(2), [3] = current player
+	  //road: 
+	  AI = true;
+  }
   public void paint(Graphics graphics){
       g = graphics;
       //allows me to print text!
       g2 = (Graphics2D)g;
       g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); 
-      drawBoard(interaction.currentPlayerID); 
+      if (AI){
+    	  drawBoard(1);
+      } else {
+    	  drawBoard(interaction.currentPlayerID);
+      }
       updateBoard();
   }
   public void drawBoard(int currentPlayer){
@@ -503,18 +520,33 @@ public class Hexanew extends JFrame{
           }
         }    
       }
-      repaint();
+      if (!AI){
+    	  repaint();
+      }
   } 
   public void addSettlement(int v){
     vertex[v][2]=1;
     vertex[v][3]=interaction.currentPlayerID;
     repaint();
   }
-  public void addCity(int v){
-    vertex[v][2]=2;
-    vertex[v][3]=interaction.currentPlayerID;
-    repaint();
+  
+  //will be called by the Visualize AI class
+  public void addSettlementWithAI(int v, int playerID){
+	    vertex[v][2]=1;
+	    vertex[v][3]=playerID;
   }
+  
+  public void addCityWithAI(int v, int playerID){
+	  vertex[v][2]=2;
+	  vertex[v][3]=playerID;
+  }
+  
+  public void addCity(int v){
+	    vertex[v][2]=2;
+	    vertex[v][3]=interaction.currentPlayerID;
+	    repaint();
+  }
+  
   public void addStatistics(int[] statistics, int currentPlayer){
     for(int i=0;i<statistics.length;i++){
       if (currentPlayer==1) {

@@ -117,7 +117,7 @@ public class GraphMaker {
 			for (int j=0; j<indices.length; j++){
 				adjTiles[j] = tilesInBoard[indices[j]];
 			}
-			Vertex toAdd = new Vertex(adjTiles);
+			Vertex toAdd = new Vertex(adjTiles, i);
 			if (debugCG){
 				System.out.println("Created vertex "+i);
 				System.out.println("Vertex lies between Tiles:");
