@@ -43,9 +43,9 @@ public class GetSpotFeatures {
 	//Julia P do stuff from here
 	private boolean rock(Vertex v){
 		//check graph if that vertex is on rock. Return true if so
-		int [] tiles = v.getAdjacentTiles();
+		Tile [] tiles = v.getAdjacentTiles();
 		for (int i=0; i<tiles.length; i++){
-			if(tiles[i].resource=translator.Rock){
+			if(tiles[i].resource==translator.Rock){
 				return true;
 			}
 		}
@@ -53,10 +53,22 @@ public class GetSpotFeatures {
 	}
 	
 	private boolean wheat(Vertex v){
+		Tile [] tiles = v.getAdjacentTiles();
+		for (int i=0; i<tiles.length; i++){
+			if(tiles[i].resource==translator.Wheat){
+				return true;
+			}
+		}
 		return false;
 	}
 	
 	private boolean brick(Vertex v){
+		Tile [] tiles = v.getAdjacentTiles();
+		for (int i=0; i<tiles.length; i++){
+			if(tiles[i].resource==translator.Brick){
+				return true;
+			}
+		}
 		return false;
 	}
 	
