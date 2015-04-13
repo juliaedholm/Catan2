@@ -123,7 +123,8 @@ public class Vertex {
 		return new Vertex[2];
 	}
 	
-	public Vertex[] getAdjacentVs(Vertex v){
+	public Vertex[] getAdjacentVs(){
+		/*
 		Vertex[] toReturn = new Vertex[3];
 		int vCount = 0;
 		for (int i=0; i<edges.length;  i++){
@@ -145,13 +146,12 @@ public class Vertex {
 		} else {
 			Vertex[] smallerArray = new Vertex[vCount];
 			for (int i = 0; i<vCount; i++){
-			
+				smallerArray[i] = toReturn[i];
 			}
-				
+			return smallerArray;
 		}
-		
-		
-		return toReturn;
+		*/
+		return new Vertex[2];
 	}
 	
 }

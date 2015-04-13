@@ -1,5 +1,7 @@
 import java.util.Random;
 
+import sun.security.provider.certpath.Vertex;
+
 /*JE
  * The GraphController class will maintain the state of the graph as game play progresses.
  * Actions like: build settlement, build road, and build city will all be validated and carried out in this class.  
@@ -21,6 +23,11 @@ public class GraphController {
 	 */
 	public boolean checkPlaceSettlement(int v, Player p, boolean printError){
 		Vertex vert = vertices[v];
+		Vertex [] adjacents = vert.getAdjacentVs();
+		System.out.println("Vertecies 1 away from "+v+" are");
+		for (int i =0 ; i<adjacents.length; i++){
+			System.out.println(adjacents[i].vertexNumber);
+		}
 		if (vert.getSettlementType() != 0) { 
 			//ensure vertex is empty
 			if(printError){
