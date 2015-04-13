@@ -33,7 +33,7 @@ public class PlayManyGames {
 			}
 		}
 		
-		spotQuality.printVertexNumAndWeights();
+		//spotQuality.printVertexNumAndWeights();
 			
 	}
 }
