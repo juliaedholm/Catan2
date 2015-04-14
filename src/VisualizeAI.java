@@ -16,9 +16,9 @@ public class VisualizeAI {
 		}
 		Hexanew h = new Hexanew(newBoard);
 		
-		Vertex[] verticesInGraph = theGraph.vertices;
+		CatanVertex[] verticesInGraph = theGraph.vertices;
 		for (int i = 0; i< verticesInGraph.length; i++){
-			Vertex currentV = verticesInGraph[i];
+			CatanVertex currentV = verticesInGraph[i];
 			//add city/settlements as appropriate
 			if (currentV.getOwner() != null){
 				if (currentV.getSettlementType() == 1){
