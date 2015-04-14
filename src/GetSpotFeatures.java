@@ -26,12 +26,22 @@ public class GetSpotFeatures {
 	 * 20 = touches 3 different Resouces
 	 * 21 = touches 2 different resources
 	 * 22 = touches 1 different resource
+	 * 23 = on 3 tiles
+	 * 24 = on 2 tiles
+	 * 25 = on 1 tile
+	 * 26 = has >=2 builable spots
+	 * 27 = has <2 buildable spots
+	 * 28 = on Rock Port
+	 * 29 = on Wheat Port
+	 * 30 = on Brick Port
+	 * 31 = on Wood Port
+	 * 32 = on Sheep Port
 	 */
 	
 	public int[] getFeaturesForVertex (CatanVertex v){
 		boolean debug = true;
 		
-		int[] toReturn = new int[30];
+		int[] toReturn = new int[35];
 
 
 		if (rock(v)){
@@ -103,8 +113,36 @@ public class GetSpotFeatures {
 		if (touchesOneTypeOfResource(v)){
 			toReturn[22] = 1;
 		}
-
-		
+		if (onThreeTiles(v)){
+			toReturn[23] = 1;
+		}
+		if (onTwoTiles(v)){
+			toReturn[24] = 1;
+		}
+		if (onOneTile(v)){
+			toReturn[25] = 1;
+		}
+		if (hasAtLeast2BuildableSpots(v)){
+			toReturn[26] = 1;
+		}
+		if (doesNotHave2BuildableSpots(v)){
+			toReturn[27] = 1;
+		}
+		if (onRockPort(v)){
+			toReturn[28] = 1;
+		}
+		if (onWheatPort(v)){
+			toReturn[29] = 1;
+		}
+		if (onBrickPort(v)){
+			toReturn[30] = 1;
+		}
+		if (onWoodPort(v)){
+			toReturn[31] = 1;
+		}
+		if (onSheepPort(v)){
+			toReturn[32] = 1;
+		}
 		if (debug){
 			System.out.println("features for vertex "+v.vertexNumber);
 			for (int i = 0; i<toReturn.length; i++){
@@ -115,7 +153,6 @@ public class GetSpotFeatures {
 		return toReturn;
 	}
 	
-	//Julia P do stuff from here
 	private boolean rock(CatanVertex v){
 		//check graph if that vertex is on rock. Return true if so
 		Tile [] tiles = v.getAdjacentTiles();
@@ -302,11 +339,6 @@ public class GetSpotFeatures {
 		return false;
 	}
 	
-
-	
-	//Julia P stop here
-	
-	//Julia E start here
 	private boolean touchesThreeDiffResources (CatanVertex v){
 		Tile[] tiles = v.getAdjacentTiles();
 		int[] resourceCounts = new int[6];
@@ -399,22 +431,35 @@ public class GetSpotFeatures {
 	}
 	
 	private boolean hasAtLeast2BuildableSpots (CatanVertex v){
-
-		return false;
+		boolean debug2Away = false;
+		int freeSpotCount = 0;
+		CatanVertex [] twoAway = v.getVertices2Away();
+		for (int i =0 ; i<twoAway.length; i++){
+			if (twoAway[i].getSettlementType() == 0){
+				freeSpotCount ++;
+				if (debug2Away){
+					System.out.println("At vertex: "+v.vertexNumber+" empty vertex "+twoAway[i].vertexNumber+" is 2 edges away");
+				}
+			}
+		}
+		return freeSpotCount >=2;
 	}
 	
 	private boolean doesNotHave2BuildableSpots (CatanVertex v){
-		return false;
+		boolean debug2Away = false;
+		int freeSpotCount = 0;
+		CatanVertex [] twoAway = v.getVertices2Away();
+		for (int i =0 ; i<twoAway.length; i++){
+			if (twoAway[i].getSettlementType() == 0){
+				freeSpotCount ++;
+				if (debug2Away){
+					System.out.println("At vertex: "+v.vertexNumber+" empty vertex "+twoAway[i].vertexNumber+" is 2 edges away");
+				}
+			}
+		}
+		return freeSpotCount <2;
 		}
 	
-	private boolean onScarceResource(Vertex v){
-		//must think about how to define scarce....
-		return false;
-	}
-	
-	//julia e stop here
-	
-	//CJ do all stuff from here
 	private boolean onRockPort(CatanVertex v){
 		Tile [] tiles = v.getAdjacentTiles();
 		for (int i=0; i<tiles.length; i++){
@@ -460,6 +505,11 @@ public class GetSpotFeatures {
 		}
 		return false;
 	}	
+	
+	private boolean onScarceResource(Vertex v){
+		//must think about how to define scarce....
+		return false;
+	}
 	
 	
 	

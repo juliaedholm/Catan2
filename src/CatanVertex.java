@@ -35,7 +35,15 @@ public class CatanVertex {
 	}
 	
 	public Edge[] getEdges(){
-		return edges;
+		if (numEdgesSet == edges.length){
+			return edges;
+		} else {
+			Edge[] toReturn = new Edge[numEdgesSet];
+			for (int i=0; i<numEdgesSet; i++){
+				toReturn[i] = edges[i];
+			}
+			return toReturn;
+		}
 	}
 	
 	public int getNumEdges(){
@@ -76,62 +84,73 @@ public class CatanVertex {
 		return settlementType;
 	}
 	
+	//returns an array with all of the vertices 2 from current vertex
 	public CatanVertex[] getVertices2Away(){
-		/*
-		int numSpotsToBuild = 0;
-		for (int i=0; i<edges.length;  i++){
-			//edges will connect you to vertex 1 away
+		boolean debug2away = false;
+		CatanVertex[] toReturn = new CatanVertex[6];
+		int numInReturnArray = 0;
+		for (int i=0; i<numEdgesSet;  i++){
 			Edge e = edges[i];
-			Vertex vertexA = e.v1;
-			Vertex vertexB = e.v2;
-			Edge[] twoAway = vertexA.getEdges();
-			numEs = vertexA.getNumEdges();
-			if (vertexA = this){
-				twoAway = vertexB.getEdges();
-				numEs = vertexB.getNumEdges();
+			//edges will connect you to vertex 1 away
+			CatanVertex vertexA = e.v1;
+			CatanVertex vertexB = e.v2;
+			//twoAway will contain the vertices one away from vertexA or vertexB
+			CatanVertex[] twoAway = getAdjacentVs(vertexA);
+			if (debug2away){
+				System.out.println("on edge number "+i+" vertex A: "+e.v1.vertexNumber+" vertex B: "+e.v2.vertexNumber);
+				System.out.println("Adjacent vs for vertex A: ");
+				for (int j =0 ; j<twoAway.length; j++){
+					System.out.println(twoAway[j].vertexNumber);
+				}
 			}
-
-			for (int j = 0; j<numEs; j++){
-				Vertex v1 = twoAway[j].v1;
-				Vertex v2 = aEs[j].v2;
-				if (v1 != vertexA){
-					if (v1.getSettlementType() == 0){
-						numSpotsToBuild ++;
-					}
-				} else if (v2 != vertexA){
-					if (v2.getSettlementType() == 0){
-						numSpotsToBuild ++;
+			if (vertexA == this){
+				twoAway = getAdjacentVs(vertexB);
+				if (debug2away){
+					System.out.println("Vertex A was this vertex. using vertex B");
+					System.out.println("Adjacent vs for vertex B: ");
+					for (int j =0 ; j<twoAway.length; j++){
+						System.out.println(twoAway[j].vertexNumber);
 					}
 				}
 			}
-			
-			for (int j = 0; j< vertexB.getNumEdges(); j++){
-				Vertex v1 = bEs[j].v1;
-				Vertex v2 = bEs[j].v2;
-				if (v1 != vertexB){
-					if (v1.getSettlementType() == 0){
-						numSpotsToBuild ++;
+
+			for (int j = 0; j<twoAway.length; j++){
+				//check that this vertex has not already been added to the array
+				boolean inArray = false;
+				for (int c = 0; c<numInReturnArray; c++){
+					if (toReturn[c] == twoAway[j]){
+						inArray = true;
 					}
-				} else if (v2 != vertexB){
-					if (v2.getSettlementType() == 0){
-						numSpotsToBuild ++;
+				}
+				if (!inArray){
+					if (twoAway[j]!= vertexA && twoAway[j]!= vertexB && twoAway[j] != this){
+						toReturn[numInReturnArray] = twoAway[j];
+						numInReturnArray ++;
 					}
 				}
 			}
 		}
-		*/
-		return new CatanVertex[2];
+		if (numInReturnArray == toReturn.length){
+			return toReturn;
+		} else {
+			CatanVertex[] smallerArray = new CatanVertex[numInReturnArray];
+			for (int i = 0; i<numInReturnArray; i++){
+				smallerArray[i] = toReturn[i];
+			}
+			return smallerArray;
+		}
 	}
 	
-	public CatanVertex[] getAdjacentVs(){
-		/*
-		Vertex[] toReturn = new Vertex[3];
+	//returns an Array with the vertices 2 away from current vertex
+	public CatanVertex[] getAdjacentVs(CatanVertex v){
+		CatanVertex[] toReturn = new CatanVertex[3];
+		Edge[] es = v.getEdges();
 		int vCount = 0;
-		for (int i=0; i<edges.length;  i++){
+		for (int i=0; i<es.length;  i++){
 			//edges will connect you to vertex 1 away
-			Edge e = edges[i];
-			Vertex vertexA = e.v1;
-			Vertex vertexB = e.v2;
+			Edge e = es[i];
+			CatanVertex vertexA = e.v1;
+			CatanVertex vertexB = e.v2;
 			if (vertexA != v){
 				toReturn[vCount] = vertexA;
 				vCount ++;
@@ -144,14 +163,12 @@ public class CatanVertex {
 		if (vCount == 3){
 			return toReturn;
 		} else {
-			Vertex[] smallerArray = new Vertex[vCount];
+			CatanVertex[] smallerArray = new CatanVertex[vCount];
 			for (int i = 0; i<vCount; i++){
 				smallerArray[i] = toReturn[i];
 			}
 			return smallerArray;
 		}
-		*/
-		return new CatanVertex[2];
 	}
 	
 }
