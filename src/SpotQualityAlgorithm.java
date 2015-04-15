@@ -3,9 +3,11 @@
 
 public class SpotQualityAlgorithm {
 	double[] weightOfVertexNum; //test learning= try to determine something meaningful about the weight of vertex for winning	
+	double[] weightOfAllFeats;
 	
 	public SpotQualityAlgorithm(){
 		weightOfVertexNum = new double[55];
+		weightOfAllFeats = new double[35];
 	} 
 	
 	public void incrementVertexNumWeight (int v){
@@ -17,10 +19,21 @@ public class SpotQualityAlgorithm {
 		weightOfVertexNum[v] -= .1;
 	}
 	
+	public void incrementFeatures(int[] goodFeats){
+		for (int i = 0; i<goodFeats.length; i++){
+			if (goodFeats[i] == 1){
+				weightOfAllFeats[i] += .1;
+			}
+		}
+	}
 	
-	public void printVertexNumAndWeights(){
-		for (int i=0; i<weightOfVertexNum.length; i++){
+	public void printFeatureWeights(){
+		/*for (int i=0; i<weightOfVertexNum.length; i++){
 			System.out.println("Weight of vertex: "+i+" is "+weightOfVertexNum[i]);
+		}
+		*/
+		for (int i=0; i<weightOfAllFeats.length; i++){
+			System.out.println("Weight of feature: "+i+" is "+weightOfAllFeats[i]);
 		}
 	}
 }
