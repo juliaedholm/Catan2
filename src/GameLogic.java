@@ -162,6 +162,10 @@ public class GameLogic {
 	public boolean legalRoadCheck(int p, int v1, int v2){
 		return graph.checkPlaceRoad(v1,v2, players[p], debugSet); 
 	}
+
+	public Edge[] legalRoadsRound1(int p){
+		return graph.getLegalRound1Roads(players[p]);
+	}
 	
 	public boolean round1RoadCheck(int v1, int v2, int p){
 		return graph.checkPlaceRound1Road(v1,v2, players[p], debugSet); 

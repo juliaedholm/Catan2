@@ -175,7 +175,48 @@ public class GraphController {
 				return false;
 			}
 	 }
-	
+	 
+	 public Edge[] getLegalRound1Roads(Player p){
+		Edge[] possibleRoads = new Edge[6];
+		int numAdded = 0;
+ 		 
+		 for (int i = 0; i< 54; i++){
+			 CatanVertex vert = vertices[i];
+			 if (vert.getSettlementType() != 0){
+				 if (vert.getOwner() == p){
+					 Edge[] es = vert.getEdges();
+					 boolean thisPlayerHasRoadFromVert = false;
+					 for (int j = 0; j<es.length; j++){
+						 if (es[j].hasRoad){
+							 if (es[j].owner == p){
+								 //System.out.println("In get legal road method. Player "+ p.getID()+" already has a raod from vertex "+i);
+								 thisPlayerHasRoadFromVert = true;
+							 }
+						 }
+					 }
+					 if (! thisPlayerHasRoadFromVert ){
+						 //go through edges and add the emptyOnes
+						 for (int j = 0; j<es.length; j++){
+							 if (!es[j].hasRoad){
+								possibleRoads[numAdded] = es[j];
+								numAdded ++;
+							 }
+						 }
+					 }
+				 }
+			 }
+		 }
+		 
+		 if (numAdded == possibleRoads.length){
+			 return possibleRoads;
+		 } else {
+			 Edge[] toReturn = new Edge[numAdded];
+			 for (int i = 0; i<numAdded; i++) {
+				 toReturn[i] = possibleRoads[i];
+			 }
+			 return toReturn;
+		 }
+	 }
 	
 	/*
 	 * Method will check that player p has at least one road leading to vertex v
