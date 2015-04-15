@@ -21,11 +21,6 @@ public class GraphController {
 	 */
 	public boolean checkPlaceSettlement(int v, Player p, boolean printError){
 		CatanVertex vert = vertices[v];
-		CatanVertex [] adjacents = vert.getAdjacentVs();
-		System.out.println("Vertecies 1 away from "+v+" are");
-		for (int i =0 ; i<adjacents.length; i++){
-			System.out.println(adjacents[i].vertexNumber);
-		}
 		if (vert.getSettlementType() != 0) { 
 			//ensure vertex is empty
 			if(printError){
