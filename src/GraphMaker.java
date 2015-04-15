@@ -5,7 +5,7 @@
 public class GraphMaker {
 	 int[][] board;
 	 Tile[] tilesInBoard;
-	 Vertex[] vertices;
+	 CatanVertex[] vertices;
 	
 	//each list in adjacentSpots contains the index within tilesInBoard that a given vertex lies between
 	static int[][] adjacentSpots = {
@@ -80,7 +80,7 @@ public class GraphMaker {
 	
 	public GraphMaker(int[][] boardFromGamePlayer){
 		board = boardFromGamePlayer;
-		vertices = new Vertex[adjacentSpots.length];
+		vertices = new CatanVertex[adjacentSpots.length];
 		convertBoardToTiles();
 		createVertices();
 		addEdges();
@@ -117,7 +117,7 @@ public class GraphMaker {
 			for (int j=0; j<indices.length; j++){
 				adjTiles[j] = tilesInBoard[indices[j]];
 			}
-			Vertex toAdd = new Vertex(adjTiles, i);
+			CatanVertex toAdd = new CatanVertex(adjTiles, i);
 			if (debugCG){
 				System.out.println("Created vertex "+i);
 				System.out.println("Vertex lies between Tiles:");
@@ -193,7 +193,7 @@ public class GraphMaker {
 		}
 	}
 	
-	public Vertex[] getVertexArray(){
+	public CatanVertex[] getVertexArray(){
 		return vertices;
 	}
 }
