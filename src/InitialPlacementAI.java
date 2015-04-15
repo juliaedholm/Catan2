@@ -58,15 +58,17 @@ public class InitialPlacementAI {
 		}
 		
 		private void findLegalRound1Road(int p){
-			roadVertices = new int[54*54][2];
+			//only 6 possible roads to build from your first 2 settlements
+			Edge[] edges = gl.legalRoadsRound1(p);
+			roadVertices = new int[6][2];
 			roadVerticesCount = 0;
-			for (int i = 0; i<54; i++){
-				for (int j=0; j<54; j++){
-					if (gl.round1RoadCheck(i,j,p)){
-						roadVertices[roadVerticesCount][0] = i;
-						roadVertices[roadVerticesCount][1] = j;
-						roadVerticesCount ++;
-					}
+			for (int i=0; i< edges.length; i++){
+				int v1 = edges[i].v1.vertexNumber;
+				int v2 = edges[i].v2.vertexNumber;
+				if (gl.round1RoadCheck(v1,v2,p)){
+					roadVertices[roadVerticesCount][0] = v1;
+					roadVertices[roadVerticesCount][1] = v2;
+					roadVerticesCount ++;
 				}
 			}
 		}
