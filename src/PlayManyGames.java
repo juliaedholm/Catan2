@@ -43,10 +43,10 @@ public class PlayManyGames {
 				if (i == winningPlayer){
 					saveDataAboutFeats(verticesInGraph[spot1], 1, writer);
 					saveDataAboutFeats(verticesInGraph[spot2], 1, writer);
+					learnAboutWinningVertex(verticesInGraph[spot1], spotQuality);
 					/* learning
 					// incriment feature weights for the winning player 
-					spotQuality.incrementVertexNumWeight(spot1);
-					spotQuality.incrementVertexNumWeight(spot2);
+				
 					*/
 				}  else if (i == worstPlayer){
 					saveDataAboutFeats(verticesInGraph[spot1], 0, writer);
@@ -64,6 +64,7 @@ public class PlayManyGames {
 		} catch (Exception e){
 			System.out.println("Can't close!");
 		}
+		spotQuality.printFeatureWeights();
 	}
 		
 	private static void getFeaturesWithGameState(CatanVertex v){
@@ -90,6 +91,12 @@ public class PlayManyGames {
 			}
 		}
 		
+	}
+	
+	private static void learnAboutWinningVertex (CatanVertex v, SpotQualityAlgorithm spotQuality){
+		GetSpotFeatures feats = new GetSpotFeatures();
+		int[] features = feats.getFeaturesForVertex (v);
+		spotQuality.incrementFeatures(features);
 	}
 		
 }
