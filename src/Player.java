@@ -35,6 +35,9 @@ public class Player {
 		dCardTracker = new DevCards();
 
 		portTracker = new Ports();
+
+		largestArmy = false;
+		longestRoad = false;
 	}
 
 	public int[] getPlayerStats(){
@@ -242,7 +245,6 @@ public class Player {
 	public boolean useDevCard(int i){
 		if(i==0)
 			return dCardTracker.useKnight();
-
 		if(i==3)
 			return dCardTracker.useRoadBuilder();	
 

@@ -227,8 +227,7 @@ public class GameLogic {
 	//i is which dev card! 0 knight, 3 rb, 4 monopoly, 5 yop
 	//this will return whether they can play that d card and then julia needs to handle the rest 
 	public boolean useDevCard(int p, int i){
-		boolean build;
-		build = players[p].useDevCard(i);
+		boolean build = players[p].useDevCard(i);
 
 		//for largest army
 		if(i==0 && build){
