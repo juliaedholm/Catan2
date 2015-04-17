@@ -102,6 +102,7 @@ public class GraphController {
 	 * if not, make no change to the graph and return false	
 	*/
 	public boolean checkPlaceRoad(int a, int b, Player p, boolean printError){
+		printError = true;
 		//find edge object that links v1 and v2, then check if edge is free
 		Edge toConsider = null;
 		Edge[] e1 = vertices[a].getEdges();
@@ -325,7 +326,29 @@ public class GraphController {
 	}
 
 	public int getRoadSize(Player p){
+		/*
+		Edge[] partOfLongRoad;
+		CatanVertex[] vertexVisitedOnLongRoad;
+		int length = 0;
+		int longestRoadCount = 0;
 		//return the length of player p's longest road
+		for (int i = 0; i< vertices.length; i++){
+			if (vertices[i].owner == p){
+				Edges[] nextEdge = vertices[i].getEdges();
+				while (nextEdge.length()>0){
+					for(int j = 0; j<nextEdge.length; nextEdge++){
+						if(j.owner = p){
+							partOfLongRoad[length]= e;
+						}
+					}
+				}
+				CatanVertex[] oneAway = vertices[i].getAdjacentVs(vertices[i]);
+				for (int i = 0; i<oneAway.length; i++){
+					
+				}
+			}
+		}
+		*/
 		return 3;
 	}
 	

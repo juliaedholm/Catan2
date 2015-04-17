@@ -252,6 +252,32 @@ public class GameLogic {
 
 	//this should be called after any instance of someone building a road (placeRoad and buildRoad)
 	public void longRoadChecker(int p){
+		int maxNumRoads = 0;
+		int winningPlayer = 0;
+		for (int i = 1; i< players.length; i++){
+			if (players[p].getNumRoads() > maxNumRoads){
+				maxNumRoads = players[p].getNumRoads();
+				winningPlayer = p;
+			}
+		}
+		if (maxNumRoads < 5){
+			return;
+		}
+		System.out.println("Max number of roads is greater than 5. Player with most roads is player"+winningPlayer);
+		if (players[winningPlayer].checkLongRoad() == true){
+			//player with longest road already has earned those points
+			return;
+		} else {
+			System.out.println("Changing long road status for player"+winningPlayer);
+			players[winningPlayer].changeLongRoad();
+			for (int i = 1; i< players.length; i++){
+				if (players[i].checkLongRoad() == true && i != winningPlayer){
+					players[i].changeLongRoad();
+				}
+			}
+		}
+		
+		/*
 		if(graph.getRoadSize(players[p])>=5 && players[p].checkLongRoad()==false){
 				for(int m=0; m<players.length; m++){
 					if(players[m].checkLongRoad() == true){
@@ -263,6 +289,7 @@ public class GameLogic {
 					}
 				}
 		}
+		*/
 	}
 
 	public void useMonopoly(int p, int r){

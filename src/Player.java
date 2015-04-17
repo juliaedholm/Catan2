@@ -148,7 +148,10 @@ public class Player {
 	}
 
 	//methods for longest road
-
+	public int getNumRoads(){
+		return numberOfRoads;
+	}
+	
 	public boolean checkLongRoad(){
 		return longestRoad;
 	}
