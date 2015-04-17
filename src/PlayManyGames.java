@@ -44,6 +44,7 @@ public class PlayManyGames {
 					saveDataAboutFeats(verticesInGraph[spot1], 1, writer);
 					saveDataAboutFeats(verticesInGraph[spot2], 1, writer);
 					learnAboutWinningVertex(verticesInGraph[spot1], spotQuality);
+<<<<<<< HEAD
 					learnAboutWinningVertex(verticesInGraph[spot2], spotQuality);
 					/* learning
 					// incriment feature weights for the winning player 
@@ -59,6 +60,11 @@ public class PlayManyGames {
 					spotQuality.decrementVertexNumWeight(spot1);
 					spotQuality.decrementVertexNumWeight(spot2);
 					*/
+=======
+				}  else if (i == worstPlayer){
+					saveDataAboutFeats(verticesInGraph[spot1], 0, writer);
+					saveDataAboutFeats(verticesInGraph[spot2], 0, writer);
+>>>>>>> juliaedholm/master
 				}
 			}
 		}
