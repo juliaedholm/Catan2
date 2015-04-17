@@ -86,9 +86,9 @@ public class TurnAI {
 			buildRoad();
 		}/* else if (devCardPossible()){
 			buyDevCard();
-		} else if (canUsePort()){
+		}*/ else if (canUsePort()){
 			usePort();
-		}*/ else if (tradePossible4to1()){
+		} else if (tradePossible4to1()){
 			makeTrade();
 		}/* else if (monopolyPossible()){
 			///do something
@@ -228,10 +228,11 @@ public class TurnAI {
 	
 	//TODO: start at 0, not 1 and use 3:1
 	private boolean canUsePort(){
-		int[] resourceWanted =  gl.getResourcesWantedInTrade(p);
+	/*	int[] resourceWanted =  gl.getResourcesWantedInTrade(p);
 		if (resourceWanted.length == 0){
 			return false;
 		}
+		*/
 		potentialPorts = new int[6];
 		portCount = 0;
 		for (int i = 1; i<6 ; i++ ){
@@ -244,6 +245,7 @@ public class TurnAI {
 	}
 	
 	private void usePort(){
+		System.out.println("Trying to use a port");
 		int randIndex = generator.nextInt(portCount);
 		int portToUse = potentialPorts[randIndex];
 		
@@ -275,7 +277,7 @@ public class TurnAI {
 		while (resourceDesired == portToUse){
 			resourceDesired = generator.nextInt(5)+1;
 		}
-		if (debug){
+		if (true){
 			System.out.println("Player: "+" is using a port of type: "+portToUse+" to trade for a resource of type: "+resourceDesired);	
 		}
 		rg.resourceClicked(resourceDesired);
@@ -283,12 +285,6 @@ public class TurnAI {
 	}
 	
 	private boolean tradePossible4to1(){
-		//first, check that they need at least 1 type of resource
-	/*	int[] resourceWanted =  gl.getResourcesWantedInTrade(p);
-		if (resourceWanted.length == 0){
-			return false;
-		}
-		*/
 		resourcesToTrade4to1 = new int[5];
 		tradeCounter = 0;
 		if (gl.hasResourcesToTrade(p, translator.Wheat, 4)){
@@ -318,13 +314,6 @@ public class TurnAI {
 		int tradeIndex = generator.nextInt(tradeCounter);
 		int resourceToTrade =  resourcesToTrade4to1[tradeIndex];
 		int resourceDesired = getResourceWanted(resourceToTrade);
-		/*
-		 * int resourceDesired =	 generator.nextInt(5)+1;
-		//make sure that the type of resourceDesired is not the same resource that you are trading away
-		while (resourceDesired == resourceToTrade){
-			resourceDesired = generator.nextInt(5)+1;
-		}
-		*/
 		int[][] tradeArray = new int[][]{{resourceDesired, 1, 0},{resourceToTrade,4, p}};
 		if (printActions){
 			System.out.println("trading resource of type: "+tradeArray[1][0]+ " with bank for a resource of type: "+resourceDesired);
