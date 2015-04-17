@@ -87,7 +87,7 @@ public class PlayManyGames {
 	private static void learnAboutWinningVertex (CatanVertex v, SpotQualityAlgorithm spotQuality){
 		GetSpotFeatures feats = new GetSpotFeatures();
 		int[] features = feats.getFeaturesForVertex (v);
-		spotQuality.incrementFeatures(features);
+		spotQuality.winnersFeatures(features);
 	}
 		
 }
