@@ -179,7 +179,6 @@ public class GraphController {
 	 public Edge[] getLegalRound1Roads(Player p){
 		Edge[] possibleRoads = new Edge[6];
 		int numAdded = 0;
- 		 
 		 for (int i = 0; i< 54; i++){
 			 CatanVertex vert = vertices[i];
 			 if (vert.getSettlementType() != 0){

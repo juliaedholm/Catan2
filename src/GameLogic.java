@@ -327,6 +327,7 @@ public class GameLogic {
 		for (int i = 0; i<playerCurrentResources.length; i++){
 			if (playerCurrentResources[i] == 0){
 				resourceTypes[typesCount] = i;
+				typesCount++;
 			}
 		}
 		if (typesCount == resourceTypes.length){
