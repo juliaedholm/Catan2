@@ -14,7 +14,7 @@ public class PlayManyGames {
 		
 		
 		SpotQualityAlgorithm spotQuality = new SpotQualityAlgorithm ();
-		int numRuns = 10;
+		int numRuns = 5;
 		
 		for (int j=0; j<numRuns; j++){
 			RunGame gameRunner = new RunGame(4, false, true, true); //will used a fixed board
@@ -44,6 +44,7 @@ public class PlayManyGames {
 					saveDataAboutFeats(verticesInGraph[spot1], 1, writer);
 					saveDataAboutFeats(verticesInGraph[spot2], 1, writer);
 					learnAboutWinningVertex(verticesInGraph[spot1], spotQuality);
+					learnAboutWinningVertex(verticesInGraph[spot2], spotQuality);
 					/* learning
 					// incriment feature weights for the winning player 
 				
@@ -51,6 +52,8 @@ public class PlayManyGames {
 				}  else if (i == worstPlayer){
 					saveDataAboutFeats(verticesInGraph[spot1], 0, writer);
 					saveDataAboutFeats(verticesInGraph[spot2], 0, writer);
+				//	learnAboutLoosingVertex(verticesInGraph[spot1], spotQuality);
+				//	learnAboutLoosingVertex(verticesInGraph[spot2], spotQuality);
 					/* learning
 					//decriment feature weights for loosing players 
 					spotQuality.decrementVertexNumWeight(spot1);
@@ -96,7 +99,13 @@ public class PlayManyGames {
 	private static void learnAboutWinningVertex (CatanVertex v, SpotQualityAlgorithm spotQuality){
 		GetSpotFeatures feats = new GetSpotFeatures();
 		int[] features = feats.getFeaturesForVertex (v);
-		spotQuality.incrementFeatures(features);
+		spotQuality.winnersFeatures(features);
+	}
+
+	private static void learnAboutLoosingVertex (CatanVertex v, SpotQualityAlgorithm spotQuality){
+		GetSpotFeatures feats = new GetSpotFeatures();
+		int[] features = feats.getFeaturesForVertex (v);
+		spotQuality.loosersFeatures(features);
 	}
 		
 }

@@ -84,11 +84,11 @@ public class TurnAI {
 			buildCity();
 		} else if (roadPossible()) {
 			buildRoad();
-		} else if (devCardPossible()){
+		} /*else if (devCardPossible()){
 			buyDevCard();
-		} else if (canUsePort()){
+		} */else if (canUsePort()){
 			usePort();
-		} else if (tradePossible4to1()){
+		}/* else if (tradePossible4to1()){
 			makeTrade();
 		} else if (monopolyPossible()){
 			///do something
@@ -99,6 +99,7 @@ public class TurnAI {
 		} else if (knightPossible()){
 			//do something
 		}
+		*/
 	}
 	
 	//populate the array possibleActions with list of the moves you can make
