@@ -84,25 +84,11 @@ public class TurnAI {
 			buildCity();
 		} else if (roadPossible()) {
 			buildRoad();
-<<<<<<< HEAD
-		} /*else if (devCardPossible()){
-=======
 		}/* else if (devCardPossible()){
->>>>>>> juliaedholm/master
 			buyDevCard();
-<<<<<<< HEAD
-		} */else if (canUsePort()){
-			usePort();
-<<<<<<< HEAD
-		}/* else if (tradePossible4to1()){
-=======
-		}*/ else if (tradePossible4to1()){
->>>>>>> juliaedholm/master
-=======
 		}*/ else if (canUsePort()){
 			usePort();
 		} else if (tradePossible4to1()){
->>>>>>> juliaedholm/master
 			makeTrade();
 		}/* else if (monopolyPossible()){
 			///do something
@@ -112,12 +98,7 @@ public class TurnAI {
 			//do something
 		} else if (knightPossible()){
 			//do something
-<<<<<<< HEAD
-		}
-		*/
-=======
 		}*/
->>>>>>> juliaedholm/master
 	}
 	
 	//populate the array possibleActions with list of the moves you can make
