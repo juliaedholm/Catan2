@@ -504,7 +504,7 @@ public class GetSpotFeatures {
 		return false;
 	}	
 	
-	private boolean onScarceResource(Vertex v){
+	private boolean onScarceResource(CatanVertex v){
 		//must think about how to define scarce....
 		return false;
 	}
