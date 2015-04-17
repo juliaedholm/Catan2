@@ -256,6 +256,12 @@ public class RunGame {
 	public void setActionType (int t){
 		if (t == 4 ){
 			System.out.println("Trade started. Click num of resources you want, then the num of resources you'll give up.");
+		/*	int[] rs = gl.getResourcesWantedInTrade(currentPlayerID);
+			System.out.println("Resource array length"+rs.length);
+			for (int i = 0; i<rs.length; i++){
+				System.out.println("resource"+rs[i]);
+			}
+			*/
 		}
 		if (actionType == 4 && t == 4){//player already clicked the trade button once
 			tradeResourceButton();
