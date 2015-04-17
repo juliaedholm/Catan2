@@ -116,6 +116,16 @@ public class Player {
 	public int getAllX(int x){
 		return resourceTracker.monopX(x);
 	}
+	
+	public int[] getResourceArray(){
+		int[] stats = new int[5];
+		stats[0] = resourceTracker.getSheep();
+		stats[1] = resourceTracker.getRock();
+		stats[2] = resourceTracker.getWheat();
+		stats[3] = resourceTracker.getBrick();
+		stats[4] = resourceTracker.getWood();
+		return stats;
+	}
 
 	//methods for largest army
 	public int getArmySize(){

@@ -84,13 +84,13 @@ public class TurnAI {
 			buildCity();
 		} else if (roadPossible()) {
 			buildRoad();
-		} else if (devCardPossible()){
+		}/* else if (devCardPossible()){
 			buyDevCard();
 		} else if (canUsePort()){
 			usePort();
-		} else if (tradePossible4to1()){
+		}*/ else if (tradePossible4to1()){
 			makeTrade();
-		} else if (monopolyPossible()){
+		}/* else if (monopolyPossible()){
 			///do something
 		} else if (yopPossible()){
 			//do something
@@ -98,7 +98,7 @@ public class TurnAI {
 			//do something
 		} else if (knightPossible()){
 			//do something
-		}
+		}*/
 	}
 	
 	//populate the array possibleActions with list of the moves you can make
@@ -228,6 +228,10 @@ public class TurnAI {
 	
 	//TODO: start at 0, not 1 and use 3:1
 	private boolean canUsePort(){
+		int[] resourceWanted =  gl.getResourcesWantedInTrade(p);
+		if (resourceWanted.length == 0){
+			return false;
+		}
 		potentialPorts = new int[6];
 		portCount = 0;
 		for (int i = 1; i<6 ; i++ ){
@@ -266,7 +270,7 @@ public class TurnAI {
 				rg.setActionType(17);
 				break;
 		}
-		int resourceDesired = generator.nextInt(5)+1;
+		int resourceDesired = getResourceWanted(portToUse);
 		//make sure that the type of resourceDesired is not the same resource that you are trading away
 		while (resourceDesired == portToUse){
 			resourceDesired = generator.nextInt(5)+1;
@@ -279,6 +283,12 @@ public class TurnAI {
 	}
 	
 	private boolean tradePossible4to1(){
+		//first, check that they need at least 1 type of resource
+	/*	int[] resourceWanted =  gl.getResourcesWantedInTrade(p);
+		if (resourceWanted.length == 0){
+			return false;
+		}
+		*/
 		resourcesToTrade4to1 = new int[5];
 		tradeCounter = 0;
 		if (gl.hasResourcesToTrade(p, translator.Wheat, 4)){
@@ -307,11 +317,14 @@ public class TurnAI {
 	private void makeTrade(){
 		int tradeIndex = generator.nextInt(tradeCounter);
 		int resourceToTrade =  resourcesToTrade4to1[tradeIndex];
-		int resourceDesired = generator.nextInt(5)+1;
+		int resourceDesired = getResourceWanted(resourceToTrade);
+		/*
+		 * int resourceDesired =	 generator.nextInt(5)+1;
 		//make sure that the type of resourceDesired is not the same resource that you are trading away
 		while (resourceDesired == resourceToTrade){
 			resourceDesired = generator.nextInt(5)+1;
 		}
+		*/
 		int[][] tradeArray = new int[][]{{resourceDesired, 1, 0},{resourceToTrade,4, p}};
 		if (printActions){
 			System.out.println("trading resource of type: "+tradeArray[1][0]+ " with bank for a resource of type: "+resourceDesired);
@@ -319,6 +332,22 @@ public class TurnAI {
 		}
 		rg.trade(tradeArray);
 		return;
+	}
+	
+	private int getResourceWanted(int resourceToTrade){
+		int[] possibleWants =  gl.getResourcesWantedInTrade(p);
+		if (possibleWants.length != 0){
+			int index = generator.nextInt(possibleWants.length);
+			return possibleWants[index];
+		} else{
+			int resourceDesired =	 generator.nextInt(5)+1;
+			//make sure that the type of resourceDesired is not the same resource that you are trading away
+			while (resourceDesired == resourceToTrade){
+				resourceDesired = generator.nextInt(5)+1;
+			}
+			return resourceDesired;
+		}
+		
 	}
 	
 	private boolean devCardPossible(){
