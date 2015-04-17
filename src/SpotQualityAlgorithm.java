@@ -19,11 +19,21 @@ public class SpotQualityAlgorithm {
 		weightOfVertexNum[v] -= .1;
 	}
 	
-	public void incrementFeatures(int[] goodFeats){
+	public void winnersFeatures(int[] goodFeats){
 		for (int i = 0; i<goodFeats.length; i++){
 			if (goodFeats[i] == 1){
-				weightOfAllFeats[i] += .1;
+				weightOfAllFeats[i] += 1;
+			} else if (goodFeats[i] == 0){
+				weightOfAllFeats[i] -= 1;
 			}
+		}
+	}
+
+	public void loosersFeatures(int[] badFeats){
+		for (int i = 0; i<badFeats.length; i++){
+			if (badFeats[i] == 1){
+				weightOfAllFeats[i] -= 1;
+			} 
 		}
 	}
 	

@@ -351,7 +351,7 @@ public class GetSpotFeatures {
 			}
 		}
 		
-		return numDiffResourcesOnSpot == 1;
+		return numDiffResourcesOnSpot == 3;
 	}
 	
 	private boolean touchesTwoDiffResources (CatanVertex v){
@@ -385,7 +385,7 @@ public class GetSpotFeatures {
 			}
 		}
 		
-		return numDiffResourcesOnSpot == 3;
+		return numDiffResourcesOnSpot == 1;
 	}
 	
 	//false if you touch 2 or 3. 
