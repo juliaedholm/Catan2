@@ -319,6 +319,27 @@ public class GameLogic {
 		int totalResourcesOfType = players[p].numResourcesOfType(resourceType);
 		return totalResourcesOfType >= numToTrade;
 	}
+	
+	public int[] getResourcesWantedInTrade(int p){
+		int[] resourceTypes = new int[5];
+		int typesCount = 0;
+		int[] playerCurrentResources = players[p].getResourceArray();
+		for (int i = 0; i<playerCurrentResources.length; i++){
+			if (playerCurrentResources[i] == 0){
+				resourceTypes[typesCount] = i;
+			}
+		}
+		if (typesCount == resourceTypes.length){
+			return resourceTypes;
+		} else {
+			int[] toReturn = new int[typesCount];
+			for (int i = 0; i<toReturn.length; i++){
+				toReturn[i] = resourceTypes[i];
+			}
+			return toReturn;
+		}
+	}
+	
 
 	public void trade(int[][] tradeStats){
 		//tradeStats[0]= {type you want, amount, playerID to give}, tradeStats[1] = {type you'll give away, amount, playerID initiating trade}
