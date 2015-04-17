@@ -270,7 +270,7 @@ public class RunGame {
 		} else if (t == 11){
 			buyDevCard();
 		} else if (t == 12){
-			System.out.println("3 to 1 port clicked...");
+			System.out.println("3 to 1 port clicked. Click num of resources you want, then the num of resources you'll give up.");
 		}
 		actionType = t;
 	}
@@ -354,7 +354,7 @@ public class RunGame {
 		if (printRunningMessage){
 			System.out.println("Trade with bank");
 		}
-		if (actionType == 4){ //clicked trade but did not click player
+		if (actionType == 4 || actionType == 12){ //clicked trade but did not click player
 			//4 to one trade
 			tradeResources[0][2] = 0;//trading with computer
 			tradeResources[1][2] = currentPlayerID;
@@ -390,7 +390,7 @@ public class RunGame {
 		if (printRunningMessage){
 			System.out.println("Resource Clicked");
 		}
-			if (actionType == 5 || actionType == 4){
+			if (actionType == 5 || actionType == 4 || actionType == 12){
 				if (tradeResources[0][0] == 0){
 					//nothing has been asked for
 					if (printRunningMessage){
@@ -409,6 +409,11 @@ public class RunGame {
 					}
 					tradeResources[1][0] = resourceType; 
 					tradeResources[1][1] = 1;
+					if (actionType == 12){
+						//3 for 1 trade
+						tradeResources[1][1] = 3;
+						tradeResourceButton();
+					}
 				} else if (tradeResources[1][0]== resourceType) {
 					if (printRunningMessage){
 						System.out.println("Incrimenting resource to give up");
@@ -424,8 +429,6 @@ public class RunGame {
 					yopResources[1] = resourceType;
 					useYearOfPlenty();
 				}
-			} else if (actionType == 12) {
-				//harder
 			} else if (actionType == 13) {
 				gl.usePort(currentPlayerID, 1, resourceType);
 			} else if (actionType == 14) {
