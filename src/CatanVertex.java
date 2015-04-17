@@ -141,7 +141,7 @@ public class CatanVertex {
 		}
 	}
 	
-	//returns an Array with the vertices 2 away from current vertex
+	//returns an Array with the vertices 1 away from current vertex
 	public CatanVertex[] getAdjacentVs(CatanVertex v){
 		CatanVertex[] toReturn = new CatanVertex[3];
 		Edge[] es = v.getEdges();
