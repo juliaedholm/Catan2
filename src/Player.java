@@ -241,8 +241,8 @@ public class Player {
 		return true;
 
 	}
-
-	public boolean useDevCard(int i){
+	
+	public boolean useDevCard (int i){
 		if(i==0)
 			return dCardTracker.useKnight();
 
@@ -254,6 +254,21 @@ public class Player {
 
 		if(i==5)
 			return dCardTracker.useYearOfPlenty();
+		return false;
+	}
+
+	public boolean canUseDevCard(int i){
+		if(i==0)
+			return (dCardTracker.getK()>0);
+
+		if(i==3)
+			return (dCardTracker.getRB()>0);	
+
+		if(i==4)
+			return dCardTracker.getM() > 0 ;
+
+		if(i==5)
+			return dCardTracker.getYoP() >0 ;
 		
 		System.out.println("Something is wrong if this prints - usedevcard.");
 		return false;

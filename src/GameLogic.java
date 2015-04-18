@@ -33,6 +33,11 @@ public class GameLogic {
 
 	}
 	
+	public int[] getVerticesWithSettlements(int p){
+		return players[p].getSettlementVertices();
+	}
+
+	
 	public boolean placeSetCheck(int p, int vertexNumber){
 		return graph.checkPlaceSettlement(vertexNumber, players[p], debugSet);
 	}
@@ -192,10 +197,52 @@ public class GameLogic {
 		}
 	}
 	
-	public int[] getVerticesWithSettlements(int p){
-		return players[p].getSettlementVertices();
-	}
-
+	//this should be called after any instance of someone building a road (placeRoad and buildRoad)
+		public void longRoadChecker(int p){
+			int maxNumRoads = 0;
+			int winningPlayer = 0;
+			for (int i = 1; i< players.length; i++){
+				if (players[p].getNumRoads() > maxNumRoads){
+					maxNumRoads = players[p].getNumRoads();
+					winningPlayer = p;
+				}
+			}
+			if (maxNumRoads < 5){
+				return;
+			}
+			if(debug){
+				System.out.println("Max number of roads is greater than 5. Player with most roads is player"+winningPlayer);
+			}
+			if (players[winningPlayer].checkLongRoad() == true){
+				//player with longest road already has earned those points
+				return;
+			} else {
+				if(debug){
+					System.out.println("Changing long road status for player"+winningPlayer);
+				}
+				players[winningPlayer].changeLongRoad();
+				for (int i = 1; i< players.length; i++){
+					if (players[i].checkLongRoad() == true && i != winningPlayer){
+						players[i].changeLongRoad();
+					}
+				}
+			}
+			
+			/*
+			if(graph.getRoadSize(players[p])>=5 && players[p].checkLongRoad()==false){
+					for(int m=0; m<players.length; m++){
+						if(players[m].checkLongRoad() == true){
+							if(graph.getRoadSize(players[p]) > graph.getRoadSize(players[m])){
+								players[p].changeLongRoad();
+								players[m].changeLongRoad();
+							}
+							break;
+						}
+					}
+			}
+			*/
+		}
+	
 	public boolean buildDevCheck(int p ){
 		boolean hasResources = players[p].buildDevCheck();
 		if (hasResources == false){
@@ -225,74 +272,39 @@ public class GameLogic {
 	}
 
 	//i is which dev card! 0 knight, 3 rb, 4 monopoly, 5 yop
-	//this will return whether they can play that d card and then julia needs to handle the rest 
-	public boolean useDevCard(int p, int i){
-		boolean build;
-		build = players[p].useDevCard(i);
-
-		//for largest army
-		if(i==0 && build){
-			System.out.println("If this is printing, you played a knight so we need to check if you have largest army. You should automatically get your two points. Tell CJ if this isnt working");
-			if(players[p].getArmySize()>=3 && players[p].checkLgArmy()==false){
-				for(int m=0; m<players.length; m++){
-					if(players[m].checkLgArmy() == true){
-						if(players[p].getArmySize() > players[m].getArmySize()){
-							players[p].changeLgArmy();
-							players[m].changeLgArmy();
-						}
-						break;
-					}
-				}
-			}
-		}
-
-		return build;
-
+	public boolean canUseDevCard(int p, int i){
+		return players[p].canUseDevCard(i);
 	}
 
-	//this should be called after any instance of someone building a road (placeRoad and buildRoad)
-	public void longRoadChecker(int p){
-		int maxNumRoads = 0;
-		int winningPlayer = 0;
-		for (int i = 1; i< players.length; i++){
-			if (players[p].getNumRoads() > maxNumRoads){
-				maxNumRoads = players[p].getNumRoads();
-				winningPlayer = p;
+	public boolean useDevCard(int playerID, int i){
+		boolean canUse = canUseDevCard(playerID, i);
+		if (canUse){
+			if (i == 0){
+				useKnight(playerID);
+			} else if (i == 3){
+				players[playerID].useDevCard(i);
 			}
 		}
-		if (maxNumRoads < 5){
-			return;
-		}
-		System.out.println("Max number of roads is greater than 5. Player with most roads is player"+winningPlayer);
-		if (players[winningPlayer].checkLongRoad() == true){
-			//player with longest road already has earned those points
-			return;
-		} else {
-			System.out.println("Changing long road status for player"+winningPlayer);
-			players[winningPlayer].changeLongRoad();
-			for (int i = 1; i< players.length; i++){
-				if (players[i].checkLongRoad() == true && i != winningPlayer){
-					players[i].changeLongRoad();
-				}
-			}
-		}
-		
-		/*
-		if(graph.getRoadSize(players[p])>=5 && players[p].checkLongRoad()==false){
-				for(int m=0; m<players.length; m++){
-					if(players[m].checkLongRoad() == true){
-						if(graph.getRoadSize(players[p]) > graph.getRoadSize(players[m])){
-							players[p].changeLongRoad();
-							players[m].changeLongRoad();
-						}
-						break;
-					}
-				}
-		}
-		*/
 	}
-
+	
+	public void useKnight(int p){
+		System.out.println("If this is printing, you played a knight so we need to check if you have largest army. You should automatically get your two points. Tell CJ if this isnt working");
+		players[p].useDevCard(0);
+		if(players[p].getArmySize()>=3 && players[p].checkLgArmy()==false){
+			for(int m=0; m<players.length; m++){
+				if(players[m].checkLgArmy() == true){
+					if(players[p].getArmySize() > players[m].getArmySize()){
+						players[p].changeLgArmy();
+						players[m].changeLgArmy();
+					}
+					break;
+				}
+			}
+		}
+	}
+	
 	public void useMonopoly(int p, int r){
+		players[p].useDevCard(4);
 		//r is the resource we are monopolizing
 		int total = 0;
 		System.out.println("Okay, I think this is the problem with monopoly. What you should see here is # of players minus one statements (so if 3 players, 2 statements) that count up to the total number of the resource you are monopolizing. Then it should say total at end of loop. Please report back to CJ what happens.");
@@ -307,6 +319,7 @@ public class GameLogic {
 	}
 
 	public void useYearOfPlenty(int p, int r1, int r2){
+		players[p].useDevCard(5);
 		players[p].addResource(r1, 1);
 		players[p].addResource(r2, 1);
 	}
@@ -394,21 +407,27 @@ public class GameLogic {
 		}
 	}
 	
-	//this is just for the 2:1 port. 3:1 port is handled elsewhere
 	public boolean checkUsePort (int player, int portType){
-		//make sure player has at least 2 of required resource
-		boolean hasResource = hasResourcesToTrade(player, portType, 2);
-		//make sure player is built on the correct port
-		boolean hasPort = players[player].usePortCheck(portType);
-		if (!hasResource && debug){
-			System.out.println("You don't have enough resources to use this port");
+		boolean hasResource;
+		if (portType != 0){
+			//make sure player has at least 2 of required resource
+			hasResource = hasResourcesToTrade(player, portType, 2);
+			//make sure player is built on the correct port	
+			if (!hasResource && debug){
+				System.out.println("You don't have enough resources to use this port");
+			}
+		} else {
+			hasResource = true;
 		}
+		boolean hasPort = players[player].usePortCheck(portType);
+	
 		if (!hasPort && debug){
 			System.out.println("You are not built on this port");
 		}
 		return hasResource && hasPort;
 	}
 	
+	//this is just for the 2:1 port. 3:1 port is handled with trade()
 	public void usePort ( int playerID, int portType, int resourceDesired){
 		boolean canUsePort = checkUsePort(playerID, portType);
 		if (canUsePort){
@@ -416,6 +435,5 @@ public class GameLogic {
 			players[playerID].addResource(resourceDesired, 1);
 		}
 	}
-
 	
 }

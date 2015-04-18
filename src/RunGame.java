@@ -120,7 +120,7 @@ public class RunGame {
 				winningPlayer = i;
 			}
 		}
-		System.out.println("first Settlement for winner("+winningPlayer+" was "+initialSettlementsForPlayers[winningPlayer][1]+ " and second was "+initialSettlementsForPlayers[winningPlayer][2]);
+		System.out.println("first Settlement for winner("+winningPlayer+" was "+initialSettlementsForPlayers[winningPlayer][1]+ ") and second was "+initialSettlementsForPlayers[winningPlayer][2]);
 		System.out.println("numTurns: "+numTurns);
 		
 		return winningPlayer;

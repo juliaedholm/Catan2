@@ -52,6 +52,8 @@ public class GraphController {
 	public void addSettlementToGraph(int v, Player p){
 		CatanVertex vert = vertices[v];
 		vert.buildSettlement(p);
+	//	GetSpotFeatures feats = new GetSpotFeatures();
+		//int[] features = feats.getFeaturesForVertex (vert);
 	}
 	
 	/*
@@ -102,7 +104,6 @@ public class GraphController {
 	 * if not, make no change to the graph and return false	
 	*/
 	public boolean checkPlaceRoad(int a, int b, Player p, boolean printError){
-		printError = true;
 		//find edge object that links v1 and v2, then check if edge is free
 		Edge toConsider = null;
 		Edge[] e1 = vertices[a].getEdges();
