@@ -21,6 +21,8 @@ public class TurnAI {
 	int roadVerticesCount;
 	int[] resourcesToTrade4to1;
 	int tradeCounter;
+	int[] resourcesToTrade3to1;
+	int trade3to1Counter;
 	int [] potentialPorts;
 	int portCount;
 	
@@ -83,12 +85,15 @@ public class TurnAI {
 		} else if (cityPossible()) {
 			buildCity();
 		} else if (roadPossible()) {
-			buildRoad();
+			buildSmartRoad();
 		}/* else if (devCardPossible()){
 			buyDevCard();
-		}*/ else if (canUsePort()){
+		}*/ else if (canUse2to1Port()){
 			usePort();
-		} else if (tradePossible4to1()){
+		} else if (canUse3to1Port()){
+			use3to1Port();
+		}
+		else if (tradePossible4to1()){
 			makeTrade();
 		}/* else if (monopolyPossible()){
 			///do something
@@ -102,6 +107,7 @@ public class TurnAI {
 	}
 	
 	//populate the array possibleActions with list of the moves you can make
+	/*
 	private void checkPossible(){
 		actionCount = 0;
 		if (settlementPossible()){
@@ -141,6 +147,7 @@ public class TurnAI {
 			actionCount ++;
 		}
 	}
+	*/
 	
 	//check if there is any vertex that you can build a settlement on
 	private boolean settlementPossible(){
@@ -210,29 +217,40 @@ public class TurnAI {
 		return;
 	}
 	
+	private void buildSmartRoad(){
+		//choose the road that will get you to a buildable spot 
+		for (int i = 0; i<roadVerticesCount; i++){
+			int v1 = roadVertices[i][0];
+			int v2 =  roadVertices[i][1];
+			if (gl.placeSetCheck(p, v1) || gl.placeSetCheck(p,v2)){
+				rg.setActionType(3);
+				rg.setVertex(v1);
+				rg.setVertex(v2);
+				System.out.println("BUILT A SMART ROAD");
+				return;
+			} 
+		} 
+		//did not build a smart raod;
+		buildRoad();
+	}
+	
 	private boolean monopolyPossible(){
-		return false;
+		return gl.canUseDevCard (p, 4);
 	}
 	
 	private boolean yopPossible(){
-		return false;
+		return gl.canUseDevCard (p, 5);
 	}
 	
 	private boolean knightPossible(){
-		return false;
+		return gl.canUseDevCard (p, 0);
 	}
 	
 	private boolean roadBuilderPossible(){
 		return false;
 	}
 	
-	//TODO: start at 0, not 1 and use 3:1
-	private boolean canUsePort(){
-	/*	int[] resourceWanted =  gl.getResourcesWantedInTrade(p);
-		if (resourceWanted.length == 0){
-			return false;
-		}
-		*/
+	private boolean canUse2to1Port(){
 		potentialPorts = new int[6];
 		portCount = 0;
 		for (int i = 1; i<6 ; i++ ){
@@ -250,7 +268,6 @@ public class TurnAI {
 		int portToUse = potentialPorts[randIndex];
 		
 		switch (portToUse) {
-		//TODO: addd 3-1 port
 			case (1):
 				//rock port
 				rg.setActionType(13);
@@ -278,9 +295,52 @@ public class TurnAI {
 			resourceDesired = generator.nextInt(5)+1;
 		}
 		if (true){
-			System.out.println("Player: "+" is using a port of type: "+portToUse+" to trade for a resource of type: "+resourceDesired);	
+			System.out.println("Player: "+p+" is using a port of type: "+portToUse+" to trade for a resource of type: "+resourceDesired);	
 		}
 		rg.resourceClicked(resourceDesired);
+		return;
+	}
+	
+	private boolean canUse3to1Port(){
+		if (!gl.checkUsePort(p, 0)){
+			return false;
+		} else {
+			resourcesToTrade3to1 = new int[5];
+			trade3to1Counter = 0;
+			if (gl.hasResourcesToTrade(p, translator.Wheat, 3)){
+				resourcesToTrade3to1[tradeCounter] = translator.Wheat;
+				trade3to1Counter ++;
+			}
+			if (gl.hasResourcesToTrade(p, translator.Rock, 3)){
+				resourcesToTrade3to1[tradeCounter] = translator.Rock;
+				trade3to1Counter ++;
+			}
+			if (gl.hasResourcesToTrade(p, translator.Brick, 3)){
+				resourcesToTrade3to1[tradeCounter] = translator.Brick;
+				trade3to1Counter ++;
+			}
+			if (gl.hasResourcesToTrade(p, translator.Sheep, 3)){
+				resourcesToTrade3to1[tradeCounter] = translator.Sheep;
+				trade3to1Counter ++;
+			}
+			if (gl.hasResourcesToTrade(p, translator.Wood, 3)){
+				resourcesToTrade3to1[tradeCounter] = translator.Wood;
+				trade3to1Counter ++;
+			}
+			return trade3to1Counter > 0;
+		}
+	}
+	
+	private void use3to1Port(){
+		int tradeIndex = generator.nextInt(trade3to1Counter);
+		int resourceToTrade =  resourcesToTrade3to1[tradeIndex];
+		int resourceDesired = getResourceWanted(resourceToTrade);
+		int[][] tradeArray = new int[][]{{resourceDesired, 1, 0},{resourceToTrade,3, p}};
+		if (true){
+			System.out.println("3 to 1 trading resource of type: "+tradeArray[1][0]+ " with port for a resource of type: "+resourceDesired);
+			System.out.println("player trading resource is player num "+tradeArray[1][2]);
+		}
+		rg.trade(tradeArray);
 		return;
 	}
 	
@@ -320,7 +380,6 @@ public class TurnAI {
 			System.out.println("player trading resource is player num "+tradeArray[1][2]);
 		}
 		rg.trade(tradeArray);
-		return;
 	}
 	
 	private int getResourceWanted(int resourceToTrade){

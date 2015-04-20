@@ -30,6 +30,10 @@ public class CatanVertex {
 		port = p;
 	}
 	
+	public Tile getPort(){
+		return port;
+	}
+	
 	public Tile[] getAdjacentTiles(){
 		return adjacentTiles;
 	}
