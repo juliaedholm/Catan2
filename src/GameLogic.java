@@ -272,25 +272,21 @@ public class GameLogic {
 	}
 
 	//i is which dev card! 0 knight, 3 rb, 4 monopoly, 5 yop
-<<<<<<< HEAD
-	//this will return whether they can play that d card and then julia needs to handle the rest 
-	public boolean useDevCard(int p, int i){
-		boolean build = players[p].useDevCard(i);
-=======
 	public boolean canUseDevCard(int p, int i){
 		return players[p].canUseDevCard(i);
 	}
->>>>>>> juliaedholm/master
 
 	public boolean useDevCard(int playerID, int i){
 		boolean canUse = canUseDevCard(playerID, i);
 		if (canUse){
 			if (i == 0){
 				useKnight(playerID);
+				return true;
 			} else if (i == 3){
-				players[playerID].useDevCard(i);
+				return players[playerID].useDevCard(i);
 			}
 		}
+		return false;
 	}
 	
 	public void useKnight(int p){
