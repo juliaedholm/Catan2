@@ -52,6 +52,8 @@ public class GraphController {
 	public void addSettlementToGraph(int v, Player p){
 		CatanVertex vert = vertices[v];
 		vert.buildSettlement(p);
+	//	GetSpotFeatures feats = new GetSpotFeatures();
+		//int[] features = feats.getFeaturesForVertex (vert);
 	}
 	
 	/*
@@ -325,7 +327,29 @@ public class GraphController {
 	}
 
 	public int getRoadSize(Player p){
+		/*
+		Edge[] partOfLongRoad;
+		CatanVertex[] vertexVisitedOnLongRoad;
+		int length = 0;
+		int longestRoadCount = 0;
 		//return the length of player p's longest road
+		for (int i = 0; i< vertices.length; i++){
+			if (vertices[i].owner == p){
+				Edges[] nextEdge = vertices[i].getEdges();
+				while (nextEdge.length()>0){
+					for(int j = 0; j<nextEdge.length; nextEdge++){
+						if(j.owner = p){
+							partOfLongRoad[length]= e;
+						}
+					}
+				}
+				CatanVertex[] oneAway = vertices[i].getAdjacentVs(vertices[i]);
+				for (int i = 0; i<oneAway.length; i++){
+					
+				}
+			}
+		}
+		*/
 		return 3;
 	}
 	

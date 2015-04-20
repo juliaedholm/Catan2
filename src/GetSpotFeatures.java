@@ -29,18 +29,19 @@ public class GetSpotFeatures {
 	 * 23 = on 3 tiles
 	 * 24 = on 2 tiles
 	 * 25 = on 1 tile
-	 * 26 = has >=2 builable spots
+	 * 26 = has >=4 builable spots
 	 * 27 = has <2 buildable spots
 	 * 28 = on Rock Port
 	 * 29 = on Wheat Port
 	 * 30 = on Brick Port
 	 * 31 = on Wood Port
 	 * 32 = on Sheep Port
+	 * 33 = on 3 to 1 port
 	 */
 	
 	public int[] getFeaturesForVertex (CatanVertex v){
 		boolean debug = true;
-		int[] toReturn = new int[32];
+		int[] toReturn = new int[34];
 
 		if (rock(v)){
 			toReturn[0] = 1;
@@ -120,7 +121,7 @@ public class GetSpotFeatures {
 		if (onOneTile(v)){
 			toReturn[25] = 1;
 		}
-		if (hasAtLeast2BuildableSpots(v)){
+		if (hasAtLeast4BuildableSpots(v)){
 			toReturn[26] = 1;
 		}
 		if (doesNotHave2BuildableSpots(v)){
@@ -140,6 +141,9 @@ public class GetSpotFeatures {
 		}
 		if (onSheepPort(v)){
 			toReturn[32] = 1;
+		}
+		if (on3to1Port(v)){
+			toReturn[33] = 1;
 		}
 		if (debug){
 			System.out.println("features for vertex "+v.vertexNumber);
@@ -428,7 +432,7 @@ public class GetSpotFeatures {
 		return numResourcesOnSpot == 1;
 	}
 	
-	private boolean hasAtLeast2BuildableSpots (CatanVertex v){
+	private boolean hasAtLeast4BuildableSpots (CatanVertex v){
 		boolean debug2Away = false;
 		int freeSpotCount = 0;
 		CatanVertex [] twoAway = v.getVertices2Away();
@@ -440,7 +444,7 @@ public class GetSpotFeatures {
 				}
 			}
 		}
-		return freeSpotCount >=2;
+		return freeSpotCount >=4;
 	}
 	
 	private boolean doesNotHave2BuildableSpots (CatanVertex v){
@@ -459,50 +463,60 @@ public class GetSpotFeatures {
 		}
 	
 	private boolean onRockPort(CatanVertex v){
-		Tile [] tiles = v.getAdjacentTiles();
-		for (int i=0; i<tiles.length; i++){
-			if(tiles[i].portType==1 && tiles[i].isPort){
+		Tile port = v.getPort();
+		if (port != null){
+			if (port.portType==1){
 				return true;
 			}
 		}
 		return false;
 	}
 	private boolean onWheatPort(CatanVertex v){
-		Tile [] tiles = v.getAdjacentTiles();
-		for (int i=0; i<tiles.length; i++){
-			if(tiles[i].portType==2 && tiles[i].isPort){
+		Tile port = v.getPort();
+		if (port != null){
+			if (port.portType==2){
 				return true;
 			}
 		}
 		return false;
 	}	
 	private boolean onBrickPort(CatanVertex v){
-		Tile [] tiles = v.getAdjacentTiles();
-		for (int i=0; i<tiles.length; i++){
-			if(tiles[i].portType==3 && tiles[i].isPort){
+		Tile port = v.getPort();
+		if (port != null){
+			if (port.portType==3){
 				return true;
 			}
 		}
 		return false;
 	}
 	private boolean onWoodPort(CatanVertex v){
-		Tile [] tiles = v.getAdjacentTiles();
-		for (int i=0; i<tiles.length; i++){
-			if(tiles[i].portType==4 && tiles[i].isPort){
+		Tile port = v.getPort();
+		if (port != null){
+			if (port.portType==4){
 				return true;
 			}
 		}
 		return false;
 	}	
 	private boolean onSheepPort(CatanVertex v){
-		Tile [] tiles = v.getAdjacentTiles();
-		for (int i=0; i<tiles.length; i++){
-			if(tiles[i].portType==4 && tiles[i].isPort){
+		Tile port = v.getPort();
+		if (port != null){
+			if (port.portType==5){
 				return true;
 			}
 		}
 		return false;
 	}	
+	
+	private boolean on3to1Port(CatanVertex v){
+		Tile port = v.getPort();
+		if (port != null){
+			if (port.portType==0){
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	private boolean onScarceResource(CatanVertex v){
 		//must think about how to define scarce....
