@@ -281,10 +281,12 @@ public class GameLogic {
 		if (canUse){
 			if (i == 0){
 				useKnight(playerID);
-			} else if (i == 3){
-				players[playerID].useDevCard(i);
+				return true;
+			} else {
+				return players[playerID].useDevCard(i);
 			}
 		}
+		return false;
 	}
 	
 	public void useKnight(int p){
