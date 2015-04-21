@@ -106,7 +106,7 @@ public class Player {
 			return resourceTracker.useBrick(q);
 		if(i==translator.Wood)
 			return resourceTracker.useWood(q);
-		if(i==translator.Sheep)
+		if(i==0 || i==5)
 			return resourceTracker.useSheep(q);
 
 		System.out.println("Something is wrong if this prints - looseResource");

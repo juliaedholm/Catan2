@@ -260,7 +260,6 @@ public class GameLogic {
 	public boolean canUseDevCard(int p, int i){
 		return players[p].canUseDevCard(i);
 	}
-
 	
 	public void useKnight(int p){
 		System.out.println("If this is printing, you played a knight so we need to check if you have largest army. You should automatically get your two points. Tell CJ if this isnt working");
@@ -314,7 +313,7 @@ public class GameLogic {
 		//r is the resource we are monopolizing
 		int total = 0;
 		System.out.println("Okay, I think this is the problem with monopoly. What you should see here is # of players minus one statements (so if 3 players, 2 statements) that count up to the total number of the resource you are monopolizing. Then it should say total at end of loop. Please report back to CJ what happens.");
-		for(int i=0; i<players.length; i++){
+		for(int i=1; i<players.length; i++){
 			if(i!=p){
 				total = total + players[i].getAllX(r);
 				System.out.println("total is now: "+total);
