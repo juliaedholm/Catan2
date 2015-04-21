@@ -494,7 +494,6 @@ public class RunGame {
 					}
 				if(roadBuilderCounter==2){
 					roadBuilderCounter=0;
-					gl.useDevCard(currentPlayerID,3);
 					updateAllStats();
 					clearVerticesAndAction();
 				}
