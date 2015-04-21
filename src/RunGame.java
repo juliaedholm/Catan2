@@ -55,6 +55,7 @@ public class RunGame {
 		verticesToAct = new int[2];
 		vertexCounter = 0;
 		tradeResources = new int[2][3];
+		yopResources = new int[2];
 		
 		usingGraphics = useGraphics;
 		//testboard gives a predetermined board
@@ -287,11 +288,13 @@ public class RunGame {
 		} else if (actionType == 2){
 			tryToBuildCity();
 		} else if (actionType == 3){
-			tryToBuildRoad();
+			tryToBuildRoad();		
 		} else if (actionType == 9){
 			useRoadBuilder();
 		} 
-		updateAllStats();
+		if(actionType!=9)
+			updateAllStats();
+		//why? because we don't want to get rid of road builder yet. 		
 	}
 	
 	public void buyDevCard(){
@@ -474,19 +477,28 @@ public class RunGame {
 
 	public void useRoadBuilder(){
 		//p is the player number which we need as input - I will leave that to you since you've been doing it
-		boolean allowed = gl.useDevCard(currentPlayerID,3);
-		if(allowed){
-			//players[currentPlayerID].giveRoadResources(); //dont need this anymore because new methods in gl
-			while(roadBuilderCounter<2){
-				boolean success = gl.useRoadBuilder(currentPlayerID, verticesToAct[0], verticesToAct[1]); 
-				if (success){
-					fei.drawRoad(verticesToAct[0], verticesToAct[1]);
-					roadBuilderCounter++;
+		if (! (vertexCounter == 2)){
+			return;
+		} 
+		else{
+			boolean allowed = gl.canUseDevCard(currentPlayerID,3);
+			if(allowed){
+				//players[currentPlayerID].giveRoadResources(); //dont need this anymore because new methods in gl
+					boolean success = gl.useRoadBuilder(currentPlayerID, verticesToAct[0], verticesToAct[1]); 
+					if (success){
+						fei.drawRoad(verticesToAct[0], verticesToAct[1]);
+						roadBuilderCounter++;
+						verticesToAct[0] = 0;
+						verticesToAct[1] = 0;
+						vertexCounter = 0;
+					}
+				if(roadBuilderCounter==2){
+					roadBuilderCounter=0;
+					gl.useDevCard(currentPlayerID,3);
+					updateAllStats();
+					clearVerticesAndAction();
 				}
 			}
-			roadBuilderCounter=0;
-			updateAllStats();
-			clearVerticesAndAction();
 		}
 	}
 
@@ -509,6 +521,8 @@ public class RunGame {
 	public void clearVerticesAndAction(){
 		verticesToAct[0] = 0;
 		verticesToAct[1] = 0;
+		yopResources[0] = 0;
+		yopResources[1] = 0;
 		vertexCounter = 0;
 		actionType = 0;
 		tradeResources = new int[2][3];
