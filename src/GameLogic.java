@@ -149,21 +149,6 @@ public class GameLogic {
 		//longest road check
 	}
 	
-	public boolean useRoadBuilder(int p, int v1, int v2){
-		boolean build = graph.checkBuildRoad(v1,v2, players[p], debugSet);
-		if (build == false){
-			System.out.println("You cannot build a road on this location.");
-			return false;
-		} 
-		else{
-			players[p].placeRoad();
-			longRoadChecker(p);
-			graph.addRoadToGraph(v1, v2, players[p]);
-			return true;
-		}
-
-	}
-
 	public boolean legalRoadCheck(int p, int v1, int v2){
 		return graph.checkPlaceRoad(v1,v2, players[p], debugSet); 
 	}
@@ -276,19 +261,14 @@ public class GameLogic {
 		return players[p].canUseDevCard(i);
 	}
 
-	public boolean useDevCard(int playerID, int i){
-		boolean canUse = canUseDevCard(playerID, i);
-		if (canUse){
-			if (i == 0){
-				useKnight(playerID);
-			} else if (i == 3){
-				players[playerID].useDevCard(i);
-			}
-		}
-	}
 	
 	public void useKnight(int p){
 		System.out.println("If this is printing, you played a knight so we need to check if you have largest army. You should automatically get your two points. Tell CJ if this isnt working");
+		boolean canUse = canUseDevCard(p, 0);
+		if (!canUse){
+			System.out.println("Tried to use a knight, but player "+p+" does not have any knight cards");
+			return;
+		}
 		players[p].useDevCard(0);
 		if(players[p].getArmySize()>=3 && players[p].checkLgArmy()==false){
 			for(int m=0; m<players.length; m++){
@@ -303,7 +283,33 @@ public class GameLogic {
 		}
 	}
 	
+	public boolean useRoadBuilder(int p, int v1, int v2){
+		boolean canUse = canUseDevCard(p, 3);
+		if (!canUse){
+			System.out.println("Tried to use a road builder, but player "+p+" does not have any");
+			return false;
+		}
+		players[p].useDevCard(3);
+		boolean build = graph.checkBuildRoad(v1,v2, players[p], debugSet);
+		if (build == false){
+			System.out.println("You cannot build a road on this location.");
+			return false;
+		} 
+		else{
+			players[p].placeRoad();
+			longRoadChecker(p);
+			graph.addRoadToGraph(v1, v2, players[p]);
+			return true;
+		}
+
+	}
+	
 	public void useMonopoly(int p, int r){
+		boolean canUse = canUseDevCard(p, 4);
+		if (!canUse){
+			System.out.println("Tried to use monopoly, but player "+p+" does not have one");
+			return;
+		}
 		players[p].useDevCard(4);
 		//r is the resource we are monopolizing
 		int total = 0;
@@ -319,6 +325,11 @@ public class GameLogic {
 	}
 
 	public void useYearOfPlenty(int p, int r1, int r2){
+		boolean canUse = canUseDevCard(p, 5);
+		if (!canUse){
+			System.out.println("Tried to use Year of Plenty, but player "+p+" does not have one");
+			return;
+		}
 		players[p].useDevCard(5);
 		players[p].addResource(r1, 1);
 		players[p].addResource(r2, 1);

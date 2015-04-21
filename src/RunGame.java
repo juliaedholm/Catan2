@@ -236,11 +236,10 @@ public class RunGame {
 	
 	public void useKnight(int tile){
 		//p is the player number which we need as input - I will leave that to you since you've been doing it
-		boolean allowed = gl.useDevCard(currentPlayerID,0);
+		boolean allowed = gl.canUseDevCard(currentPlayerID,0);
 		if(allowed){
 			System.out.println("You are allowed to use a knight, time to use it.");
 			robberAction(tile, currentPlayerID);
-
 		}
 		clearVerticesAndAction();
 		updateAllStats();
@@ -362,6 +361,7 @@ public class RunGame {
 		trade();
 	}
 	
+	//will be used by AI
 	public void trade(int[][] completeTradeArray){
 		if (printRunningMessage){
 			System.out.println("Calling trade with AI");
@@ -447,7 +447,7 @@ public class RunGame {
 	public void useMonopoly(int resource){
 		//p is the player number which we need as input - I will leave that to you since you've been doing it
 		//r is the resource (int) they want to monopolize from all the players
-		boolean allowed = gl.useDevCard(currentPlayerID, 4);
+		boolean allowed = gl.canUseDevCard(currentPlayerID, 4);
 		if(allowed){
 			System.out.println("Monopoly use is allowed. Now we try to use it.");
 			gl.useMonopoly(currentPlayerID, resource);
@@ -460,7 +460,7 @@ public class RunGame {
 	public void useYearOfPlenty(){
 		//p is the player number which we need as input - I will leave that to you since you've been doing it
 		//r1 and r2 are the two resources (int) they want to take from the bank
-		boolean allowed = gl.useDevCard(currentPlayerID,5);
+		boolean allowed = gl.canUseDevCard(currentPlayerID,5);
 		if(allowed){
 			System.out.println("You have the card, lets use it! These two numbers should be >0: "+yopResources[0]+" "+yopResources[1]);
 			gl.useYearOfPlenty(currentPlayerID, yopResources[0], yopResources[1]);
@@ -474,7 +474,7 @@ public class RunGame {
 
 	public void useRoadBuilder(){
 		//p is the player number which we need as input - I will leave that to you since you've been doing it
-		boolean allowed = gl.useDevCard(currentPlayerID,3);
+		boolean allowed = gl.canUseDevCard(currentPlayerID,3);
 		if(allowed){
 			//players[currentPlayerID].giveRoadResources(); //dont need this anymore because new methods in gl
 			while(roadBuilderCounter<2){
