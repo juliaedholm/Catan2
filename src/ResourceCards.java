@@ -138,10 +138,10 @@ public class ResourceCards{
 	}
 
 	public int monopX(int x){
+		if(x==5)
+			x=0;
 		int getrid = cardKey[x];
-		while(cardKey[x]>0){
-			cardKey[x]--;
-		}
+		cardKey[x]=0;
 		return getrid;
 	}
 

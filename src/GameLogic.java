@@ -282,7 +282,11 @@ public class GameLogic {
 			if (i == 0){
 				useKnight(playerID);
 				return true;
+<<<<<<< HEAD
 			} else if (i == 3){
+=======
+			} else {
+>>>>>>> juliaedholm/master
 				return players[playerID].useDevCard(i);
 			}
 		}
@@ -310,7 +314,7 @@ public class GameLogic {
 		//r is the resource we are monopolizing
 		int total = 0;
 		System.out.println("Okay, I think this is the problem with monopoly. What you should see here is # of players minus one statements (so if 3 players, 2 statements) that count up to the total number of the resource you are monopolizing. Then it should say total at end of loop. Please report back to CJ what happens.");
-		for(int i=0; i<players.length; i++){
+		for(int i=1; i<players.length; i++){
 			if(i!=p){
 				total = total + players[i].getAllX(r);
 				System.out.println("total is now: "+total);
