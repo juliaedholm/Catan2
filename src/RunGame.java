@@ -237,7 +237,7 @@ public class RunGame {
 	
 	public void useKnight(int tile){
 		//p is the player number which we need as input - I will leave that to you since you've been doing it
-		boolean allowed = gl.canUseDevCard(currentPlayerID,0);
+		boolean allowed = gl.useKnight(currentPlayerID);
 		if(allowed){
 			System.out.println("You are allowed to use a knight, time to use it.");
 			robberAction(tile, currentPlayerID);
