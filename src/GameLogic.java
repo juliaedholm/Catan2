@@ -289,13 +289,14 @@ public class GameLogic {
 		return true;
 	}
 	
-	public boolean useRoadBuilder(int p, int v1, int v2){
+	public boolean useRoadBuilder(int p, int v1, int v2, int roadbuildcounter){
 		boolean canUse = canUseDevCard(p, 3);
 		if (!canUse){
 			System.out.println("Tried to use a road builder, but player "+p+" does not have any");
 			return false;
 		}
-		players[p].useDevCard(3);
+		if(roadbuildcounter == 2)
+			players[p].useDevCard(3);
 		boolean build = graph.checkBuildRoad(v1,v2, players[p], debugSet);
 		if (build == false){
 			System.out.println("You cannot build a road on this location.");
