@@ -261,34 +261,42 @@ public class GameLogic {
 		return players[p].canUseDevCard(i);
 	}
 	
-	public void useKnight(int p){
+	public boolean useKnight(int p){
 		System.out.println("If this is printing, you played a knight so we need to check if you have largest army. You should automatically get your two points. Tell CJ if this isnt working");
 		boolean canUse = canUseDevCard(p, 0);
 		if (!canUse){
 			System.out.println("Tried to use a knight, but player "+p+" does not have any knight cards");
-			return;
+			return false;
 		}
 		players[p].useDevCard(0);
+		boolean truechecker = false;
 		if(players[p].getArmySize()>=3 && players[p].checkLgArmy()==false){
-			for(int m=0; m<players.length; m++){
-				if(players[m].checkLgArmy() == true){
-					if(players[p].getArmySize() > players[m].getArmySize()){
-						players[p].changeLgArmy();
-						players[m].changeLgArmy();
+			for(int m=1; m<players.length; m++){
+				if(m!=p){
+					if(players[m].checkLgArmy() == true){
+						truechecker=true;
+						if(players[p].getArmySize() > players[m].getArmySize()){
+							players[m].changeLgArmy();
+							players[p].changeLgArmy();
+						}
+						break;
 					}
-					break;
 				}
 			}
+		if(truechecker==false)
+			players[p].changeLgArmy();
 		}
+		return true;
 	}
 	
-	public boolean useRoadBuilder(int p, int v1, int v2){
+	public boolean useRoadBuilder(int p, int v1, int v2, int roadbuildcounter){
 		boolean canUse = canUseDevCard(p, 3);
 		if (!canUse){
 			System.out.println("Tried to use a road builder, but player "+p+" does not have any");
 			return false;
 		}
-		players[p].useDevCard(3);
+		if(roadbuildcounter == 2)
+			players[p].useDevCard(3);
 		boolean build = graph.checkBuildRoad(v1,v2, players[p], debugSet);
 		if (build == false){
 			System.out.println("You cannot build a road on this location.");

@@ -237,7 +237,7 @@ public class RunGame {
 	
 	public void useKnight(int tile){
 		//p is the player number which we need as input - I will leave that to you since you've been doing it
-		boolean allowed = gl.canUseDevCard(currentPlayerID,0);
+		boolean allowed = gl.useKnight(currentPlayerID);
 		if(allowed){
 			System.out.println("You are allowed to use a knight, time to use it.");
 			robberAction(tile, currentPlayerID);
@@ -484,7 +484,7 @@ public class RunGame {
 			boolean allowed = gl.canUseDevCard(currentPlayerID,3);
 			if(allowed){
 				//players[currentPlayerID].giveRoadResources(); //dont need this anymore because new methods in gl
-					boolean success = gl.useRoadBuilder(currentPlayerID, verticesToAct[0], verticesToAct[1]); 
+					boolean success = gl.useRoadBuilder(currentPlayerID, verticesToAct[0], verticesToAct[1], roadBuilderCounter+1); 
 					if (success){
 						fei.drawRoad(verticesToAct[0], verticesToAct[1]);
 						roadBuilderCounter++;
@@ -525,6 +525,7 @@ public class RunGame {
 		vertexCounter = 0;
 		actionType = 0;
 		tradeResources = new int[2][3];
+		roadBuilderCounter = 0;
 	}
 	
 	private boolean gameEnd(){
