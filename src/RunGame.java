@@ -237,7 +237,7 @@ public class RunGame {
 	
 	public void useKnight(int tile){
 		//p is the player number which we need as input - I will leave that to you since you've been doing it
-		boolean allowed = gl.canUseDevCard(currentPlayerID,0);
+		boolean allowed = gl.useKnight(currentPlayerID);
 		if(allowed){
 			System.out.println("You are allowed to use a knight, time to use it.");
 			robberAction(tile, currentPlayerID);
@@ -452,12 +452,11 @@ public class RunGame {
 		//r is the resource (int) they want to monopolize from all the players
 		boolean allowed = gl.canUseDevCard(currentPlayerID, 4);
 		if(allowed){
-			System.out.println("Monopoly use is allowed. Now we try to use it.");
+			System.out.println("Monopoly use is allowed. Click the resource you want to monopolize.");
 			gl.useMonopoly(currentPlayerID, resource);
 		}
 		clearVerticesAndAction();
 		updateAllStats();
-		System.out.println("Do we see monopoly changes? We should!");
 	}
 	
 	public void useYearOfPlenty(){
@@ -465,14 +464,13 @@ public class RunGame {
 		//r1 and r2 are the two resources (int) they want to take from the bank
 		boolean allowed = gl.canUseDevCard(currentPlayerID,5);
 		if(allowed){
-			System.out.println("You have the card, lets use it! These two numbers should be >0: "+yopResources[0]+" "+yopResources[1]);
+			System.out.println("You have the card, lets use it!");
 			gl.useYearOfPlenty(currentPlayerID, yopResources[0], yopResources[1]);
 		}
 		else
-			System.out.println("You do not have a year of plenty card it seems.");
+			System.out.println("You do not have a year of plenty card.");
 		clearVerticesAndAction();
 		updateAllStats();
-		System.out.println("If you don't see the stuff updated right now I don't know what to say!");
 	}
 
 	public void useRoadBuilder(){

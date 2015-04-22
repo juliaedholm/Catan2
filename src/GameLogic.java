@@ -275,12 +275,12 @@ public class GameLogic {
 		return false;
 	}
 	
-	public void useKnight(int p){
+	public boolean useKnight(int p){
 		System.out.println("If this is printing, you played a knight so we need to check if you have largest army. You should automatically get your two points. Tell CJ if this isnt working");
 		boolean canUse = canUseDevCard(p, 0);
 		if (!canUse){
 			System.out.println("Tried to use a knight, but player "+p+" does not have any knight cards");
-			return;
+			return false;
 		}
 		players[p].useDevCard(0);
 		if(players[p].getArmySize()>=3 && players[p].checkLgArmy()==false){
@@ -294,6 +294,7 @@ public class GameLogic {
 				}
 			}
 		}
+		return true;
 	}
 	
 	public boolean useRoadBuilder(int p, int v1, int v2){
