@@ -86,24 +86,41 @@ public class TurnAI {
 			buildCity();
 		} else if (roadPossible()) {
 			buildSmartRoad();
-		}/* else if (devCardPossible()){
+		} else if (devCardPossible()){
 			buyDevCard();
-		}*/ else if (canUse2to1Port()){
+		} else if (canUse2to1Port()){
 			usePort();
 		} else if (canUse3to1Port()){
 			use3to1Port();
 		}
 		else if (tradePossible4to1()){
 			makeTrade();
-		}/* else if (monopolyPossible()){
-			///do something
+		} else if (monopolyPossible()){
+			useMonopoly();
 		} else if (yopPossible()){
-			//do something
+			useYearOfPlenty();
 		} else if (roadBuilderPossible()){
-			//do something
+			useRoadBuilder();
 		} else if (knightPossible()){
-			//do something
-		}*/
+			useKnight();
+		}
+	}
+	
+	private void smartTurnWithoutDevCards(){
+		if (settlementPossible()) {
+			settle();
+		} else if (cityPossible()) {
+			buildCity();
+		} else if (roadPossible()) {
+			buildSmartRoad();
+		} else if (canUse2to1Port()){
+			usePort();
+		} else if (canUse3to1Port()){
+			use3to1Port();
+		}
+		else if (tradePossible4to1()){
+			makeTrade();
+		}
 	}
 	
 	//populate the array possibleActions with list of the moves you can make
@@ -232,22 +249,6 @@ public class TurnAI {
 		} 
 		//did not build a smart raod;
 		buildRoad();
-	}
-	
-	private boolean monopolyPossible(){
-		return gl.canUseDevCard (p, 4);
-	}
-	
-	private boolean yopPossible(){
-		return gl.canUseDevCard (p, 5);
-	}
-	
-	private boolean knightPossible(){
-		return gl.canUseDevCard (p, 0);
-	}
-	
-	private boolean roadBuilderPossible(){
-		return false;
 	}
 	
 	private boolean canUse2to1Port(){
@@ -408,6 +409,43 @@ public class TurnAI {
 	
 	private void buyDevCard(){
 		rg.setActionType(11);
+	}
+	
+	private boolean monopolyPossible(){
+		return gl.canUseDevCard (p, 4);
+	}
+	
+	private void useMonopoly(){
+		int r1 = getResourceWanted(0);
+		gl.useMonopoly(p, r1);
+		System.out.println("Player "+p+" used monopoly");
+	}
+	
+	private boolean yopPossible(){
+		return gl.canUseDevCard (p, 5);
+	}
+	
+	private void useYearOfPlenty(){
+		int r1 = getResourceWanted(0);
+		int r2 = getResourceWanted(0);
+		gl.useYearOfPlenty(p, r1, r2);
+		System.out.println("Player "+p+" used the year of plenty");
+	}
+	
+	private boolean knightPossible(){
+		return gl.canUseDevCard (p, 0);
+	}
+	
+	private void useKnight(){
+		System.out.println("Player "+p+" used knight");
+	}
+	
+	private boolean roadBuilderPossible(){
+		return gl.canUseDevCard (p, 3);
+	}
+	
+	private void useRoadBuilder(){
+		System.out.println("Player "+p+" used the road builder");
 	}
 	
 	
