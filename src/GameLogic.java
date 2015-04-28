@@ -283,27 +283,41 @@ public class GameLogic {
 			return false;
 		}
 		players[p].useDevCard(0);
+		boolean truechecker = false;
 		if(players[p].getArmySize()>=3 && players[p].checkLgArmy()==false){
 			for(int m=1; m<players.length; m++){
+<<<<<<< HEAD
 				if(players[m].checkLgArmy() == true){
 					if(players[p].getArmySize() > players[m].getArmySize()){
 						players[p].changeLgArmy();
 						players[m].changeLgArmy();
+=======
+				if(m!=p){
+					if(players[m].checkLgArmy() == true){
+						truechecker=true;
+						if(players[p].getArmySize() > players[m].getArmySize()){
+							players[m].changeLgArmy();
+							players[p].changeLgArmy();
+						}
+						break;
+>>>>>>> juliaedholm/master
 					}
-					break;
 				}
 			}
+		if(truechecker==false)
+			players[p].changeLgArmy();
 		}
 		return true;
 	}
 	
-	public boolean useRoadBuilder(int p, int v1, int v2){
+	public boolean useRoadBuilder(int p, int v1, int v2, int roadbuildcounter){
 		boolean canUse = canUseDevCard(p, 3);
 		if (!canUse){
 			System.out.println("Tried to use a road builder, but player "+p+" does not have any");
 			return false;
 		}
-		players[p].useDevCard(3);
+		if(roadbuildcounter == 2)
+			players[p].useDevCard(3);
 		boolean build = graph.checkBuildRoad(v1,v2, players[p], debugSet);
 		if (build == false){
 			System.out.println("You cannot build a road on this location.");
