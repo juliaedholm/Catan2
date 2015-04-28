@@ -62,6 +62,11 @@ public class Hexanew extends JFrame{
 
   //v1,v2,road?,player
   int[][] roadSide = new int[][]{
+
+
+
+
+
     {0,1,0,0},
     {2,3,0,0},
     {4,5,0,0},
