@@ -28,9 +28,7 @@ public class SpotQualityAlgorithm {
 		for (int i = 0; i<goodFeats.length; i++){
 			if (goodFeats[i] == 1){
 				weightOfAllFeats[i] = weightOfAllFeats[i] + 1;
-			} else if (goodFeats[i] == 0){
-				weightOfAllFeats[i]= weightOfAllFeats[i] - 0 ;
-			}
+			} 
 		}
 	}
 
@@ -53,5 +51,9 @@ public class SpotQualityAlgorithm {
 		for (int i=0; i<weightOfAllFeats.length; i++){
 			System.out.println("Weight of feature: "+i+" is "+weightOfAllFeats[i]);
 		}
+	}
+
+	private void normalize(){
+		
 	}
 }

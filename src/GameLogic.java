@@ -286,12 +286,6 @@ public class GameLogic {
 		boolean truechecker = false;
 		if(players[p].getArmySize()>=3 && players[p].checkLgArmy()==false){
 			for(int m=1; m<players.length; m++){
-<<<<<<< HEAD
-				if(players[m].checkLgArmy() == true){
-					if(players[p].getArmySize() > players[m].getArmySize()){
-						players[p].changeLgArmy();
-						players[m].changeLgArmy();
-=======
 				if(m!=p){
 					if(players[m].checkLgArmy() == true){
 						truechecker=true;
@@ -300,7 +294,6 @@ public class GameLogic {
 							players[p].changeLgArmy();
 						}
 						break;
->>>>>>> juliaedholm/master
 					}
 				}
 			}
