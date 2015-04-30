@@ -27,7 +27,7 @@ public class TurnAI {
 	int portCount;
 	
 	
-	boolean debug = true;
+	boolean debug = false;
 	boolean printActions = true;
 	private ResourceTranslator translator = new ResourceTranslator();
 	int smartPlayer = 1;
@@ -86,23 +86,22 @@ public class TurnAI {
 			buildCity();
 		} else if (roadPossible()) {
 			buildSmartRoad();
-		} else if (devCardPossible()){
-			buyDevCard();
-		} else if (canUse2to1Port()){
-			usePort();
-		} else if (canUse3to1Port()){
-			use3to1Port();
-		}
-		else if (tradePossible4to1()){
-			makeTrade();
 		} else if (monopolyPossible()){
 			useMonopoly();
 		} else if (yopPossible()){
 			useYearOfPlenty();
 		} else if (roadBuilderPossible()){
 			useRoadBuilder();
-		} else if (knightPossible()){
-			useKnight();
+		}else if (canUse2to1Port()){
+			usePort();
+		} else if (devCardPossible()){
+			buyDevCard();
+		} else if (canUse3to1Port()){
+			use3to1Port();
+		} else if (tradePossible4to1()){
+			makeTrade();
+		}  else if (knightPossible()){
+			//useKnight();
 		}
 	}
 	
@@ -117,8 +116,7 @@ public class TurnAI {
 			usePort();
 		} else if (canUse3to1Port()){
 			use3to1Port();
-		}
-		else if (tradePossible4to1()){
+		} else if (tradePossible4to1()){
 			makeTrade();
 		}
 	}
@@ -243,7 +241,7 @@ public class TurnAI {
 				rg.setActionType(3);
 				rg.setVertex(v1);
 				rg.setVertex(v2);
-				System.out.println("BUILT A SMART ROAD");
+			//	System.out.println("BUILT A SMART ROAD");
 				return;
 			} 
 		} 
@@ -264,7 +262,9 @@ public class TurnAI {
 	}
 	
 	private void usePort(){
-		System.out.println("Trying to use a port");
+		if (debug){
+			System.out.println("Trying to use a port");
+		}
 		int randIndex = generator.nextInt(portCount);
 		int portToUse = potentialPorts[randIndex];
 		
@@ -295,7 +295,7 @@ public class TurnAI {
 		while (resourceDesired == portToUse){
 			resourceDesired = generator.nextInt(5)+1;
 		}
-		if (true){
+		if (debug){
 			System.out.println("Player: "+p+" is using a port of type: "+portToUse+" to trade for a resource of type: "+resourceDesired);	
 		}
 		rg.resourceClicked(resourceDesired);
@@ -337,7 +337,7 @@ public class TurnAI {
 		int resourceToTrade =  resourcesToTrade3to1[tradeIndex];
 		int resourceDesired = getResourceWanted(resourceToTrade);
 		int[][] tradeArray = new int[][]{{resourceDesired, 1, 0},{resourceToTrade,3, p}};
-		if (true){
+		if (debug){
 			System.out.println("3 to 1 trading resource of type: "+tradeArray[1][0]+ " with port for a resource of type: "+resourceDesired);
 			System.out.println("player trading resource is player num "+tradeArray[1][2]);
 		}
@@ -438,14 +438,46 @@ public class TurnAI {
 	
 	private void useKnight(){
 		System.out.println("Player "+p+" used knight");
+		Player[] ps = rg.getPlayers();
+		int highestPlayerVPs = ps[0].victoryPoints;
+		int highestPlayer = 0;
+		for (int i = 1; i<5; i++){
+			if (i == p){
+				continue;
+			}
+			int vp = ps[i].victoryPoints;
+			if (vp>= highestPlayerVPs){
+				highestPlayerVPs = vp;
+				highestPlayer = i;
+			}
+		}
+		//get tiles that highest player owns and randomly choose one
+	
 	}
 	
 	private boolean roadBuilderPossible(){
-		return gl.canUseDevCard (p, 3);
+		boolean hasRoadsToBuild = 	roadPossible();
+		return hasRoadsToBuild && gl.canUseDevCard (p, 3);
 	}
 	
 	private void useRoadBuilder(){
-		System.out.println("Player "+p+" used the road builder");
+		//choose the road that will get you to a buildable spot 
+		for (int i = 0; i<roadVerticesCount; i++){
+			int v1 = roadVertices[i][0];
+			int v2 =  roadVertices[i][1];
+			if (gl.placeSetCheck(p, v1) || gl.placeSetCheck(p,v2)){
+				gl.useRoadBuilder(p, v1,v2);
+				System.out.println("Player "+p+" used the road builder to build a smart road");
+				return;
+			} 
+		} 
+		//build a regular road
+		int roadIndex = generator.nextInt(roadVerticesCount);
+		int v1 = roadVertices[roadIndex][0];
+		int v2 =  roadVertices[roadIndex][1];
+		gl.useRoadBuilder(p, v1,v2);
+		System.out.println("Player "+p+" used the road builder to build a normal road");
+		
 	}
 	
 	

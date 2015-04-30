@@ -17,6 +17,7 @@ public class GameLogic {
 	public GameLogic(int[][] board, Player[] pArray) {
 		GraphMaker gm = new GraphMaker(board);
 		graph = new GraphController(gm.getVertexArray(), gm.tilesInBoard);
+		graph.getScarcestResource();
 		devDeck = new DevCardDeck();
 		players = pArray;
 	}
@@ -289,7 +290,7 @@ public class GameLogic {
 			return false;
 		}
 		players[p].useDevCard(3);
-		boolean build = graph.checkBuildRoad(v1,v2, players[p], debugSet);
+		boolean build = graph.checkBuildRoad(v1,v2, players[p], true);
 		if (build == false){
 			System.out.println("You cannot build a road on this location.");
 			return false;

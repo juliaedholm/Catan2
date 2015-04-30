@@ -160,8 +160,24 @@ public class GraphController {
 		if (connectedRoads(v1,p) || connectedRoads(v2,p)){
 			return checkPlaceRoad (v1, v2, p, printErrors);
 		} else{
+			if (printErrors){
+				System.out.println("Player "+p+" does not have a road leading to this vertex");
+			}
 			return false;
 		}
+	}
+	 
+	/*
+	 * Method will check that player p has at least one road leading to vertex v
+	 */
+	private boolean connectedRoads(int v, Player p){
+		Edge[] edges = vertices[v].getEdges();
+			for (int i = 0; i<vertices[v].getNumEdges(); i++){
+				if (edges[i].owner == p ){
+					return true;
+				}
+			}
+		return false;
 	}
 	
 	 //must check for settlement at one edge - if in first round
@@ -218,19 +234,6 @@ public class GraphController {
 			 return toReturn;
 		 }
 	 }
-	
-	/*
-	 * Method will check that player p has at least one road leading to vertex v
-	 */
-	private boolean connectedRoads(int v, Player p){
-		Edge[] edges = vertices[v].getEdges();
-			for (int i = 0; i<vertices[v].getNumEdges(); i++){
-				if (edges[i].owner == p ){
-					return true;
-				}
-			}
-		return false;
-	}
 	
 	private Player longestRoad(){
 		int longestRoad = 0;
@@ -366,6 +369,58 @@ public class GraphController {
 			}
 		}
 		return toReturn;
+	}
+	
+	public int[] getResourceDots(){
+		int[] dotsForResource = new int[6];
+		for (int i=0; i<tiles.length; i++){
+			int roll = tiles[i].roll;
+			int resource = tiles[i].resource;
+			if (roll == 2 || roll == 12){
+				dotsForResource[resource] = dotsForResource[resource] + 1;
+			} else if (roll == 3 || roll == 11){
+				dotsForResource[resource] = dotsForResource[resource] + 2;
+			} else if (roll == 4 || roll == 10){
+				dotsForResource[resource] = dotsForResource[resource] + 3;
+			} else if (roll == 5 || roll == 9){
+				dotsForResource[resource] = dotsForResource[resource] + 4;
+			} else if (roll == 6 || roll==8) {
+				dotsForResource[resource] = dotsForResource[resource] + 5;
+			}
+		}
+		return dotsForResource;
+	} 
+	
+	public int getScarcestResource(){
+		ResourceTranslator translator = new ResourceTranslator();
+		int r = 1;
+		int[] dots = getResourceDots();
+		for (int i =1; i<dots.length; i++){
+			System.out.println("Resource type "+i+" has "+dots[i]+" dots");
+			if (dots[i]<dots[r]){
+				r = i;
+			}
+		}
+		if (debug){
+			System.out.println("Found the scarcest resource in this board. That resource is type: "+r);
+		}
+		return r;
+	}
+	
+	public int getMostBountifulResource(){
+		ResourceTranslator translator = new ResourceTranslator();
+		int r = 1;
+		int[] dots = getResourceDots();
+		for (int i =1; i<dots.length; i++){
+			System.out.println("Resource type "+i+" has "+dots[i]+" dots");
+			if (dots[i]>dots[r]){
+				r = i;
+			}
+		}
+		if (debug){
+			System.out.println("Found the most bountiful resource in this board. That resource is type: "+r);
+		}
+		return r;
 	}
 	
 	
