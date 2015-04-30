@@ -466,7 +466,8 @@ public class TurnAI {
 			int v1 = roadVertices[i][0];
 			int v2 =  roadVertices[i][1];
 			if (gl.placeSetCheck(p, v1) || gl.placeSetCheck(p,v2)){
-				gl.useRoadBuilder(p, v1,v2);
+				//NOTE - WE NEED TO KEEP TRACK OF HOW MANY WE HAVE BUILT!!!!
+				gl.useRoadBuilder(p, v1,v2, 2);
 				System.out.println("Player "+p+" used the road builder to build a smart road");
 				return;
 			} 
@@ -475,7 +476,7 @@ public class TurnAI {
 		int roadIndex = generator.nextInt(roadVerticesCount);
 		int v1 = roadVertices[roadIndex][0];
 		int v2 =  roadVertices[roadIndex][1];
-		gl.useRoadBuilder(p, v1,v2);
+		gl.useRoadBuilder(p, v1,v2, 2);
 		System.out.println("Player "+p+" used the road builder to build a normal road");
 		
 	}

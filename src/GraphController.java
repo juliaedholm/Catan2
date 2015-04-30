@@ -396,7 +396,9 @@ public class GraphController {
 		int r = 1;
 		int[] dots = getResourceDots();
 		for (int i =1; i<dots.length; i++){
-			System.out.println("Resource type "+i+" has "+dots[i]+" dots");
+			if (debug){
+				System.out.println("Resource type "+i+" has "+dots[i]+" dots");
+			}			
 			if (dots[i]<dots[r]){
 				r = i;
 			}
@@ -412,7 +414,9 @@ public class GraphController {
 		int r = 1;
 		int[] dots = getResourceDots();
 		for (int i =1; i<dots.length; i++){
-			System.out.println("Resource type "+i+" has "+dots[i]+" dots");
+			if (debug){
+				System.out.println("Resource type "+i+" has "+dots[i]+" dots");
+			}
 			if (dots[i]>dots[r]){
 				r = i;
 			}
