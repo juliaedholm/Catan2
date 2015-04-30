@@ -1014,7 +1014,7 @@ public class GetSpotFeatures {
 		Tile [] tiles = v.getAdjacentTiles();	
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
-			if (array[0]==5 || array[0]==9){
+			if (array[0]==6 || array[0]==8){
 				if(array[1]==5 || array[1]==5){
 					toReturn = true;
 				}

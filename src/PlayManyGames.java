@@ -12,7 +12,7 @@ public class PlayManyGames {
 			System.out.println("Can't open the file: Feature Data.txt");
 		}
 		
-		int numRuns = 2000;
+		int numRuns = 500;
 		SpotQualityAlgorithm spotQuality = new SpotQualityAlgorithm (59, numRuns);
 		
 		for (int j=0; j<numRuns; j++){
