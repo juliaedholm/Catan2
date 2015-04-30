@@ -30,7 +30,7 @@ public class SpotQualityAlgorithm {
 				weightOfAllFeats[i] = weightOfAllFeats[i] + 1;
 			} 
 		}
-		normalize();
+		//normalize();
 	}
 
 	public void loosersFeatures(int[] badFeats){
@@ -39,7 +39,7 @@ public class SpotQualityAlgorithm {
 				weightOfAllFeats[i] -= 1;
 			} 
 		}
-		normalize();
+		//normalize();
 	}
 	
 	public void printFeatureWeights(){
