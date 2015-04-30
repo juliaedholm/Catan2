@@ -12,11 +12,16 @@ public class PlayManyGames {
 			System.out.println("Can't open the file: Feature Data.txt");
 		}
 		
+<<<<<<< HEAD
 		int numRuns = 2000;
 		SpotQualityAlgorithm spotQuality = new SpotQualityAlgorithm (59, numRuns);
 		
+=======
+		int numRuns = 100;
+		SpotQualityAlgorithm spotQuality = new SpotQualityAlgorithm (58, numRuns);
+>>>>>>> juliaedholm/master
 		for (int j=0; j<numRuns; j++){
-			RunGame gameRunner = new RunGame(4, false, true, true); //will used a fixed board
+			RunGame gameRunner = new RunGame(4, false, true, false); //will NOT used a fixed board
 			int winningPlayer = gameRunner.runGameWithAI(false);
 			GraphController theGraph = gameRunner.gl.graph;
 			CatanVertex[] verticesInGraph = theGraph.vertices;
@@ -46,6 +51,7 @@ public class PlayManyGames {
 				}  else if (i == worstPlayer){
 					saveDataAboutFeats(verticesInGraph[spot1], 0, writer);
 					saveDataAboutFeats(verticesInGraph[spot2], 0, writer);
+					learnAboutLosingVertex(verticesInGraph[spot1], spotQuality);
 				}
 			}
 		}
@@ -87,6 +93,12 @@ public class PlayManyGames {
 		GetSpotFeatures feats = new GetSpotFeatures();
 		int[] features = feats.getFeaturesForVertex (v);
 		spotQuality.winnersFeatures(features);
+	}
+
+	private static void learnAboutLosingVertex (CatanVertex v, SpotQualityAlgorithm spotQuality){
+		GetSpotFeatures feats = new GetSpotFeatures();
+		int[] features = feats.getFeaturesForVertex (v);
+		spotQuality.loosersFeatures(features);
 	}
 		
 }

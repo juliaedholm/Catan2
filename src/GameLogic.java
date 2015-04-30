@@ -17,6 +17,7 @@ public class GameLogic {
 	public GameLogic(int[][] board, Player[] pArray) {
 		GraphMaker gm = new GraphMaker(board);
 		graph = new GraphController(gm.getVertexArray(), gm.tilesInBoard);
+		graph.getScarcestResource();
 		devDeck = new DevCardDeck();
 		players = pArray;
 	}
@@ -259,6 +260,20 @@ public class GameLogic {
 	//i is which dev card! 0 knight, 3 rb, 4 monopoly, 5 yop
 	public boolean canUseDevCard(int p, int i){
 		return players[p].canUseDevCard(i);
+	}
+
+	public boolean useDevCard(int playerID, int i){
+		boolean canUse = canUseDevCard(playerID, i);
+		if (canUse){
+			if (i == 0){
+				useKnight(playerID);
+				return true;
+			} 
+			else {
+				return players[playerID].useDevCard(i);
+			}
+		}
+		return false;
 	}
 	
 	public boolean useKnight(int p){

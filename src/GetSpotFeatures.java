@@ -65,8 +65,13 @@ public class GetSpotFeatures {
 	 */
 	
 	public int[] getFeaturesForVertex (CatanVertex v){
+<<<<<<< HEAD
 		boolean debug = true;
 		int[] toReturn = new int[59];
+=======
+		boolean debug = false;
+		int[] toReturn = new int[58];
+>>>>>>> juliaedholm/master
 
 		if (rock(v)){
 			toReturn[0] = 1;
@@ -252,6 +257,7 @@ public class GetSpotFeatures {
 				System.out.println(toReturn[i]);
 			}
 		}
+		
 		return toReturn;
 	}
 	
