@@ -30,6 +30,7 @@ public class SpotQualityAlgorithm {
 				weightOfAllFeats[i] = weightOfAllFeats[i] + 1;
 			} 
 		}
+		normalize();
 	}
 
 	public void loosersFeatures(int[] badFeats){
@@ -38,6 +39,7 @@ public class SpotQualityAlgorithm {
 				weightOfAllFeats[i] -= 1;
 			} 
 		}
+		normalize();
 	}
 	
 	public void printFeatureWeights(){
@@ -46,14 +48,23 @@ public class SpotQualityAlgorithm {
 		}
 		*/
 		for (int i=0; i<weightOfAllFeats.length; i++){
-			weightOfAllFeats[i] = weightOfAllFeats[i]/numberOfGames;
+			//we normalize instead of this
+			//weightOfAllFeats[i] = weightOfAllFeats[i]/numberOfGames;
 		}
 		for (int i=0; i<weightOfAllFeats.length; i++){
 			System.out.println("Weight of feature: "+i+" is "+weightOfAllFeats[i]);
 		}
 	}
 
+	//normalize all features to 100
 	private void normalize(){
-		
+		double sum = 0;
+		for(int i=0; i<weightOfAllFeats.length; i++){
+			sum = sum + weightOfAllFeats[i];
+		}
+		double divisor = 100/sum;
+		for(int i=0; i<weightOfAllFeats.length; i++){
+			weightOfAllFeats[i]=weightOfAllFeats[i]*divisor;
+		}
 	}
 }
