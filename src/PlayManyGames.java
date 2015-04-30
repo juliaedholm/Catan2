@@ -46,6 +46,7 @@ public class PlayManyGames {
 				}  else if (i == worstPlayer){
 					saveDataAboutFeats(verticesInGraph[spot1], 0, writer);
 					saveDataAboutFeats(verticesInGraph[spot2], 0, writer);
+					learnAboutLosingVertex(verticesInGraph[spot1], spotQuality);
 				}
 			}
 		}
@@ -87,6 +88,12 @@ public class PlayManyGames {
 		GetSpotFeatures feats = new GetSpotFeatures();
 		int[] features = feats.getFeaturesForVertex (v);
 		spotQuality.winnersFeatures(features);
+	}
+
+	private static void learnAboutLosingVertex (CatanVertex v, SpotQualityAlgorithm spotQuality){
+		GetSpotFeatures feats = new GetSpotFeatures();
+		int[] features = feats.getFeaturesForVertex (v);
+		spotQuality.loosersFeatures(features);
 	}
 		
 }

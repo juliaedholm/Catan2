@@ -260,6 +260,20 @@ public class GameLogic {
 	public boolean canUseDevCard(int p, int i){
 		return players[p].canUseDevCard(i);
 	}
+
+	public boolean useDevCard(int playerID, int i){
+		boolean canUse = canUseDevCard(playerID, i);
+		if (canUse){
+			if (i == 0){
+				useKnight(playerID);
+				return true;
+			} 
+			else {
+				return players[playerID].useDevCard(i);
+			}
+		}
+		return false;
+	}
 	
 	public boolean useKnight(int p){
 		System.out.println("If this is printing, you played a knight so we need to check if you have largest army. You should automatically get your two points. Tell CJ if this isnt working");
