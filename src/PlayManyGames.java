@@ -13,6 +13,7 @@ public class PlayManyGames {
 		}
 		
 		int numRuns = 100;
+
 		SpotQualityAlgorithm spotQuality = new SpotQualityAlgorithm (34, numRuns);
 		
 		for (int j=0; j<numRuns; j++){
@@ -46,6 +47,7 @@ public class PlayManyGames {
 				}  else if (i == worstPlayer){
 					saveDataAboutFeats(verticesInGraph[spot1], 0, writer);
 					saveDataAboutFeats(verticesInGraph[spot2], 0, writer);
+					learnAboutLosingVertex(verticesInGraph[spot1], spotQuality);
 				}
 			}
 		}
@@ -87,6 +89,12 @@ public class PlayManyGames {
 		GetSpotFeatures feats = new GetSpotFeatures();
 		int[] features = feats.getFeaturesForVertex (v);
 		spotQuality.winnersFeatures(features);
+	}
+
+	private static void learnAboutLosingVertex (CatanVertex v, SpotQualityAlgorithm spotQuality){
+		GetSpotFeatures feats = new GetSpotFeatures();
+		int[] features = feats.getFeaturesForVertex (v);
+		spotQuality.loosersFeatures(features);
 	}
 		
 }
