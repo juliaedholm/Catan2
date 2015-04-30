@@ -37,11 +37,36 @@ public class GetSpotFeatures {
 	 * 31 = on Wood Port
 	 * 32 = on Sheep Port
 	 * 33 = on 3 to 1 port
+	 * 34 = on 2 or 12 wood
+	 * 35 = on 3 or 11 wood
+	 * 36 = on 4 or 10 wood
+	 * 37 = on 5 or 9 wood
+	 * 38 = on 6 or 8 wood
+	 * 39 = on 2 or 12 wheat
+	 * 40 = on 3 or 11 wheat
+	 * 41 = on 4 or 10 wheat
+	 * 42 = on 5 or 9 wheat
+	 * 43 = on 6 or 8 wheat
+	 * 44 = on 2 or 12 brick
+	 * 45 = on 3 or 11 brick
+	 * 46 = on 4 or 10 brick
+	 * 47 = on 5 or 9 brick
+	 * 48 = on 6 or 8 brick
+	 * 49 = on 2 or 12 stone
+	 * 50 = on 3 or 11 stone
+	 * 51 = on 4 or 10 stone
+	 * 52 = on 5 or 9 stone
+	 * 53 = on 6 or 8 stone
+	 * 54 = on 2 or 12 sheep
+	 * 55 = on 3 or 11 sheep
+	 * 56 = on 4 or 10 sheep
+	 * 57 = on 5 or 9 sheep
+	 * 58 = on 6 or 8 sheep
 	 */
 	
 	public int[] getFeaturesForVertex (CatanVertex v){
 		boolean debug = false;
-		int[] toReturn = new int[34];
+		int[] toReturn = new int[58];
 
 		if (rock(v)){
 			toReturn[0] = 1;
@@ -144,6 +169,81 @@ public class GetSpotFeatures {
 		}
 		if (on3to1Port(v)){
 			toReturn[33] = 1;
+		}
+		if (on2and12wood(v)){
+			toReturn[34] = 1;
+		}
+		if (on2and12brick(v)){
+			toReturn[35] = 1;
+		}
+		if (on2and12stone(v)){
+			toReturn[36] = 1;
+		}
+		if (on2and12wheat(v)){
+			toReturn[37] = 1;
+		}
+		if (on2and12stone(v)){
+			toReturn[38] = 1;
+		}
+		if (on3and11wood(v)){
+			toReturn[39] = 1;
+		}
+		if (on3and11brick(v)){
+			toReturn[40] = 1;
+		}
+		if (on3and11stone(v)){
+			toReturn[41] = 1;
+		}
+		if (on3and11wheat(v)){
+			toReturn[42] = 1;
+		}
+		if (on3and11stone(v)){
+			toReturn[43] = 1;
+		}
+		if (on4and10wood(v)){
+			toReturn[44] = 1;
+		}
+		if (on4and10brick(v)){
+			toReturn[45] = 1;
+		}
+		if (on4and10stone(v)){
+			toReturn[45] = 1;
+		}
+		if (on4and10wheat(v)){
+			toReturn[46] = 1;
+		}
+		if (on4and10stone(v)){
+			toReturn[47] = 1;
+		}
+		if (on5and9wood(v)){
+			toReturn[48] = 1;
+		}
+		if (on5and9brick(v)){
+			toReturn[49] = 1;
+		}
+		if (on5and9stone(v)){
+			toReturn[50] = 1;
+		}
+		if (on5and9wheat(v)){
+			toReturn[51] = 1;
+		}
+		if (on5and9stone(v)){
+			toReturn[52] = 1;
+		}
+		if (on6and8wood(v)){
+			toReturn[53] = 1;
+		}
+		if (on6and8brick(v)){
+			toReturn[54] = 1;
+		}
+		if (on6and8stone(v)){
+			toReturn[55] = 1;
+		}
+		if (on6and8wheat(v)){
+			toReturn[56] = 1;
+		}
+		if (on6and8stone(v)){
+			toReturn[57] = 1;
 		}
 		if (debug){
 			System.out.println("features for vertex "+v.vertexNumber);
@@ -519,6 +619,408 @@ public class GetSpotFeatures {
 		return false;
 	}
 	
+	private int[] getRollandResource(Tile t){
+
+		int[] toReturn = new int[2];
+		Tile tiles = t;	
+		if(tiles.roll==2){
+			toReturn[0]=2;
+		}
+		if(tiles.roll==3){
+			toReturn[0]=3;
+		}
+		if(tiles.roll==4){
+			toReturn[0]=4;
+		}
+		if(tiles.roll==5){
+			toReturn[0]=5;
+		}
+		if(tiles.roll==6){
+			toReturn[0]=6;
+		}
+		if(tiles.roll==8){
+			toReturn[0]=8;
+		}
+		if(tiles.roll==9){
+			toReturn[0]=9;
+		}
+		if(tiles.roll==10){
+			toReturn[0]=10;
+		}
+		if(tiles.roll==11){
+			toReturn[0]=11;
+		}
+		if(tiles.roll==12){
+			toReturn[0]=12;
+		}
+		if(tiles.resource==translator.Rock){
+			toReturn[1]=1;
+		}
+		if(tiles.resource==translator.Wheat){
+			toReturn[1]=2;
+		}
+		if(tiles.resource==translator.Brick){
+			toReturn[1]=3;
+		}
+		if(tiles.resource==translator.Wood){
+			toReturn[1]=4;
+		}
+		if(tiles.resource==translator.Sheep){
+			toReturn[1]=5;
+		}
+		return toReturn;
+	}
+
+	private boolean on2and12wood(CatanVertex v){
+		boolean toReturn=false;
+		int[] array = new int[2];	
+		Tile [] tiles = v.getAdjacentTiles();	
+		for(int i=0; i<tiles.length; i++){
+			array = getRollandResource(tiles[i]);
+			if (array[0]==2 || array[0]==2){
+				if(array[1]==4 || array[1]==4){
+					toReturn = true;
+				}
+			}
+		}
+		return toReturn;
+	}
+	private boolean on2and12brick(CatanVertex v){
+		boolean toReturn=false;
+		int[] array = new int[2];	
+		Tile [] tiles = v.getAdjacentTiles();	
+		for(int i=0; i<tiles.length; i++){
+			array = getRollandResource(tiles[i]);
+			if (array[0]==2 || array[0]==2){
+				if(array[1]==3 || array[1]==3){
+					toReturn = true;
+				}
+			}
+		}
+		return toReturn;
+	}
+	private boolean on2and12stone(CatanVertex v){
+		boolean toReturn=false;
+		int[] array = new int[2];	
+		Tile [] tiles = v.getAdjacentTiles();	
+		for(int i=0; i<tiles.length; i++){
+			array = getRollandResource(tiles[i]);
+			if (array[0]==2 || array[0]==2){
+				if(array[1]==1 || array[1]==1){
+					toReturn = true;
+				}
+			}
+		}
+		return toReturn;
+	}
+	private boolean on2and12wheat(CatanVertex v){
+		boolean toReturn=false;
+		int[] array = new int[2];	
+		Tile [] tiles = v.getAdjacentTiles();	
+		for(int i=0; i<tiles.length; i++){
+			array = getRollandResource(tiles[i]);
+			if (array[0]==2 || array[0]==2){
+				if(array[1]==2 || array[1]==2){
+					toReturn = true;
+				}
+			}
+		}
+		return toReturn;
+	}
+	private boolean on2and12sheep(CatanVertex v){
+		boolean toReturn=false;
+		int[] array = new int[2];	
+		Tile [] tiles = v.getAdjacentTiles();	
+		for(int i=0; i<tiles.length; i++){
+			array = getRollandResource(tiles[i]);
+			if (array[0]==2 || array[0]==2){
+				if(array[1]==5 || array[1]==5){
+					toReturn = true;
+				}
+			}
+		}
+		return toReturn;
+	}
+	private boolean on3and11wood(CatanVertex v){
+		boolean toReturn=false;
+		int[] array = new int[2];	
+		Tile [] tiles = v.getAdjacentTiles();	
+		for(int i=0; i<tiles.length; i++){
+			array = getRollandResource(tiles[i]);
+			if (array[0]==3 || array[0]==11){
+				if(array[1]==4 || array[1]==4){
+					toReturn = true;
+				}
+			}
+		}
+		return toReturn;
+	}
+	private boolean on3and11brick(CatanVertex v){
+		boolean toReturn=false;
+		int[] array = new int[2];	
+		Tile [] tiles = v.getAdjacentTiles();	
+		for(int i=0; i<tiles.length; i++){
+			array = getRollandResource(tiles[i]);
+			if (array[0]==3 || array[0]==11){
+				if(array[1]==3 || array[1]==3){
+					toReturn = true;
+				}
+			}
+		}
+		return toReturn;
+	}
+	private boolean on3and11stone(CatanVertex v){
+		boolean toReturn=false;
+		int[] array = new int[2];	
+		Tile [] tiles = v.getAdjacentTiles();	
+		for(int i=0; i<tiles.length; i++){
+			array = getRollandResource(tiles[i]);
+			if (array[0]==3 || array[0]==11){
+				if(array[1]==1 || array[1]==1){
+					toReturn = true;
+				}
+			}
+		}
+		return toReturn;
+	}
+	private boolean on3and11wheat(CatanVertex v){
+		boolean toReturn=false;
+		int[] array = new int[2];	
+		Tile [] tiles = v.getAdjacentTiles();	
+		for(int i=0; i<tiles.length; i++){
+			array = getRollandResource(tiles[i]);
+			if (array[0]==3 || array[0]==11){
+				if(array[1]==2 || array[1]==2){
+					toReturn = true;
+				}
+			}
+		}
+		return toReturn;
+	}
+	private boolean on3and11sheep(CatanVertex v){
+		boolean toReturn=false;
+		int[] array = new int[2];	
+		Tile [] tiles = v.getAdjacentTiles();	
+		for(int i=0; i<tiles.length; i++){
+			array = getRollandResource(tiles[i]);
+			if (array[0]==3 || array[0]==11){
+				if(array[1]==5 || array[1]==5){
+					toReturn = true;
+				}
+			}
+		}
+		return toReturn;
+	}
+	private boolean on4and10wood(CatanVertex v){
+		boolean toReturn=false;
+		int[] array = new int[2];	
+		Tile [] tiles = v.getAdjacentTiles();	
+		for(int i=0; i<tiles.length; i++){
+			array = getRollandResource(tiles[i]);
+			if (array[0]==4 || array[0]==10){
+				if(array[1]==4 || array[1]==4){
+					toReturn = true;
+				}
+			}
+		}
+		return toReturn;
+	}
+	private boolean on4and10brick(CatanVertex v){
+		boolean toReturn=false;
+		int[] array = new int[2];	
+		Tile [] tiles = v.getAdjacentTiles();	
+		for(int i=0; i<tiles.length; i++){
+			array = getRollandResource(tiles[i]);
+			if (array[0]==4 || array[0]==10){
+				if(array[1]==3 || array[1]==3){
+					toReturn = true;
+				}
+			}
+		}
+		return toReturn;
+	}
+	private boolean on4and10stone(CatanVertex v){
+		boolean toReturn=false;
+		int[] array = new int[2];	
+		Tile [] tiles = v.getAdjacentTiles();	
+		for(int i=0; i<tiles.length; i++){
+			array = getRollandResource(tiles[i]);
+			if (array[0]==4 || array[0]==10){
+				if(array[1]==1 || array[1]==1){
+					toReturn = true;
+				}
+			}
+		}
+		return toReturn;
+	}
+	private boolean on4and10wheat(CatanVertex v){
+		boolean toReturn=false;
+		int[] array = new int[2];	
+		Tile [] tiles = v.getAdjacentTiles();	
+		for(int i=0; i<tiles.length; i++){
+			array = getRollandResource(tiles[i]);
+			if (array[0]==4 || array[0]==10){
+				if(array[1]==2 || array[1]==2){
+					toReturn = true;
+				}
+			}
+		}
+		return toReturn;
+	}
+	private boolean on4and10sheep(CatanVertex v){
+		boolean toReturn=false;
+		int[] array = new int[2];	
+		Tile [] tiles = v.getAdjacentTiles();	
+		for(int i=0; i<tiles.length; i++){
+			array = getRollandResource(tiles[i]);
+			if (array[0]==4 || array[0]==10){
+				if(array[1]==5 || array[1]==5){
+					toReturn = true;
+				}
+			}
+		}
+		return toReturn;
+	}
+	private boolean on5and9wood(CatanVertex v){
+		boolean toReturn=false;
+		int[] array = new int[2];	
+		Tile [] tiles = v.getAdjacentTiles();	
+		for(int i=0; i<tiles.length; i++){
+			array = getRollandResource(tiles[i]);
+			if (array[0]==5 || array[0]==9){
+				if(array[1]==4 || array[1]==4){
+					toReturn = true;
+				}
+			}
+		}
+		return toReturn;
+	}
+	private boolean on5and9brick(CatanVertex v){
+		boolean toReturn=false;
+		int[] array = new int[2];	
+		Tile [] tiles = v.getAdjacentTiles();	
+		for(int i=0; i<tiles.length; i++){
+			array = getRollandResource(tiles[i]);
+			if (array[0]==5 || array[0]==9){
+				if(array[1]==3 || array[1]==3){
+					toReturn = true;
+				}
+			}
+		}
+		return toReturn;
+	}
+	private boolean on5and9stone(CatanVertex v){
+		boolean toReturn=false;
+		int[] array = new int[2];	
+		Tile [] tiles = v.getAdjacentTiles();	
+		for(int i=0; i<tiles.length; i++){
+			array = getRollandResource(tiles[i]);
+			if (array[0]==5 || array[0]==9){
+				if(array[1]==1 || array[1]==1){
+					toReturn = true;
+				}
+			}
+		}
+		return toReturn;
+	}
+	private boolean on5and9wheat(CatanVertex v){
+		boolean toReturn=false;
+		int[] array = new int[2];	
+		Tile [] tiles = v.getAdjacentTiles();	
+		for(int i=0; i<tiles.length; i++){
+			array = getRollandResource(tiles[i]);
+			if (array[0]==5 || array[0]==9){
+				if(array[1]==2 || array[1]==2){
+					toReturn = true;
+				}
+			}
+		}
+		return toReturn;
+	}
+	private boolean on5and9sheep(CatanVertex v){
+		boolean toReturn=false;
+		int[] array = new int[2];	
+		Tile [] tiles = v.getAdjacentTiles();	
+		for(int i=0; i<tiles.length; i++){
+			array = getRollandResource(tiles[i]);
+			if (array[0]==5 || array[0]==9){
+				if(array[1]==5 || array[1]==5){
+					toReturn = true;
+				}
+			}
+		}
+		return toReturn;
+	}
+	private boolean on6and8wood(CatanVertex v){
+		boolean toReturn=false;
+		int[] array = new int[2];	
+		Tile [] tiles = v.getAdjacentTiles();	
+		for(int i=0; i<tiles.length; i++){
+			array = getRollandResource(tiles[i]);
+			if (array[0]==6 || array[0]==8){
+				if(array[1]==4 || array[1]==4){
+					toReturn = true;
+				}
+			}
+		}
+		return toReturn;
+	}
+	private boolean on6and8brick(CatanVertex v){
+		boolean toReturn=false;
+		int[] array = new int[2];	
+		Tile [] tiles = v.getAdjacentTiles();	
+		for(int i=0; i<tiles.length; i++){
+			array = getRollandResource(tiles[i]);
+			if (array[0]==6 || array[0]==8){
+				if(array[1]==3 || array[1]==3){
+					toReturn = true;
+				}
+			}
+		}
+		return toReturn;
+	}
+	private boolean on6and8stone(CatanVertex v){
+		boolean toReturn=false;
+		int[] array = new int[2];	
+		Tile [] tiles = v.getAdjacentTiles();	
+		for(int i=0; i<tiles.length; i++){
+			array = getRollandResource(tiles[i]);
+			if (array[0]==6 || array[0]==8){
+				if(array[1]==1 || array[1]==1){
+					toReturn = true;
+				}
+			}
+		}
+		return toReturn;
+	}
+	private boolean on6and8wheat(CatanVertex v){
+		boolean toReturn=false;
+		int[] array = new int[2];	
+		Tile [] tiles = v.getAdjacentTiles();	
+		for(int i=0; i<tiles.length; i++){
+			array = getRollandResource(tiles[i]);
+			if (array[0]==6 || array[0]==8){
+				if(array[1]==2 || array[1]==2){
+					toReturn = true;
+				}
+			}
+		}
+		return toReturn;
+	}
+	private boolean on6and8sheep(CatanVertex v){
+		boolean toReturn=false;
+		int[] array = new int[2];	
+		Tile [] tiles = v.getAdjacentTiles();	
+		for(int i=0; i<tiles.length; i++){
+			array = getRollandResource(tiles[i]);
+			if (array[0]==5 || array[0]==9){
+				if(array[1]==5 || array[1]==5){
+					toReturn = true;
+				}
+			}
+		}
+		return toReturn;
+	}
 	private boolean onScarceResource(CatanVertex v){
 		//must think about how to define scarce....
 		return false;
