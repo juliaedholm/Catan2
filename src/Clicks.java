@@ -90,71 +90,54 @@ public class Clicks implements MouseListener{
 			interaction.resourceClicked(translator.Wheat);
 		}
 		else if(player1){
-			System.out.println("player1");
 			interaction.playerClicked(1);
 		}
 		else if(player2){
-						System.out.println("player2");
 			interaction.playerClicked(2);
 		}
 		else if(player3){
-					System.out.println("player3");
 			interaction.playerClicked(3);
 		}
 		else if(player4){
-						System.out.println("player4");
 			interaction.playerClicked(4);
 		}
 		else if(knights){
-			System.out.println("knights");
 			interaction.knightClicked();
 		}
 		else if(yearOfPlenty){
-			System.out.println("yearOfPlenty");
 			interaction.yearOfPlentyClicked();
 		}
 		else if(monopoly){
-			System.out.println("monops");
 			interaction.monopolyClicked();
 		}
 		else if(roadBuilder){
-			System.out.println("roadBuilder");
 			interaction.roadBuilderClicked();
 		}
 		else if(port0){
-			System.out.println("port0");
 			interaction.portClicked(0);
 		}
 		else if(port1){
-			System.out.println("port1");
 			interaction.portClicked(1);
 		}
 		else if(port2){
-			System.out.println("port2");
 			interaction.portClicked(2);
 		}
 		else if(port3){
-			System.out.println("port3");
 			interaction.portClicked(3);
 		}
 		else if(port4){
-			System.out.println("port4");
 			interaction.portClicked(4);
 		}
 		else if(port5){
-			System.out.println("port5");
 			interaction.portClicked(5);
 		}
 		else if(port6){
-			System.out.println("port6");
 			interaction.portClicked(6);
 		}
 		else if(port7){
-			System.out.println("port7");
 			interaction.portClicked(7);
 		}
 		else if(port8){
-			System.out.println("port8");
 			interaction.portClicked(8);
 		}
 

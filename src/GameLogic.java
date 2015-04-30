@@ -17,6 +17,7 @@ public class GameLogic {
 	public GameLogic(int[][] board, Player[] pArray) {
 		GraphMaker gm = new GraphMaker(board);
 		graph = new GraphController(gm.getVertexArray(), gm.tilesInBoard);
+		graph.getScarcestResource();
 		devDeck = new DevCardDeck();
 		players = pArray;
 	}
