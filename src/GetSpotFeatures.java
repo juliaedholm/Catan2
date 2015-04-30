@@ -678,8 +678,8 @@ public class GetSpotFeatures {
 		Tile [] tiles = v.getAdjacentTiles();	
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
-			if (array[0]==2 || array[0]==2){
-				if(array[1]==4 || array[1]==4){
+			if (array[0]==2 || array[0]==12){
+				if(array[1]==4){
 					toReturn = true;
 				}
 			}
@@ -692,8 +692,8 @@ public class GetSpotFeatures {
 		Tile [] tiles = v.getAdjacentTiles();	
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
-			if (array[0]==2 || array[0]==2){
-				if(array[1]==3 || array[1]==3){
+			if (array[0]==2 || array[0]==12){
+				if(array[1]==3){
 					toReturn = true;
 				}
 			}
@@ -706,8 +706,8 @@ public class GetSpotFeatures {
 		Tile [] tiles = v.getAdjacentTiles();	
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
-			if (array[0]==2 || array[0]==2){
-				if(array[1]==1 || array[1]==1){
+			if (array[0]==2 || array[0]==12){
+				if(array[1]==1){
 					toReturn = true;
 				}
 			}
@@ -720,8 +720,8 @@ public class GetSpotFeatures {
 		Tile [] tiles = v.getAdjacentTiles();	
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
-			if (array[0]==2 || array[0]==2){
-				if(array[1]==2 || array[1]==2){
+			if (array[0]==2 || array[0]==12){
+				if(array[1]==2){
 					toReturn = true;
 				}
 			}
@@ -734,8 +734,8 @@ public class GetSpotFeatures {
 		Tile [] tiles = v.getAdjacentTiles();	
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
-			if (array[0]==2 || array[0]==2){
-				if(array[1]==5 || array[1]==5){
+			if (array[0]==2 || array[0]==12){
+				if(array[1]==5){
 					toReturn = true;
 				}
 			}
@@ -749,7 +749,7 @@ public class GetSpotFeatures {
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
 			if (array[0]==3 || array[0]==11){
-				if(array[1]==4 || array[1]==4){
+				if(array[1]==4){
 					toReturn = true;
 				}
 			}
@@ -763,7 +763,7 @@ public class GetSpotFeatures {
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
 			if (array[0]==3 || array[0]==11){
-				if(array[1]==3 || array[1]==3){
+				if(array[1]==3){
 					toReturn = true;
 				}
 			}
@@ -777,7 +777,7 @@ public class GetSpotFeatures {
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
 			if (array[0]==3 || array[0]==11){
-				if(array[1]==1 || array[1]==1){
+				if(array[1]==1){
 					toReturn = true;
 				}
 			}
@@ -791,7 +791,7 @@ public class GetSpotFeatures {
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
 			if (array[0]==3 || array[0]==11){
-				if(array[1]==2 || array[1]==2){
+				if(array[1]==2){
 					toReturn = true;
 				}
 			}
@@ -805,7 +805,7 @@ public class GetSpotFeatures {
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
 			if (array[0]==3 || array[0]==11){
-				if(array[1]==5 || array[1]==5){
+				if(array[1]==5){
 					toReturn = true;
 				}
 			}
@@ -819,7 +819,7 @@ public class GetSpotFeatures {
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
 			if (array[0]==4 || array[0]==10){
-				if(array[1]==4 || array[1]==4){
+				if(array[1]==4){
 					toReturn = true;
 				}
 			}
@@ -833,7 +833,7 @@ public class GetSpotFeatures {
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
 			if (array[0]==4 || array[0]==10){
-				if(array[1]==3 || array[1]==3){
+				if(array[1]==3){
 					toReturn = true;
 				}
 			}
@@ -847,7 +847,7 @@ public class GetSpotFeatures {
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
 			if (array[0]==4 || array[0]==10){
-				if(array[1]==1 || array[1]==1){
+				if(array[1]==1){
 					toReturn = true;
 				}
 			}
@@ -861,7 +861,7 @@ public class GetSpotFeatures {
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
 			if (array[0]==4 || array[0]==10){
-				if(array[1]==2 || array[1]==2){
+				if(array[1]==2){
 					toReturn = true;
 				}
 			}
@@ -875,7 +875,7 @@ public class GetSpotFeatures {
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
 			if (array[0]==4 || array[0]==10){
-				if(array[1]==5 || array[1]==5){
+				if(array[1]==5){
 					toReturn = true;
 				}
 			}
@@ -889,7 +889,7 @@ public class GetSpotFeatures {
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
 			if (array[0]==5 || array[0]==9){
-				if(array[1]==4 || array[1]==4){
+				if(array[1]==4){
 					toReturn = true;
 				}
 			}
@@ -903,7 +903,7 @@ public class GetSpotFeatures {
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
 			if (array[0]==5 || array[0]==9){
-				if(array[1]==3 || array[1]==3){
+				if(array[1]==3){
 					toReturn = true;
 				}
 			}
@@ -917,7 +917,7 @@ public class GetSpotFeatures {
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
 			if (array[0]==5 || array[0]==9){
-				if(array[1]==1 || array[1]==1){
+				if(array[1]==1){
 					toReturn = true;
 				}
 			}
@@ -931,7 +931,7 @@ public class GetSpotFeatures {
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
 			if (array[0]==5 || array[0]==9){
-				if(array[1]==2 || array[1]==2){
+				if(array[1]==2){
 					toReturn = true;
 				}
 			}
@@ -945,7 +945,7 @@ public class GetSpotFeatures {
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
 			if (array[0]==5 || array[0]==9){
-				if(array[1]==5 || array[1]==5){
+				if(array[1]==5){
 					toReturn = true;
 				}
 			}
@@ -959,7 +959,7 @@ public class GetSpotFeatures {
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
 			if (array[0]==6 || array[0]==8){
-				if(array[1]==4 || array[1]==4){
+				if(array[1]==4){
 					toReturn = true;
 				}
 			}
@@ -973,7 +973,7 @@ public class GetSpotFeatures {
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
 			if (array[0]==6 || array[0]==8){
-				if(array[1]==3 || array[1]==3){
+				if(array[1]==3){
 					toReturn = true;
 				}
 			}
@@ -987,7 +987,7 @@ public class GetSpotFeatures {
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
 			if (array[0]==6 || array[0]==8){
-				if(array[1]==1 || array[1]==1){
+				if(array[1]==1){
 					toReturn = true;
 				}
 			}
@@ -1001,7 +1001,7 @@ public class GetSpotFeatures {
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
 			if (array[0]==6 || array[0]==8){
-				if(array[1]==2 || array[1]==2){
+				if(array[1]==2){
 					toReturn = true;
 				}
 			}
@@ -1015,7 +1015,7 @@ public class GetSpotFeatures {
 		for(int i=0; i<tiles.length; i++){
 			array = getRollandResource(tiles[i]);
 			if (array[0]==6 || array[0]==8){
-				if(array[1]==5 || array[1]==5){
+				if(array[1]==5){
 					toReturn = true;
 				}
 			}
