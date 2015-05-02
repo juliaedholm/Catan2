@@ -34,6 +34,8 @@ public class RunGame {
 	public boolean inFirstRound;
 	private boolean firstRoundSET;
 	private int firstRoundRoadCounter;
+
+	private int turnMax = 100;
 	
 	int[][] initialSettlementsForPlayers;
 	
@@ -108,10 +110,14 @@ public class RunGame {
 		for (int i=0; i<playerCount*2; i++){
 			initial.firstRoundRoad(currentPlayerID);
 		}
-		while(!gameEnd()){
+		while(!gameEnd(false)){
 			numTurns ++;
 			int[] r = rollDice();
 			turn.turn(currentPlayerID);
+			if(numTurns>turnMax){
+				gameEnd(true);
+				return -1;
+			}
 		}
 		int winningPlayer = 0;
 		for (int i = 1; i< players.length; i++){
@@ -134,7 +140,7 @@ public class RunGame {
 	}
 	
 	public int[] rollDice(){
-		if ( gameEnd() ){
+		if ( gameEnd(false) ){
 			//System.exit(0);
 			return new int[] {6,6};
 		}
@@ -239,12 +245,12 @@ public class RunGame {
 		//p is the player number which we need as input - I will leave that to you since you've been doing it
 		boolean allowed = gl.useKnight(currentPlayerID);
 		if(allowed){
-			System.out.println("You are allowed to use a knight, time to use it.");
+			//System.out.println("You are allowed to use a knight, time to use it.");
 			robberAction(tile, currentPlayerID);
 		}
 		clearVerticesAndAction();
 		updateAllStats();
-		System.out.println("Working?");
+		//System.out.println("Working?");
 	}
 
 	public void robberAction(int tile, int playerID){
@@ -526,7 +532,9 @@ public class RunGame {
 		roadBuilderCounter = 0;
 	}
 	
-	private boolean gameEnd(){
+	private boolean gameEnd(boolean turnMaxEnder){
+		if(turnMaxEnder)
+			return false;
 		for (int i = 1; i< players.length; i++){
 			int vp = players[i].victoryPoints;
 			if (vp>= endGameCondition){

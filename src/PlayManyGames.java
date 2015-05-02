@@ -12,11 +12,20 @@ public class PlayManyGames {
 			System.out.println("Can't open the file: Feature Data.txt");
 		}
 		
-		int numRuns = 100;
+		int numRuns = 10000;
 		SpotQualityAlgorithm spotQuality = new SpotQualityAlgorithm (59, numRuns);
 		for (int j=0; j<numRuns; j++){
+			boolean tryAgain = true;
 			RunGame gameRunner = new RunGame(4, false, true, false); //will NOT used a fixed board
 			int winningPlayer = gameRunner.runGameWithAI(false);
+			if(winningPlayer>0)
+					tryAgain=false;
+			while(tryAgain){
+				gameRunner = new RunGame(4, false, true, false); //will NOT used a fixed board
+				winningPlayer = gameRunner.runGameWithAI(false);
+				if(winningPlayer>0)
+					tryAgain=false;
+			}
 			GraphController theGraph = gameRunner.gl.graph;
 			CatanVertex[] verticesInGraph = theGraph.vertices;
 			Player[] players = gameRunner.getPlayers();
