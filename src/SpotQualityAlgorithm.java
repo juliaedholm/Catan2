@@ -37,11 +37,11 @@ public class SpotQualityAlgorithm {
 	public void loosersFeatures(int[] badFeats){
 		for (int i = 0; i<badFeats.length; i++){
 			if (badFeats[i] == 1){
-				weightOfAllFeats[i] -= 1;
-				numOfInteractions[i]++;
+			//	weightOfAllFeats[i] -= 1;
+				//numOfInteractions[i]++;
 			} 
 		}
-	//	normalize();
+		//normalize();
 	}
 	
 	public void printFeatureWeights(){

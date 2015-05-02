@@ -15,8 +15,17 @@ public class PlayManyGames {
 		int numRuns = 500;
 		SpotQualityAlgorithm spotQuality = new SpotQualityAlgorithm (69, numRuns);
 		for (int j=0; j<numRuns; j++){
+			boolean tryAgain = true;
 			RunGame gameRunner = new RunGame(4, false, true, false); //will NOT used a fixed board
 			int winningPlayer = gameRunner.runGameWithAI(false);
+			if(winningPlayer>0)
+					tryAgain=false;
+			while(tryAgain){
+				gameRunner = new RunGame(4, false, true, false); //will NOT used a fixed board
+				winningPlayer = gameRunner.runGameWithAI(false);
+				if(winningPlayer>0)
+					tryAgain=false;
+			}
 			GraphController theGraph = gameRunner.gl.graph;
 			CatanVertex[] verticesInGraph = theGraph.vertices;
 			Player[] players = gameRunner.getPlayers();
