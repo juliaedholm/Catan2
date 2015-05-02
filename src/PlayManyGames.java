@@ -12,7 +12,7 @@ public class PlayManyGames {
 			System.out.println("Can't open the file: Feature Data.txt");
 		}
 		
-		int numRuns = 500;
+		int numRuns = 10;
 		SpotQualityAlgorithm spotQuality = new SpotQualityAlgorithm (69, numRuns);
 		for (int j=0; j<numRuns; j++){
 			boolean tryAgain = true;
@@ -78,7 +78,7 @@ public class PlayManyGames {
 		//print stats in some meaningful way
 		if (writer != null){
 			try{
-				writer.write("Feature information for vertex: "+v.vertexNumber);
+				//writer.write("Feature information for vertex: "+v.vertexNumber);
 				writer.newLine();
 				for (int i = 0; i<features.length; i++){
 					writer.write(" "+features[i]+",");
