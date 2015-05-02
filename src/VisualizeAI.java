@@ -3,13 +3,9 @@ public class VisualizeAI {
 	
 	public static void main (String[] args){
 		//creates Player classes for each player and stores in players[]
-<<<<<<< HEAD
 		RunGame gameRunner = new RunGame(4, false, true, true);
 		SpotQualityAlgorithm spotQuality = new SpotQualityAlgorithm (69, 1);
 		int winningPlayer = gameRunner.runGameWithAI(false);
-=======
-		RunGame gameRunner = new RunGame(4, false, true, true); 
->>>>>>> cjbernstein-master
 		
 		/* get the game state graphically*/
 		GraphController theGraph = gameRunner.gl.graph;

@@ -41,11 +41,7 @@ public class SpotQualityAlgorithm {
 				//numOfInteractions[i]++;
 			} 
 		}
-<<<<<<< HEAD
-	//	normalize();
-=======
 		//normalize();
->>>>>>> cjbernstein-master
 	}
 	
 	public void printFeatureWeights(){
