@@ -62,6 +62,17 @@ public class GetSpotFeatures {
 	 * 56 = on 6 or 8 brick
 	 * 57 = on 6 or 8 stone
 	 * 58 = on 6 or 8 sheep
+	 * 59 =  rock is scarce
+	 * 60 = wheat is scarce
+	 * 61 = brick is scarce
+	 * 62 = wood is scarce
+	 * 63 = sheep is scarce
+	 * 64 = rock is plentiful
+	 * 65 = wheat is plentiful
+	 * 66 = brick is plentiful
+	 * 67 = wood is plentiful
+	 * 68 = sheep is plentiful 
+	 * 
 	 */
 	
 	public int[] getFeaturesForVertex (CatanVertex v){
