@@ -13,7 +13,7 @@ public class PlayManyGames {
 		}
 		
 		int numRuns = 500;
-		SpotQualityAlgorithm spotQuality = new SpotQualityAlgorithm (59, numRuns);
+		SpotQualityAlgorithm spotQuality = new SpotQualityAlgorithm (69, numRuns);
 		for (int j=0; j<numRuns; j++){
 			RunGame gameRunner = new RunGame(4, false, true, false); //will NOT used a fixed board
 			int winningPlayer = gameRunner.runGameWithAI(false);
