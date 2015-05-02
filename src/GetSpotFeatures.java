@@ -2,6 +2,9 @@
 
 public class GetSpotFeatures {
 	ResourceTranslator translator = new ResourceTranslator();
+	GraphController graph;
+	int scarcestResource;
+	int mostCommonResource;
 	/*
 	 * 0 = rock
 	 * 1 = wheat
@@ -75,11 +78,12 @@ public class GetSpotFeatures {
 	 * 
 	 */
 	
-	public int[] getFeaturesForVertex (CatanVertex v){
-
+	public int[] getFeaturesForVertex (CatanVertex v, GraphController g){
+		graph = g;
 		boolean debug = true;
 		int[] toReturn = new int[59];
-
+		calculateScarcestResource();
+		
 		if (rock(v)){
 			toReturn[0] = 1;
 		}
@@ -256,6 +260,36 @@ public class GetSpotFeatures {
 		}
 		if (on6and8sheep(v)){
 			toReturn[58] = 1;
+		}
+		if (scarcestResource == translator.Rock){
+			toReturn[59] = 1;
+		}
+		if (scarcestResource == translator.Wheat){
+			toReturn[60] =1;
+		}
+		if (scarcestResource == translator.Brick){
+			toReturn[61] = 1;
+		}
+		if (scarcestResource == translator.Wood){
+			toReturn[62] =1 ;
+		}
+		if (scarcestResource == translator.Sheep){
+			toReturn[63] = 1;
+		}
+		if (mostCommonResource == translator.Rock){
+			toReturn[64] = 1;
+		}
+		if (mostCommonResource == translator.Wheat){
+			toReturn[64] = 1;
+		}
+		if (mostCommonResource == translator.Brick){
+			toReturn[64] = 1;
+		}
+		if (mostCommonResource == translator.Wood){
+			toReturn[64] = 1;
+		}
+		if (mostCommonResource == translator.Sheep){
+			toReturn[64] = 1;
 		}
 		if (debug){
 			System.out.println("features for vertex "+v.vertexNumber);
@@ -1033,6 +1067,12 @@ public class GetSpotFeatures {
 		}
 		return toReturn;
 	}
+	
+	private void calculateScarcestResource(){
+		scarcestResource = graph.getScarcestResource();
+		mostCommonResource = graph.getMostBountifulResource();
+	}
+	
 	private boolean onScarceResource(CatanVertex v){
 		//must think about how to define scarce....
 		return false;
