@@ -280,16 +280,16 @@ public class GetSpotFeatures {
 			toReturn[64] = 1;
 		}
 		if (mostCommonResource == translator.Wheat){
-			toReturn[64] = 1;
+			toReturn[65] = 1;
 		}
 		if (mostCommonResource == translator.Brick){
-			toReturn[64] = 1;
+			toReturn[66] = 1;
 		}
 		if (mostCommonResource == translator.Wood){
-			toReturn[64] = 1;
+			toReturn[67] = 1;
 		}
 		if (mostCommonResource == translator.Sheep){
-			toReturn[64] = 1;
+			toReturn[68] = 1;
 		}
 		if (debug){
 			System.out.println("features for vertex "+v.vertexNumber);
