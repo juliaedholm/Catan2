@@ -1074,10 +1074,24 @@ public class GetSpotFeatures {
 	}
 	
 	private boolean onScarceResource(CatanVertex v){
-		//must think about how to define scarce....
+		Tile [] tiles = v.getAdjacentTiles();
+		for (int i=0; i<tiles.length; i++){
+			if(tiles[i].resource==scarcestResource){
+				return true;
+			}
+		}
 		return false;
 	}
 	
+	private boolean onPlentifulResource(CatanVertex v){
+		Tile [] tiles = v.getAdjacentTiles();
+		for (int i=0; i<tiles.length; i++){
+			if(tiles[i].resource==mostCommonResource){
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	
 }

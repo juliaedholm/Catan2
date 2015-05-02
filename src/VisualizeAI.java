@@ -60,9 +60,9 @@ public class VisualizeAI {
 			int spot1 = playerStartSettlements[1];
 			int spot2 = playerStartSettlements[2];
 			if (i == winningPlayer){
-				learnAboutWinningVertex(verticesInGraph[spot1], spotQuality);
+				learnAboutWinningVertex(verticesInGraph[spot1], spotQuality, theGraph);
 			}  else if (i == worstPlayer){
-				learnAboutLosingVertex(verticesInGraph[spot1], spotQuality);
+				learnAboutLosingVertex(verticesInGraph[spot1], spotQuality, theGraph);
 			}
 		}
 
@@ -74,15 +74,15 @@ public class VisualizeAI {
 	}
 		
 	
-	private static void learnAboutWinningVertex (CatanVertex v, SpotQualityAlgorithm spotQuality){
+	private static void learnAboutWinningVertex (CatanVertex v, SpotQualityAlgorithm spotQuality, GraphController g){
 		GetSpotFeatures feats = new GetSpotFeatures();
-		int[] features = feats.getFeaturesForVertex (v);
+		int[] features = feats.getFeaturesForVertex (v, g);
 		spotQuality.winnersFeatures(features);
 	}
 
-	private static void learnAboutLosingVertex (CatanVertex v, SpotQualityAlgorithm spotQuality){
+	private static void learnAboutLosingVertex (CatanVertex v, SpotQualityAlgorithm spotQuality, GraphController g){
 		GetSpotFeatures feats = new GetSpotFeatures();
-		int[] features = feats.getFeaturesForVertex (v);
+		int[] features = feats.getFeaturesForVertex (v, g);
 		spotQuality.loosersFeatures(features);
 	}
 		
