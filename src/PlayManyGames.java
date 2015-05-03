@@ -11,14 +11,10 @@ public class PlayManyGames {
 		} catch (Exception e){
 			System.out.println("Can't open the file: Feature Data.txt");
 		}
-		
-<<<<<<< HEAD
-		int numRuns = 10000;
-		SpotQualityAlgorithm spotQuality = new SpotQualityAlgorithm (69, numRuns);
-=======
-		int numRuns = 100;
+
+		int numRuns = 30000;
 		SpotQualityAlgorithm spotQuality = new SpotQualityAlgorithm (71, numRuns);
->>>>>>> juliaedholm/master
+
 		for (int j=0; j<numRuns; j++){
 			boolean tryAgain = true;
 			RunGame gameRunner = new RunGame(4, false, true, false); //will NOT used a fixed board
