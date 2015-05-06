@@ -4,16 +4,19 @@
 public class DecisionTree {
 	GetSpotFeatures featFinder;
 	GraphController graph;
+	CatanVertex[] verticesInGraph;
 	
 	public DecisionTree(GraphController g){
 		featFinder = new GetSpotFeatures();
 		graph = g;
+		verticesInGraph = graph.vertices;
 	} 
 	
-	public boolean isSpotGood (CatanVertex v){
-		boolean debug = true;
+	public boolean isSpotGood (int v){
+		boolean debug = false;
 		boolean toReturn = false;
-		int[] feats = featFinder.getFeaturesForVertex(v, graph);
+		CatanVertex vert = verticesInGraph[v];
+		int[] feats = featFinder.getFeaturesForVertex(vert, graph);
 		
 		//decision tree:
 		if (feats[4] == 1){
