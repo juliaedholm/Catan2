@@ -188,6 +188,20 @@ public class TurnAI {
 	}
 	
 	private void buildCity (){
+		if (p == playerWithDT){
+			int[] newCityVertices = new int[54];
+			int newCityVertCount = 0;
+			for (int i = 0; i<cityVertices.length; i++){
+				if (dt.isSpotGood(cityVertices[i])){
+					newCityVertices[newCityVertCount] = cityVertices[i];
+					newCityVertCount ++;
+				}
+			}
+			if (newCityVertCount > 0 ){
+				cityVertices = newCityVertices;
+				cityVerticesCount = newCityVertCount;
+			}
+		}
 		rg.setActionType(2);
 		int cityIndex = generator.nextInt(cityVerticesCount);
 		int cityToBuild = cityVertices[cityIndex];
@@ -221,6 +235,20 @@ public class TurnAI {
 	
 	private void buildSmartRoad(){
 		//choose the road that will get you to a buildable spot 
+		if (p == playerWithDT){
+			int[][] newRoadVertices = new int[54*54][2];
+			int newRoadVerticesCount = 0;
+			for (int i = 0; i<roadVerticesCount; i++){
+				if (dt.isSpotGood(roadVertices[i][0]) || dt.isSpotGood(roadVertices[i][0]) ){
+					newRoadVertices[newRoadVerticesCount] = roadVertices[i];
+					newRoadVerticesCount ++;
+				}
+			}
+			if (newRoadVerticesCount > 0 ){
+				roadVertices = newRoadVertices;
+				roadVerticesCount =newRoadVerticesCount;
+			}
+		}
 		for (int i = 0; i<roadVerticesCount; i++){
 			int v1 = roadVertices[i][0];
 			int v2 =  roadVertices[i][1];
