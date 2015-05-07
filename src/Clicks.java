@@ -16,8 +16,8 @@ public class Clicks implements MouseListener{
 
 		int x = e.getX();
 		int y = e.getY();
-		System.out.println(x);
-		System.out.println(y);
+		//System.out.println(x);
+		//System.out.println(y);
 		//identifying the Vertex and Hexagon
 		int verty= searchVert(x,y);
 		int hexy= searchHex(x,y);

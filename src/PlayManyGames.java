@@ -12,7 +12,7 @@ public class PlayManyGames {
 			System.out.println("Can't open the file: Feature Data.txt");
 		}
 
-		int numRuns = 30000;
+		int numRuns = 200;
 		SpotQualityAlgorithm spotQuality = new SpotQualityAlgorithm (71, numRuns);
 
 		for (int j=0; j<numRuns; j++){
@@ -65,7 +65,7 @@ public class PlayManyGames {
 		} catch (Exception e){
 			System.out.println("Can't close!");
 		}
-	//	spotQuality.printFeatureWeights();
+		spotQuality.printFeatureWeights();
 	}
 		
 	private static void getFeaturesWithGameState(CatanVertex v){

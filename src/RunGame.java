@@ -125,7 +125,7 @@ public class RunGame {
 		int winningPlayer = 0;
 		for (int i = 1; i< players.length; i++){
 			int vp = players[i].victoryPoints;
-			System.out.println("Player: "+i+" ended with vps "+vp);
+			//System.out.println("Player: "+i+" ended with vps "+vp);
 			if (vp>= endGameCondition){
 				winningPlayer = i;
 			}
