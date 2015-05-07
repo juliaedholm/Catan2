@@ -6,6 +6,8 @@ public class TurnAI {
 	private GameLogic gl;
 	private DecisionTree dt;
 	int playerWithDT;
+	private LearnedWeights weight;
+	int playerWithLW;
 	int[] possibleActions;
 	Random generator;
 	
@@ -43,6 +45,10 @@ public class TurnAI {
 		debug = printMessages;
 		dt = new DecisionTree(g.graph);
 		playerWithDT = smartPlayer;
+		//playerWithDT = 0;
+		weight = new LearnedWeights(g.graph);
+		playerWithLW = 2;
+		//playerWithLW = 0;
 	}
 	
 	public void turn(int playerID){
@@ -152,25 +158,34 @@ public class TurnAI {
 	}
 	
 	private void settle(){
-		if (p== playerWithDT){
-			if (p == playerWithDT){
-				int[] newSettlementVertices = new int[54];
-				int newSetVertCount = 0;
-				for (int i = 0; i<settlementVertices.length; i++){
-					if (dt.isSpotGood(settlementVertices[i])){
-						newSettlementVertices[newSetVertCount] = settlementVertices[i];
-						newSetVertCount ++;
-					}
-				}
-				if (newSetVertCount > 0 ){
-					settlementVertices = newSettlementVertices;
-					settlementVerticesCount = newSetVertCount;
+		if (p == playerWithDT){
+			int[] newSettlementVertices = new int[54];
+			int newSetVertCount = 0;
+			for (int i = 0; i<settlementVertices.length; i++){
+				if (dt.isSpotGood(settlementVertices[i])){
+					newSettlementVertices[newSetVertCount] = settlementVertices[i];
+					newSetVertCount ++;
 				}
 			}
-		} 
+			if (newSetVertCount > 0 ){
+				settlementVertices = newSettlementVertices;
+				settlementVerticesCount = newSetVertCount;
+			//	System.out.println("Found 'good' settlement using DT");
+			}
+		}
 		rg.setActionType (1);
 		int randIndex = generator.nextInt(settlementVerticesCount);
 		int vertexToBuild = settlementVertices[randIndex];
+		if (p == playerWithLW){
+			double maxWeight = -10000;
+			for (int i = 0; i<settlementVerticesCount; i++){
+				if (weight.getSpotWeight(settlementVertices[i])>maxWeight){
+					maxWeight = weight.getSpotWeight(settlementVertices[i]);
+					vertexToBuild = settlementVertices[i];
+					System.out.println("Built on the highest weight vertex");
+				}
+			}
+		}
 		rg.setVertex(vertexToBuild);
 	}
 	
@@ -205,6 +220,16 @@ public class TurnAI {
 		rg.setActionType(2);
 		int cityIndex = generator.nextInt(cityVerticesCount);
 		int cityToBuild = cityVertices[cityIndex];
+		if (p == playerWithLW){
+			double maxWeight = -10000;
+			for (int i = 0; i<cityVerticesCount; i++){
+				if (weight.getSpotWeight(cityVertices[i])>maxWeight){
+					maxWeight = weight.getSpotWeight(cityVertices[i]);
+					cityIndex = cityVertices[i];
+					System.out.println("Built city on the highest weight vertex");
+				}
+			}
+		}
 		rg.setVertex(cityToBuild);
 	}
 	
@@ -247,7 +272,30 @@ public class TurnAI {
 			if (newRoadVerticesCount > 0 ){
 				roadVertices = newRoadVertices;
 				roadVerticesCount =newRoadVerticesCount;
+				//System.out.println("Found 'good' roads using DT");
 			}
+		}
+		if (p == playerWithLW){
+			int bestRoad = 0;
+			double bestSpotWeight = -1000;
+			for (int i = 0; i<roadVerticesCount; i++){
+				int v1 = roadVertices[i][0];
+				int v2 =  roadVertices[i][1];
+				if (gl.placeSetCheck(p, v1) || gl.placeSetCheck(p,v2)){
+					if (weight.getSpotWeight(v1)>bestSpotWeight){
+						bestSpotWeight = weight.getSpotWeight(v1);
+						bestRoad = i;
+					} else if (weight.getSpotWeight(v2)>bestSpotWeight){
+						bestSpotWeight = weight.getSpotWeight(v2);
+						bestRoad = i;
+					}
+				}
+			}
+			rg.setActionType(3);
+			rg.setVertex(roadVertices[bestRoad][0]);
+			rg.setVertex(roadVertices[bestRoad][1]);
+			//System.out.println("BUILT ROAD TO HIGH WEIGHT SPOT");
+			return;
 		}
 		for (int i = 0; i<roadVerticesCount; i++){
 			int v1 = roadVertices[i][0];
