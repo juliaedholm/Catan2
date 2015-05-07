@@ -6,6 +6,8 @@ public class InitialPlacementAI {
 	GameLogic gl;
 	private DecisionTree dt;
 	int playerWithDT;
+	private LearnedWeights weight;
+	int playerWithLW;
 	boolean fixedInitialPlacement;
 	
 	int[] settlementVertices;
@@ -21,6 +23,10 @@ public class InitialPlacementAI {
 		fixedInitialPlacement = f;
 		dt = new DecisionTree(g.graph);
 		playerWithDT = smartPlayer;
+		//playerWithDT = 0;
+		weight = new LearnedWeights(g.graph);
+		playerWithLW = 2;
+		//playerWithLW = 0;
 	}
 	
 	// actions for first round (settlement and road placement) ///
@@ -63,6 +69,17 @@ public class InitialPlacementAI {
 			}
 			int randIndex = generator.nextInt(settlementVerticesCount);
 			int vertexToBuild = settlementVertices[randIndex];
+			if (p == playerWithLW){
+				double maxWeight = -10000;
+				for (int i = 0; i<settlementVertices.length; i++){
+					//System.out.println("Weight calculated" + weight.getSpotWeight(settlementVertices[i]));
+					if (weight.getSpotWeight(settlementVertices[i]) > maxWeight){
+						maxWeight = weight.getSpotWeight(settlementVertices[i]);
+						vertexToBuild = settlementVertices[i];
+					//	System.out.println("Changed the highest weight vertex");
+					}
+				}
+			}
 			return vertexToBuild;
 		}
 		

@@ -3,7 +3,7 @@ public class TestSmartAI {
 	
 	public static void main (String[] args){
 		//creates Player classes for each player and stores in players[]
-		int numRuns = 1000;
+		int numRuns = 100;
 		int [] numWinsPerPlayer = new int[5];
 		
 		for (int i = 0; i< numRuns; i ++){

@@ -3,7 +3,7 @@ public class VisualizeAI {
 	
 	public static void main (String[] args){
 		//creates Player classes for each player and stores in players[]
-		RunGame gameRunner = new RunGame(4, false, true, true);
+		RunGame gameRunner = new RunGame(4, false, true, false);
 		SpotQualityAlgorithm spotQuality = new SpotQualityAlgorithm (71, 1);
 		int winningPlayer = gameRunner.runGameWithAI(false);
 		
@@ -54,24 +54,12 @@ public class VisualizeAI {
 				}
 			}
 		}
-				
-		for (int i = 1; i<initialSettlementsAllPlayers.length; i++){
-			int [] playerStartSettlements = initialSettlementsAllPlayers[i];
-			int spot1 = playerStartSettlements[1];
-			int spot2 = playerStartSettlements[2];
-			if (i == winningPlayer){
-				learnAboutWinningVertex(verticesInGraph[spot1], spotQuality, theGraph);
-			}  else if (i == worstPlayer){
-				learnAboutLosingVertex(verticesInGraph[spot1], spotQuality, theGraph);
-			}
-		}
 
-		spotQuality.printFeatureWeights();
+
+	//	spotQuality.printFeatureWeights();
 	}
 		
-	private static void getFeaturesWithGameState(CatanVertex v){
-		//might require passing the entire board or information about player hand
-	}
+
 		
 	
 	private static void learnAboutWinningVertex (CatanVertex v, SpotQualityAlgorithm spotQuality, GraphController g){

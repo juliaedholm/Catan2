@@ -19,6 +19,15 @@ public class GameLogic {
 		graph = new GraphController(gm.getVertexArray(), gm.tilesInBoard);
 		graph.getScarcestResource();
 		graph.getMostBountifulResource();
+		LearnedWeights lw = new LearnedWeights(graph);
+		CatanVertex[] vertices = graph.vertices;
+		// print the weights of spots 
+		/*
+		for (int i = 0; i<vertices.length; i++){
+			double weight = lw.getSpotWeight(i);
+			System.out.println(" vertex "+i+" weight: "+weight);
+		}
+		*/
 		devDeck = new DevCardDeck();
 		players = pArray;
 	}
