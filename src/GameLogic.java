@@ -20,14 +20,15 @@ public class GameLogic {
 		graph.getScarcestResource();
 		graph.getMostBountifulResource();
 		LearnedWeights lw = new LearnedWeights(graph);
+		DecisionTree dt = new DecisionTree(graph);
 		CatanVertex[] vertices = graph.vertices;
+		
 		// print the weights of spots 
-		/*
 		for (int i = 0; i<vertices.length; i++){
 			double weight = lw.getSpotWeight(i);
-			System.out.println(" vertex "+i+" weight: "+weight);
+			System.out.println(" Vertex "+i+" weight: "+weight+"is good? "+ dt.isSpotGood(i));
+			
 		}
-		*/
 		devDeck = new DevCardDeck();
 		players = pArray;
 	}
@@ -339,7 +340,7 @@ public class GameLogic {
 	public void useMonopoly(int p, int r){
 		boolean canUse = canUseDevCard(p, 4);
 		if (!canUse){
-			System.out.println("Tried to use monopoly, but player "+p+" does not have one");
+		//	System.out.println("Tried to use monopoly, but player "+p+" does not have one");
 			return;
 		}
 		players[p].useDevCard(4);
@@ -349,17 +350,17 @@ public class GameLogic {
 		for(int i=1; i<players.length; i++){
 			if(i!=p){
 				total = total + players[i].getAllX(r);
-				System.out.println("total is now: "+total);
+				//System.out.println("total is now: "+total);
 			}
 		}
-		System.out.println("total at end of loop = "+total);
+	//	System.out.println("total at end of loop = "+total);
 		players[p].addResource(r,total);
 	}
 
 	public void useYearOfPlenty(int p, int r1, int r2){
 		boolean canUse = canUseDevCard(p, 5);
 		if (!canUse){
-			System.out.println("Tried to use Year of Plenty, but player "+p+" does not have one");
+			//System.out.println("Tried to use Year of Plenty, but player "+p+" does not have one");
 			return;
 		}
 		players[p].useDevCard(5);

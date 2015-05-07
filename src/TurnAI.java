@@ -8,6 +8,7 @@ public class TurnAI {
 	int playerWithDT;
 	private LearnedWeights weight;
 	int playerWithLW;
+	int playerWithAntiDT;
 	int[] possibleActions;
 	Random generator;
 	
@@ -47,8 +48,10 @@ public class TurnAI {
 		playerWithDT = smartPlayer;
 		//playerWithDT = 0;
 		weight = new LearnedWeights(g.graph);
-		playerWithLW = 2;
-		//playerWithLW = 0;
+	//	playerWithLW = 2;
+		playerWithLW = 0;
+		//playerWithAntiDT = 3;
+		playerWithAntiDT = 0;
 	}
 	
 	public void turn(int playerID){
@@ -73,10 +76,10 @@ public class TurnAI {
 			usePort();
 		} else if (devCardPossible()){
 			buyDevCard();
-/*		} else if (canUse3to1Port()){
+		} else if (canUse3to1Port()){
 			use3to1Port();
 		} else if (tradePossible4to1()){
-			makeTrade(); */
+			makeTrade(); 
 		}  else if (knightPossible()){
 			//useKnight();
 		}
@@ -159,10 +162,25 @@ public class TurnAI {
 	
 	private void settle(){
 		if (p == playerWithDT){
-			int[] newSettlementVertices = new int[54];
+			int[] newSettlementVertices = new int[settlementVerticesCount];
 			int newSetVertCount = 0;
-			for (int i = 0; i<settlementVertices.length; i++){
+			for (int i = 0; i<settlementVerticesCount; i++){
 				if (dt.isSpotGood(settlementVertices[i])){
+					newSettlementVertices[newSetVertCount] = settlementVertices[i];
+					newSetVertCount ++;
+				}
+			}
+			if (newSetVertCount > 0 ){
+				settlementVertices = newSettlementVertices;
+				settlementVerticesCount = newSetVertCount;
+			//	System.out.println("Found 'good' settlement using DT");
+			}
+		}
+		if (p == playerWithAntiDT){
+			int[] newSettlementVertices = new int[settlementVerticesCount];
+			int newSetVertCount = 0;
+			for (int i = 0; i<settlementVerticesCount; i++){
+				if (!dt.isSpotGood(settlementVertices[i])){
 					newSettlementVertices[newSetVertCount] = settlementVertices[i];
 					newSetVertCount ++;
 				}
@@ -204,10 +222,24 @@ public class TurnAI {
 	
 	private void buildCity (){
 		if (p == playerWithDT){
-			int[] newCityVertices = new int[54];
+			int[] newCityVertices = new int[cityVerticesCount];
 			int newCityVertCount = 0;
-			for (int i = 0; i<cityVertices.length; i++){
+			for (int i = 0; i<cityVerticesCount; i++){
 				if (dt.isSpotGood(cityVertices[i])){
+					newCityVertices[newCityVertCount] = cityVertices[i];
+					newCityVertCount ++;
+				}
+			}
+			if (newCityVertCount > 0 ){
+				cityVertices = newCityVertices;
+				cityVerticesCount = newCityVertCount;
+			}
+		}
+		if (p == playerWithAntiDT){
+			int[] newCityVertices = new int[cityVerticesCount];
+			int newCityVertCount = 0;
+			for (int i = 0; i<cityVerticesCount; i++){
+				if (!dt.isSpotGood(cityVertices[i])){
 					newCityVertices[newCityVertCount] = cityVertices[i];
 					newCityVertCount ++;
 				}
@@ -265,6 +297,21 @@ public class TurnAI {
 			int newRoadVerticesCount = 0;
 			for (int i = 0; i<roadVerticesCount; i++){
 				if (dt.isSpotGood(roadVertices[i][0]) || dt.isSpotGood(roadVertices[i][0]) ){
+					newRoadVertices[newRoadVerticesCount] = roadVertices[i];
+					newRoadVerticesCount ++;
+				}
+			}
+			if (newRoadVerticesCount > 0 ){
+				roadVertices = newRoadVertices;
+				roadVerticesCount =newRoadVerticesCount;
+				//System.out.println("Found 'good' roads using DT");
+			}
+		}
+		if (p == playerWithAntiDT){
+			int[][] newRoadVertices = new int[54*54][2];
+			int newRoadVerticesCount = 0;
+			for (int i = 0; i<roadVerticesCount; i++){
+				if (!dt.isSpotGood(roadVertices[i][0]) || !dt.isSpotGood(roadVertices[i][0]) ){
 					newRoadVertices[newRoadVerticesCount] = roadVertices[i];
 					newRoadVerticesCount ++;
 				}
@@ -482,7 +529,9 @@ public class TurnAI {
 	private void useMonopoly(){
 		int r1 = getResourceWanted(0);
 		gl.useMonopoly(p, r1);
-		System.out.println("Player "+p+" used monopoly");
+		if (debug){
+			System.out.println("Player "+p+"  monopoly");	
+		}
 	}
 	
 	private boolean yopPossible(){
@@ -493,7 +542,9 @@ public class TurnAI {
 		int r1 = getResourceWanted(0);
 		int r2 = getResourceWanted(0);
 		gl.useYearOfPlenty(p, r1, r2);
-		System.out.println("Player "+p+" used the year of plenty");
+		if (debug){
+			System.out.println("Player "+p+" used the year of plenty");
+		}
 	}
 	
 	private boolean knightPossible(){
@@ -501,6 +552,7 @@ public class TurnAI {
 	}
 	
 	private void useKnight(){
+		
 		System.out.println("Player "+p+" used knight");
 		Player[] ps = rg.getPlayers();
 		int highestPlayerVPs = ps[0].victoryPoints;

@@ -6,6 +6,7 @@ public class InitialPlacementAI {
 	GameLogic gl;
 	private DecisionTree dt;
 	int playerWithDT;
+	int playerWithAntiDT;
 	private LearnedWeights weight;
 	int playerWithLW;
 	boolean fixedInitialPlacement;
@@ -25,8 +26,10 @@ public class InitialPlacementAI {
 		playerWithDT = smartPlayer;
 		//playerWithDT = 0;
 		weight = new LearnedWeights(g.graph);
-		playerWithLW = 2;
-		//playerWithLW = 0;
+		//playerWithLW = 2;
+		playerWithLW = 0;
+		//playerWithAntiDT = 3;
+		playerWithAntiDT = 0;
 	}
 	
 	// actions for first round (settlement and road placement) ///
@@ -54,10 +57,24 @@ public class InitialPlacementAI {
 				}
 			}
 			if (p == playerWithDT){
-				int[] newSettlementVertices = new int[54];
+				int[] newSettlementVertices = new int[settlementVerticesCount];
 				int newSetVertCount = 0;
-				for (int i = 0; i<settlementVertices.length; i++){
+				for (int i = 0; i<settlementVerticesCount; i++){
 					if (dt.isSpotGood(settlementVertices[i])){
+						newSettlementVertices[newSetVertCount] = settlementVertices[i];
+						newSetVertCount ++;
+					}
+				}
+				if (newSetVertCount >0){
+					settlementVertices = newSettlementVertices;
+					settlementVerticesCount = newSetVertCount;
+				}
+			}
+			if (p == playerWithAntiDT){
+				int[] newSettlementVertices = new int[settlementVerticesCount];
+				int newSetVertCount = 0;
+				for (int i = 0; i<settlementVerticesCount; i++){
+					if (!dt.isSpotGood(settlementVertices[i])){
 						newSettlementVertices[newSetVertCount] = settlementVertices[i];
 						newSetVertCount ++;
 					}
