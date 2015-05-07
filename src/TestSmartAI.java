@@ -12,13 +12,13 @@ public class TestSmartAI {
 			if (winner < 0){
 				continue;
 			}
-			System.out.println("winner was: "+winner);
+			//System.out.println("winner was: "+winner);
 			numWinsPerPlayer[winner] ++;
 		}
-		System.out.println("Ran "+ numRuns+ "games");
+/*		System.out.println("Ran "+ numRuns+ "games");
 		System.out.println("Player 1 won: "+numWinsPerPlayer[1]);
 		System.out.println("Player 2 won: "+numWinsPerPlayer[2]);		
 		System.out.println("Player 3 won: "+numWinsPerPlayer[3]);
-		System.out.println("Player 4 won: "+numWinsPerPlayer[4]);
+		System.out.println("Player 4 won: "+numWinsPerPlayer[4]);*/
 	}
 }

@@ -67,10 +67,10 @@ public class TurnAI {
 			usePort();
 		} else if (devCardPossible()){
 			buyDevCard();
-		} else if (canUse3to1Port()){
+/*		} else if (canUse3to1Port()){
 			use3to1Port();
 		} else if (tradePossible4to1()){
-			makeTrade();
+			makeTrade(); */
 		}  else if (knightPossible()){
 			//useKnight();
 		}
